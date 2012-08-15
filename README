@@ -1,0 +1,24 @@
+TIGRE (Tiny Graphics Rendering Engine)
+
+TIGRE is in an early development stage and it is not recommanded to use it right now.
+
+What is TIGRE ?
+================
+TIGRE is a set of libraries dedicated to advanced visualization and/or video game development.
+TIGRE is developped in C++ and it uses a very modulare architecture.
+TIGRE is easy to install, to use, and to understand.
+TIGRE is free and open source (MIT Licence).
+
+Installation
+=============
+TIGRE uses the Qt Build Suite aka qbs (see http://doc-snapshot.qt-project.org/qbs) to compile and install the project.
+Once you have qbs installed, just run "qbs" in this directory.
+
+License
+========
+TIGRE is made available under the MIT License.
+
+LINKS
+======
+Gitorious page: https://gitorious.org/tigre
+
