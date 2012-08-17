@@ -8,6 +8,7 @@ TIGRE is a set of libraries dedicated to advanced visualization and/or video gam
 TIGRE is developped in C++ and it uses a very modulare architecture.
 TIGRE is easy to install, to use, and to understand.
 TIGRE is free and open source (MIT Licence).
+TIGRE is cross-platform.
 
 Installation
 =============
