@@ -33,13 +33,15 @@ SOFTWARE.
 #include <cstdlib>
 #include <string>
 
+#include "export.h"
+
 namespace tigre
 {
     namespace core
     {
         typedef char Char;
 
-        class String
+        class SHARED String
         {
             public:
 
@@ -80,11 +82,13 @@ namespace tigre
                 Char  operator[](int pos) const;
                 Char &operator[](int pos);
 
-                // Getters
+                // Getter
                 const Char *unicode() const;
                 int size() const;
 
                 // Converters
+                const char *toCString() const;
+
                 short toShort(bool *ok = 0, int base = 10) const;
                 unsigned short toUShort(bool *ok = 0, int base = 10) const;
 

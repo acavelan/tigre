@@ -177,6 +177,11 @@ namespace tigre
         }
 
         // Converters
+        const char *String::toCString() const
+        {
+            return data.c_str();
+        }
+
         short String::toShort(bool *ok, int base) const
         {
             char* end = 0;

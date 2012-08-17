@@ -9,6 +9,8 @@ Product
     Depends { name: "cpp" }
 
     files: [
-        "src/String.cpp"
+        "src/String.cpp",
+        "src/Exception.cpp",
+        "src/Exceptions.cpp"
     ]
 }
