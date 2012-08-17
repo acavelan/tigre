@@ -33,7 +33,7 @@ SOFTWARE.
 #include <cstdlib>
 #include <string>
 
-#include "export.h"
+#include "config.h"
 
 namespace tigre
 {

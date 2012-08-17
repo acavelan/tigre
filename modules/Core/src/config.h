@@ -26,41 +26,16 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef EXCEPTIONS_H
-#define EXCEPTIONS_H
+// It is better to use the Char type because a Char class will be implemented,
+// making the char type useless and causing compatibility problems
+typedef char Char;
 
-#include <exception>
+// If defined, Assertions will do nothing
+// TIGRE_NO_ASSERT
 
-#include "config.h"
-#include "String.hpp"
+// If defined, it uses the dll export macro (Windows only)
+// otherwise it assumes dll import (does nothing on Linux)
+// TIGRE_EXPORT
 
-#ifndef TIGRE_NO_ASSERT
-#   define Assert(condition) if (!(condition)) throw AssertException(__FILE__, __LINE__, #condition)
-#else
-inline void doNothing(bool) {}
-#   define Assert(condition) doNothing(!(condition))
-#endif
-
-namespace tigre
-{
-    namespace core
-    {
-        class SHARED Exception : public std::exception
-        {
-            public:
-
-                Exception(const String &message = "");
-
-                virtual ~Exception() throw();
-
-                virtual const char *what() const throw();
-
-            private:
-
-				
-                String message;
-        };
-    }
-}
-
-#endif
+// Define the SHARED macro for dll export (Windows only)
+#include "export.h"
