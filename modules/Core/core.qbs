@@ -11,6 +11,8 @@ Product
     files: [
         "src/String.cpp",
         "src/Exception.cpp",
-        "src/Exceptions.cpp"
+        "src/Exceptions.cpp",
+        "src/LogWriter.cpp",
+        "src/Logger.cpp"
     ]
 }

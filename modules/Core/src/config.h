@@ -2,7 +2,9 @@
 --------------------------------------------------------------------------------
 This source file is part of TIGRE.
 
-TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
+TIGRE is made available under the MIT License.
+
+Refer to https://github.com/razlock/tigre for more informations.
 
 Copyright (c) 2012 Aurélien Cavelan (razlock)
 
@@ -31,11 +33,11 @@ SOFTWARE.
 typedef char Char;
 
 // If defined, Assertions will do nothing
-// TIGRE_NO_ASSERT
+/// TIGRE_NO_ASSERT
 
 // If defined, it uses the dll export macro (Windows only)
 // otherwise it assumes dll import (does nothing on Linux)
-// TIGRE_EXPORT
+/// TIGRE_EXPORT
 
 // Define the SHARED macro for dll export (Windows only)
 #include "export.h"

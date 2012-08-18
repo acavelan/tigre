@@ -2,7 +2,9 @@
 --------------------------------------------------------------------------------
 This source file is part of TIGRE.
 
-TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
+TIGRE is made available under the MIT License.
+
+Refer to https://github.com/razlock/tigre for more informations.
 
 Copyright (c) 2012 Aurélien Cavelan (razlock)
 
@@ -26,8 +28,8 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef EXCEPTIONS_H
-#define EXCEPTIONS_H
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
 
 #include <exception>
 
@@ -63,4 +65,4 @@ namespace tigre
     }
 }
 
-#endif
+#endif // EXCEPTION_H
