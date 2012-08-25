@@ -84,8 +84,12 @@ namespace tigre
                 Char  operator[](int pos) const;
                 Char &operator[](int pos);
 
+                // Setters
+                void clear();
+
                 // Getter
                 const Char *unicode() const;
+                bool empty() const;
                 int size() const;
 
                 // Converters
@@ -119,7 +123,7 @@ namespace tigre
 
             private:
 
-                std::string data;
+                std::string _data;
         };
 
         #include "String.inl"

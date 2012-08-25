@@ -34,11 +34,13 @@ SOFTWARE.
 #ifdef WIN32
     #ifdef TIGRE_EXPORT
         #define SHARED __declspec(dllexport)
+        #define DYNLIB_EXPORT __declspec(dllexport)
     #else
         #define SHARED __declspec(dllimport)
     #endif
 #else
     #define SHARED
+    #define DYNLIB_EXPORT
 #endif
 
 #endif // EXPORT_H

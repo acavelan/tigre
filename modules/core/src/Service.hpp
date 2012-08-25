@@ -28,24 +28,28 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#include "Exception.hpp"
+#ifndef SERVICE_H
+#define SERVICE_H
+
+#include "config.h"
+#include "String.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        Exception::Exception(const String &message) :
-            message(message)
+        template<class T>
+        class SHARED Service
         {
-        }
+            public:
 
-        Exception::~Exception() throw()
-        {
-        }
+                Service();
+                virtual ~Service();
 
-        const char *Exception::what() const throw()
-        {
-            return message.toCString();
-        }
+        };
+
+        #include "Service.inl"
     }
 }
+
+#endif // SERVICE_H

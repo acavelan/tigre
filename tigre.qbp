@@ -3,6 +3,6 @@ import qbs.base 1.0
 Project
 {
     references: [
-        "modules/Core/core.qbs"
+        "modules/core/core.qbp"
     ]
 }

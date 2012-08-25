@@ -28,41 +28,26 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef LOGWRITER_H
+#define LOGWRITER_H
 
-#include <exception>
+#include <map>
 
 #include "config.h"
 #include "String.hpp"
-
-#ifndef TIGRE_NO_ASSERT
-#   define Assert(condition) if (!(condition)) throw AssertException(__FILE__, __LINE__, #condition)
-#else
-inline void doNothing(bool) {}
-#   define Assert(condition) doNothing(!(condition))
-#endif
+#include "../../ILogWriter.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        class SHARED Exception : public std::exception
+        class SHARED StdWriter : public ILogWriter
         {
             public:
 
-                Exception(const String &message = "");
-
-                virtual ~Exception() throw();
-
-                virtual const char *what() const throw();
-
-            private:
-
-				
-                String message;
+                void write(const String &message);
         };
     }
 }
 
-#endif // EXCEPTION_H
+#endif // LOGWRITER_H

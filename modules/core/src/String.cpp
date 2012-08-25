@@ -37,19 +37,23 @@ namespace tigre
 {
     namespace core
     {
-        String::String() : data()
+        String::String() :
+            _data()
         {
         }
 
-        String::String(char ch) : data(1, ch)
+        String::String(char ch) :
+            _data(1, ch)
         {
         }
 
-        String::String(const char *str) : data(str)
+        String::String(const char *str) :
+            _data(str)
         {
         }
 
-        String::String(const String &other) : data(other.data)
+        String::String(const String &other) :
+            _data(other._data)
         {
         }
 
@@ -60,134 +64,145 @@ namespace tigre
         // Operators
         String String::operator+(Char ch) const
         {
-            String str(data.c_str());
-            str.data += ch;
+            String str(_data.c_str());
+            str._data += ch;
             return str;
         }
 
         String String::operator+(const Char *unicode) const
         {
-            String str(data.c_str());
-            str.data += unicode;
+            String str(_data.c_str());
+            str._data += unicode;
             return str;
         }
 
         String String::operator+(const String &other) const
         {
-            String str(data.c_str());
-            str.data += other.data;
+            String str(_data.c_str());
+            str._data += other._data;
             return str;
         }
 
         String &String::operator+=(Char ch)
         {
-            data += ch;
+            _data += ch;
             return *this;
         }
 
         String &String::operator+=(const Char *unicode)
         {
-            data += unicode;
+            _data += unicode;
             return *this;
         }
 
         String &String::operator+=(const String &other)
         {
-            data += other.data;
+            _data += other._data;
             return *this;
         }
 
         bool String::operator> (const Char *other) const
         {
-            return strcmp(data.c_str(), other) > 0;
+            return strcmp(_data.c_str(), other) > 0;
         }
 
         bool String::operator>(const String &other) const
         {
-            return data > other.data;
+            return _data > other._data;
         }
 
         bool String::operator>=(const Char *other) const
         {
-            return strcmp(data.c_str(), other) >= 0;
+            return strcmp(_data.c_str(), other) >= 0;
         }
 
         bool String::operator>=(const String &other) const
         {
-            return data >= other.data;
+            return _data >= other._data;
         }
 
         bool String::operator< (const Char *other) const
         {
-            return strcmp(data.c_str(), other) < 0;
+            return strcmp(_data.c_str(), other) < 0;
         }
 
         bool String::operator<(const String &other) const
         {
-            return data < other.data;
+            return _data < other._data;
         }
 
         bool String::operator<=(const Char *other) const
         {
-            return strcmp(data.c_str(), other) <= 0;
+            return strcmp(_data.c_str(), other) <= 0;
         }
 
         bool String::operator<=(const String &other) const
         {
-            return data <= other.data;
+            return _data <= other._data;
         }
 
         bool String::operator==(const Char *other) const
         {
-            return strcmp(data.c_str(), other) == 0;
+            return strcmp(_data.c_str(), other) == 0;
         }
 
         bool String::operator==(const String &other) const
         {
-            return data == other.data;
+            return _data == other._data;
         }
 
         bool String::operator!=(const Char *other) const
         {
-            return strcmp(data.c_str(), other) != 0;
+            return strcmp(_data.c_str(), other) != 0;
         }
 
         bool String::operator!=(const String &other) const
         {
-            return data != other.data;
+            return _data != other._data;
         }
 
         char String::operator[](int pos) const
         {
-            return data[pos];
+            return _data[pos];
         }
 
         char &String::operator[](int pos)
         {
-            return data[pos];
+            return _data[pos];
+        }
+
+        // Setters
+        void String::clear()
+        {
+            _data.clear();
         }
 
         // Getters
         const Char *String::unicode() const
         {
-            return data.c_str();
+            return _data.c_str();
+        }
+
+        bool String::empty() const
+        {
+            return _data.empty();
         }
 
         int String::size() const
         {
-            return data.size();
+            return _data.size();
         }
 
         // Converters
         const char *String::toCString() const
         {
-            return data.c_str();
+            return _data.c_str();
         }
 
         short String::toShort(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             short number = strtol(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -197,7 +212,7 @@ namespace tigre
         unsigned short String::toUShort(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             unsigned short number = strtoul(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -207,7 +222,7 @@ namespace tigre
         int String::toInt(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             int number = strtol(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -217,7 +232,7 @@ namespace tigre
         unsigned int String::toUInt(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             unsigned int number = strtoul(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -227,7 +242,7 @@ namespace tigre
         long String::toLong(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             long number = strtol(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -237,7 +252,7 @@ namespace tigre
         unsigned long String::toULong(bool *ok, int base) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             unsigned long number = strtoul(str, &end, base);
             if(str == end && ok)
                 *ok = false;
@@ -247,7 +262,7 @@ namespace tigre
         float String::toFloat(bool *ok) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             float number = strtof(str, &end);
             if(str == end && ok)
                 *ok = false;
@@ -257,7 +272,7 @@ namespace tigre
         double String::toDouble(bool *ok) const
         {
             char* end = 0;
-            const char *str = data.c_str();
+            const char *str = _data.c_str();
             double number = strtod(str, &end);
             if(str == end && ok)
                 *ok = false;
@@ -282,27 +297,27 @@ namespace tigre
         // Friend related members
         std::ostream &operator<<(std::ostream &os, const String &str)
         {
-            os << str.data;
+            os << str._data;
             return os;
         }
 
         std::istream &operator>>(std::istream &is, String &str)
         {
-            is >> str.data;
+            is >> str._data;
             return is;
         }
 
         String operator+(char ch, const String &str)
         {
             String result(ch);
-            result.data += str.data;
+            result._data += str._data;
             return result;
         }
 
         String operator+(const Char *unicode, const String &str)
         {
             String result(unicode);
-            result.data += str.data;
+            result._data += str._data;
             return result;
         }
     }
