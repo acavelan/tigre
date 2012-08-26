@@ -31,9 +31,22 @@ SOFTWARE.
 template<class T>
 inline Service<T>::Service()
 {
+    Service<T>::set(static_cast<T*>(this));
 }
 
 template<class T>
 inline Service<T>::~Service()
 {
+}
+
+template<class T>
+inline void Service<T>::set(T *inst)
+{
+    _inst = inst;
+}
+
+template<class T>
+inline T &Service<T>::get()
+{
+    return *_inst;
 }

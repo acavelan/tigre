@@ -32,6 +32,7 @@ SOFTWARE.
 #define LOGGER_H
 
 #include <map>
+#include <sstream>
 
 #include "config.h"
 #include "Plugin.hpp"
@@ -50,14 +51,13 @@ namespace tigre
 
             public:
 
-                Logger(){}
-                virtual ~Logger(){}
+                void log(const String &message);
 
-                virtual void log(const String &message)
-                {
-                    writer->write(message);
-                }
+                template <class T>
+                Logger &operator <<(const T &toLog);
         };
+
+        #include "Logger.inl"
     }
 }
 

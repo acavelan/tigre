@@ -95,34 +95,34 @@ inline T *SharedPtr<T>::ptr() const
 }
 
 template <class T>
-inline T &SharedPtr<T>::operator *() const
+inline T &SharedPtr<T>::operator  *() const
 {
     Assert(_data != 0);
     return *_data;
 }
 
 template <class T>
-inline T *SharedPtr<T>::operator->() const
+inline T *SharedPtr<T>::operator ->() const
 {
     Assert(_data != 0);
     return _data;
 }
 
 template <class T>
-inline SharedPtr<T>::operator T*() const
+inline SharedPtr<T>::operator    T*() const
 {
     return _data;
 }
 
 template <class T>
-inline const SharedPtr<T> &SharedPtr<T>::operator=(const SharedPtr<T> &pointer)
+inline const SharedPtr<T> &SharedPtr<T>::operator =(const SharedPtr<T> &pointer)
 {
     SharedPtr<T>(pointer).swap(*this);
     return *this;
 }
 
 template <class T>
-inline const SharedPtr<T> &SharedPtr<T>::operator=(T *ptr)
+inline const SharedPtr<T> &SharedPtr<T>::operator =(T *ptr)
 {
     if(_data != ptr)
         SharedPtr<T>(ptr).swap(*this);

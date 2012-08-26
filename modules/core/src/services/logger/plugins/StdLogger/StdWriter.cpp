@@ -39,7 +39,7 @@ namespace tigre
     {
         void StdWriter::write(const String &message)
         {
-            std::cout << message << std::endl;
+            std::cout << message << std::flush;
         }
 
         EXPORT_PLUGIN(StdWriter)

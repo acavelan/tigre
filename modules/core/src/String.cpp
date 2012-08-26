@@ -28,10 +28,10 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#include "String.hpp"
-
 #include <cstring>
 #include <cstdio>
+
+#include "String.hpp"
 
 namespace tigre
 {
@@ -62,111 +62,111 @@ namespace tigre
         }
 
         // Operators
-        String String::operator+(Char ch) const
+        String String::operator +(Char ch) const
         {
             String str(_data.c_str());
             str._data += ch;
             return str;
         }
 
-        String String::operator+(const Char *unicode) const
+        String String::operator +(const Char *unicode) const
         {
             String str(_data.c_str());
             str._data += unicode;
             return str;
         }
 
-        String String::operator+(const String &other) const
+        String String::operator +(const String &other) const
         {
             String str(_data.c_str());
             str._data += other._data;
             return str;
         }
 
-        String &String::operator+=(Char ch)
+        String &String::operator +=(Char ch)
         {
             _data += ch;
             return *this;
         }
 
-        String &String::operator+=(const Char *unicode)
+        String &String::operator +=(const Char *unicode)
         {
             _data += unicode;
             return *this;
         }
 
-        String &String::operator+=(const String &other)
+        String &String::operator +=(const String &other)
         {
             _data += other._data;
             return *this;
         }
 
-        bool String::operator> (const Char *other) const
+        bool String::operator >(const Char *other) const
         {
             return strcmp(_data.c_str(), other) > 0;
         }
 
-        bool String::operator>(const String &other) const
+        bool String::operator >(const String &other) const
         {
             return _data > other._data;
         }
 
-        bool String::operator>=(const Char *other) const
+        bool String::operator >=(const Char *other) const
         {
             return strcmp(_data.c_str(), other) >= 0;
         }
 
-        bool String::operator>=(const String &other) const
+        bool String::operator >=(const String &other) const
         {
             return _data >= other._data;
         }
 
-        bool String::operator< (const Char *other) const
+        bool String::operator <(const Char *other) const
         {
             return strcmp(_data.c_str(), other) < 0;
         }
 
-        bool String::operator<(const String &other) const
+        bool String::operator <(const String &other) const
         {
             return _data < other._data;
         }
 
-        bool String::operator<=(const Char *other) const
+        bool String::operator <=(const Char *other) const
         {
             return strcmp(_data.c_str(), other) <= 0;
         }
 
-        bool String::operator<=(const String &other) const
+        bool String::operator <=(const String &other) const
         {
             return _data <= other._data;
         }
 
-        bool String::operator==(const Char *other) const
+        bool String::operator ==(const Char *other) const
         {
             return strcmp(_data.c_str(), other) == 0;
         }
 
-        bool String::operator==(const String &other) const
+        bool String::operator ==(const String &other) const
         {
             return _data == other._data;
         }
 
-        bool String::operator!=(const Char *other) const
+        bool String::operator !=(const Char *other) const
         {
             return strcmp(_data.c_str(), other) != 0;
         }
 
-        bool String::operator!=(const String &other) const
+        bool String::operator !=(const String &other) const
         {
             return _data != other._data;
         }
 
-        char String::operator[](int pos) const
+        char String::operator [](int pos) const
         {
             return _data[pos];
         }
 
-        char &String::operator[](int pos)
+        char &String::operator [](int pos)
         {
             return _data[pos];
         }
@@ -295,26 +295,26 @@ namespace tigre
         }
 
         // Friend related members
-        std::ostream &operator<<(std::ostream &os, const String &str)
+        std::ostream &operator <<(std::ostream &os, const String &str)
         {
             os << str._data;
             return os;
         }
 
-        std::istream &operator>>(std::istream &is, String &str)
+        std::istream &operator >>(std::istream &is, String &str)
         {
             is >> str._data;
             return is;
         }
 
-        String operator+(char ch, const String &str)
+        String operator +(char ch, const String &str)
         {
             String result(ch);
             result._data += str._data;
             return result;
         }
 
-        String operator+(const Char *unicode, const String &str)
+        String operator +(const Char *unicode, const String &str)
         {
             String result(unicode);
             result._data += str._data;

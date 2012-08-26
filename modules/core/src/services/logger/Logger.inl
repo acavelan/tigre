@@ -28,59 +28,16 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef PLUGIN_H
-#define PLUGIN_H
-
-#include "config.h"
-#include "String.hpp"
-#include "SharedPtr.hpp"
-#include "SharedLibrary.hpp"
-
-namespace tigre
+void Logger::log(const String &message)
 {
-    namespace core
-    {
-        template<class T>
-        class Plugin
-        {
-            public:
-
-                String path;
-
-            public:
-
-                Plugin();
-                Plugin(const String &filename);
-
-                virtual ~Plugin();
-
-                const String &name() const;
-
-                void load();
-                void load(const String &filename);
-
-                const Plugin &operator =(const String &filename);
-
-                T &operator  *() const;
-                T *operator ->() const;
-                operator    T*() const;
-
-            private:
-
-                SharedLibrary _plugin;
-                SharedPtr<T> _data;
-                String _filename;
-
-        };
-
-        #include "Plugin.inl"
-
-        #define EXPORT_PLUGIN(T) \
-            extern "C" DYNLIB_EXPORT T *init_plugin() \
-            { \
-                return new T(); \
-            }
-    }
+    writer->write(message);
 }
 
-#endif // PLUGIN_H
+template <class T>
+inline Logger &Logger::operator <<(const T &toLog)
+{
+    std::ostringstream stream;
+    stream << toLog;
+    writer->write(stream.str().c_str());
+    return *this;
+}

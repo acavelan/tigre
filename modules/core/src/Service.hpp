@@ -46,7 +46,18 @@ namespace tigre
                 Service();
                 virtual ~Service();
 
+                static T &get();
+
+            private:
+
+                static void set(T *inst);
+
+                static T *_inst;
+
         };
+
+        template<class T>
+        T *Service<T>::_inst = 0;
 
         #include "Service.inl"
     }

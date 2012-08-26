@@ -75,7 +75,7 @@ inline void Plugin<T>::load(const String &filename)
 }
 
 template<class T>
-inline const Plugin<T> &Plugin<T>::operator=(const String &filename)
+inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
 {
     _filename = filename;
 
@@ -86,13 +86,13 @@ inline const Plugin<T> &Plugin<T>::operator=(const String &filename)
 
 
 template<class T>
-inline T &Plugin<T>::operator*() const
+inline T &Plugin<T>::operator *() const
 {
     return *_data;
 }
 
 template<class T>
-T *Plugin<T>::operator->() const
+T *Plugin<T>::operator ->() const
 {
     return _data.ptr();
 }

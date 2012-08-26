@@ -55,34 +55,34 @@ namespace tigre
                 ~String();
 
                 // Operators
-                String operator+(Char ch) const;
-                String operator+(const Char *unicode) const;
-                String operator+(const String &other) const;
+                String operator +(Char ch) const;
+                String operator +(const Char *unicode) const;
+                String operator +(const String &other) const;
 
-                String &operator+=(Char ch);
-                String &operator+=(const Char *unicode);
-                String &operator+=(const String &other);
+                String &operator +=(Char ch);
+                String &operator +=(const Char *unicode);
+                String &operator +=(const String &other);
 
-                bool operator> (const Char *other) const;
-                bool operator> (const String &other) const;
+                bool operator >(const Char *other) const;
+                bool operator >(const String &other) const;
 
-                bool operator>=(const Char *other) const;
-                bool operator>=(const String &other) const;
+                bool operator >=(const Char *other) const;
+                bool operator >=(const String &other) const;
 
-                bool operator< (const Char *other) const;
-                bool operator< (const String &other) const;
+                bool operator  <(const Char *other) const;
+                bool operator  <(const String &other) const;
 
-                bool operator<=(const Char *other) const;
-                bool operator<=(const String &other) const;
+                bool operator <=(const Char *other) const;
+                bool operator <=(const String &other) const;
 
-                bool operator==(const Char *other) const;
-                bool operator==(const String &other) const;
+                bool operator ==(const Char *other) const;
+                bool operator ==(const String &other) const;
 
-                bool operator!=(const Char *other) const;
-                bool operator!=(const String &other) const;
+                bool operator !=(const Char *other) const;
+                bool operator !=(const String &other) const;
 
-                Char  operator[](int pos) const;
-                Char &operator[](int pos);
+                Char  operator [](int pos) const;
+                Char &operator [](int pos);
 
                 // Setters
                 void clear();
@@ -115,11 +115,11 @@ namespace tigre
                 static String number(double n, int precision = 6);
 
                 // Friend related operators
-                friend std::ostream &operator<<(std::ostream &os, const String &str);
-                friend std::istream &operator>>(std::istream &is, String &str);
+                friend std::ostream &operator <<(std::ostream &os, const String &str);
+                friend std::istream &operator >>(std::istream &is, String &str);
 
-                friend String operator+(Char ch, const String &str);
-                friend String operator+(const Char *unicode, const String &str);
+                friend String operator +(Char ch, const String &str);
+                friend String operator +(const Char *unicode, const String &str);
 
             private:
 

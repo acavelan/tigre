@@ -52,13 +52,13 @@ namespace tigre
 
                 T *ptr() const;
 
-                T &operator* () const;
-                T *operator->() const;
-                operator   T*() const;
+                T &operator  *() const;
+                T *operator ->() const;
+                operator    T*() const;
 
-                const SharedPtr &operator=(const SharedPtr &pointer);
+                const SharedPtr &operator =(const SharedPtr &pointer);
 
-                const SharedPtr &operator=(T *ptr);
+                const SharedPtr &operator =(T *ptr);
 
             private :
 
