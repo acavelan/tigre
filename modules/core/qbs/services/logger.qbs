@@ -4,7 +4,7 @@ Product
 {
     name: "StdWriter"
     type: "dynamiclibrary"
-    destination: "lib/plugins"
+    destination: "lib/plugins/logger"
 
     Depends { name: "cpp" }
     Depends { name: "Core" }

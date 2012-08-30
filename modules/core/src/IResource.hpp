@@ -28,77 +28,41 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-template<class T>
-inline Plugin<T>::Plugin()
+#ifndef IRESOURCE_H
+#define IRESOURCE_H
+
+#include "config.h"
+#include "String.hpp"
+#include "Event.hpp"
+#include "IReferenceCounted.hpp"
+
+namespace tigre
 {
+    namespace core
+    {
+        class SHARED IResource : public IReferenceCounted
+        {
+            public:
+
+                Event<IResource*> onGrab;
+                Event<IResource*> onRelease;
+
+                virtual void grab();
+                virtual void release();
+
+                IResource(const String &name);
+                virtual ~IResource();
+
+                const String &name() const;
+
+            private:
+
+                IResource(const IResource &);
+                const IResource &operator =(const IResource &);
+
+                String _name;
+        };
+    }
 }
 
-template<class T>
-inline Plugin<T>::Plugin(const String &filename) :
-    _plugin(filename), _filename(filename)
-{
-    _plugin.load();
-}
-
-template<class T>
-inline  Plugin<T>::~Plugin()
-{
-}
-
-template<class T>
-inline const String &Plugin<T>::name() const
-{
-    return _filename;
-}
-
-template<class T>
-inline void Plugin<T>::load()
-{
-    if(_ptr)
-        _ptr.release();
-
-    _plugin.load(_filename);
-
-    typedef T *(*init_f)();
-
-    init_f init = (init_f)_plugin.resolve("init_plugin");
-
-    _ptr = init();
-}
-
-template<class T>
-inline void Plugin<T>::load(const String &filename)
-{
-    _filename = filename;
-
-    load();
-}
-
-template<class T>
-inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
-{
-    _filename = filename;
-
-    load();
-
-    return *this;
-}
-
-
-template<class T>
-inline T &Plugin<T>::operator *() const
-{
-    return *_ptr;
-}
-
-template<class T>
-T *Plugin<T>::operator ->() const
-{
-    return _ptr.ptr();
-}
-
-template<class T>
-inline Plugin<T>::operator T*() const
-{
-    return _ptr.ptr();
-}
+#endif // IRESOURCE_H

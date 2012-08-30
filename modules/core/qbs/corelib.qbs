@@ -19,5 +19,7 @@ Product
         "../src/Exception.cpp",
         "../src/Exceptions.cpp",
         "../src/SharedLibrary.cpp",
+        "../src/IReferenceCounted.cpp",
+        "../src/IResource.cpp"
     ]
 }

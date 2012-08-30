@@ -39,7 +39,7 @@ namespace tigre
     namespace core
     {
         template<class T>
-        class SHARED Service
+        class Service
         {
             public:
 

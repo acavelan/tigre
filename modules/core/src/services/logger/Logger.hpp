@@ -43,13 +43,11 @@ namespace tigre
 {
     namespace core
     {
-        class SHARED Logger : public Service<Logger>
+        class Logger : public Service<Logger>
         {
             public:
 
                 Plugin<ILogWriter> writer;
-
-            public:
 
                 void log(const String &message);
 

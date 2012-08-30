@@ -45,10 +45,6 @@ namespace tigre
         {
             public:
 
-                String path;
-
-            public:
-
                 Plugin();
                 Plugin(const String &filename);
 
@@ -67,8 +63,11 @@ namespace tigre
 
             private:
 
+                Plugin(const Plugin &);
+                const Plugin &operator =(const Plugin &);
+
                 SharedLibrary _plugin;
-                SharedPtr<T> _data;
+                SharedPtr<T> _ptr;
                 String _filename;
 
         };

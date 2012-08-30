@@ -84,9 +84,10 @@ namespace tigre
 
                 void *resolve(const String &symbol);
 
-                const SharedLibrary &operator=(const SharedLibrary &other);
-
             private:
+
+                SharedLibrary(const SharedLibrary &);
+                const SharedLibrary &operator =(const SharedLibrary &);
 
                 String _filename;
                 bool _isloaded;

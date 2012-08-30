@@ -47,6 +47,7 @@ namespace tigre
         SharedLibrary::SharedLibrary(const String &filename) :
             _filename(filename), _isloaded(false)
         {
+            load();
         }
 
         SharedLibrary::~SharedLibrary()
@@ -88,19 +89,9 @@ namespace tigre
 
         void SharedLibrary::load(const String &filename)
         {
-            if(_isloaded)
-                unload();
-
             _filename = filename;
 
-            Assert(_filename.empty() == false);
-
-            _lib = DYNLIB_LOAD(String(_filename + "." + SHARED_LIBRARY_EXT).toCString());
-
-            if(!_lib)
-                throw SharedLibraryException(_filename, DYNLIB_ERROR());
-
-            _isloaded = true;
+            load();
         }
 
         void SharedLibrary::unload()
@@ -125,18 +116,6 @@ namespace tigre
                 throw SharedLibraryException(_filename, DYNLIB_ERROR());
 
             return sym;
-        }
-
-        const SharedLibrary &SharedLibrary::operator=(const SharedLibrary &other)
-        {
-            if(_isloaded)
-                unload();
-
-            _filename = other._filename;
-            _isloaded = other._isloaded;
-            _lib = other._lib;
-
-            return *this;
         }
     }
 }

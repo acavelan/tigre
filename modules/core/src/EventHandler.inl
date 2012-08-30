@@ -28,77 +28,14 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-template<class T>
-inline Plugin<T>::Plugin()
+template<class T, typename TArg>
+inline EventHandler<T, TArg>::EventHandler(T *inst, void (T::*TFunc)(const TArg args)) :
+    _inst(inst), _ptrFunc(TFunc)
 {
 }
 
-template<class T>
-inline Plugin<T>::Plugin(const String &filename) :
-    _plugin(filename), _filename(filename)
+template<class T, typename TArg>
+inline void EventHandler<T, TArg>::send(const TArg args)
 {
-    _plugin.load();
-}
-
-template<class T>
-inline  Plugin<T>::~Plugin()
-{
-}
-
-template<class T>
-inline const String &Plugin<T>::name() const
-{
-    return _filename;
-}
-
-template<class T>
-inline void Plugin<T>::load()
-{
-    if(_ptr)
-        _ptr.release();
-
-    _plugin.load(_filename);
-
-    typedef T *(*init_f)();
-
-    init_f init = (init_f)_plugin.resolve("init_plugin");
-
-    _ptr = init();
-}
-
-template<class T>
-inline void Plugin<T>::load(const String &filename)
-{
-    _filename = filename;
-
-    load();
-}
-
-template<class T>
-inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
-{
-    _filename = filename;
-
-    load();
-
-    return *this;
-}
-
-
-template<class T>
-inline T &Plugin<T>::operator *() const
-{
-    return *_ptr;
-}
-
-template<class T>
-T *Plugin<T>::operator ->() const
-{
-    return _ptr.ptr();
-}
-
-template<class T>
-inline Plugin<T>::operator T*() const
-{
-    return _ptr.ptr();
+    (_inst->*_ptrFunc)(args);
 }

@@ -28,77 +28,59 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-template<class T>
-inline Plugin<T>::Plugin()
+template<typename TArg>
+inline Event<TArg>::Event()
 {
 }
 
-template<class T>
-inline Plugin<T>::Plugin(const String &filename) :
-    _plugin(filename), _filename(filename)
+template<typename TArg>
+inline Event<TArg>::~Event()
 {
-    _plugin.load();
+    clear();
 }
 
-template<class T>
-inline  Plugin<T>::~Plugin()
+template<typename TArg>
+inline typename Event<TArg>::iterator Event<TArg>::begin()
 {
+    return _listeners.begin();
 }
 
-template<class T>
-inline const String &Plugin<T>::name() const
+template<typename TArg>
+inline typename Event<TArg>::iterator Event<TArg>::end()
 {
-    return _filename;
+    return _listeners.end();
 }
 
-template<class T>
-inline void Plugin<T>::load()
+template<typename TArg>
+inline void Event<TArg>::clear()
 {
-    if(_ptr)
-        _ptr.release();
-
-    _plugin.load(_filename);
-
-    typedef T *(*init_f)();
-
-    init_f init = (init_f)_plugin.resolve("init_plugin");
-
-    _ptr = init();
+    for(iterator it = begin(); it != end(); ++it)
+        delete *it;
+    _listeners.clear();
 }
 
-template<class T>
-inline void Plugin<T>::load(const String &filename)
+template<typename TArg>
+inline void Event<TArg>::operator +=(IEventHandler<TArg> *listener)
 {
-    _filename = filename;
-
-    load();
+    _listeners.push_back(listener);
 }
 
+template<typename TArg>
 template<class T>
-inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
+inline void Event<TArg>::connect(T *inst, void (T::*TFunc)(const TArg args))
 {
-    _filename = filename;
-
-    load();
-
-    return *this;
+    _listeners.push_back(new EventHandler<T, TArg>(inst, TFunc));
 }
 
-
-template<class T>
-inline T &Plugin<T>::operator *() const
+template<typename TArg>
+inline void Event<TArg>::send(const TArg args)
 {
-    return *_ptr;
+    for(iterator it = begin(); it != end(); ++it)
+        (*it)->send(args);
 }
 
-template<class T>
-T *Plugin<T>::operator ->() const
+template<class T, typename TArg>
+inline IEventHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args))
 {
-    return _ptr.ptr();
-}
-
-template<class T>
-inline Plugin<T>::operator T*() const
-{
-    return _ptr.ptr();
+    return new EventHandler<T, TArg>(inst, TFunc);
 }
