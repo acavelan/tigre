@@ -47,7 +47,7 @@ namespace tigre
                 SharedPtr(T *pointer);
                 ~SharedPtr();
 
-                void release();
+                void clear();
                 int count() const;
 
                 T *ptr() const;
@@ -57,7 +57,6 @@ namespace tigre
                 operator    T*() const;
 
                 const SharedPtr &operator =(const SharedPtr &pointer);
-
                 const SharedPtr &operator =(T *ptr);
 
             private :

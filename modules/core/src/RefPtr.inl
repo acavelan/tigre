@@ -55,7 +55,7 @@ inline RefPtr<T>::~RefPtr()
 }
 
 template <class T>
-inline void RefPtr<T>::release()
+inline void RefPtr<T>::clear()
 {
     if(_data)
     {

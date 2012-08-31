@@ -47,7 +47,7 @@ namespace tigre
                 RefPtr(T *pointer);
                 ~RefPtr();
 
-                void release();
+                void clear();
                 int count() const;
 
                 T *ptr() const;
@@ -57,7 +57,6 @@ namespace tigre
                 operator    T*() const;
 
                 const RefPtr &operator =(const RefPtr &pointer);
-
                 const RefPtr &operator =(T *ptr);
 
             private :

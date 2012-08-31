@@ -55,7 +55,7 @@ template<class T>
 inline void Plugin<T>::load()
 {
     if(_ptr)
-        _ptr.release();
+        _ptr.clear();
 
     _plugin.load(_filename);
 

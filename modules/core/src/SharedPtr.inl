@@ -61,7 +61,7 @@ inline SharedPtr<T>::~SharedPtr()
 }
 
 template <class T>
-inline void SharedPtr<T>::release()
+inline void SharedPtr<T>::clear()
 {
     if(_data && _counter && --(*_counter) == 0)
     {
