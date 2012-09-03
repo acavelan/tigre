@@ -46,6 +46,7 @@ namespace tigre
             public:
 
                 Plugin();
+                Plugin(const Plugin &other);
                 Plugin(const String &filename);
 
                 virtual ~Plugin();
@@ -55,7 +56,10 @@ namespace tigre
                 void load();
                 void load(const String &filename);
 
+                const Plugin &operator =(const Plugin &other);
                 const Plugin &operator =(const String &filename);
+
+                T *ptr() const;
 
                 T &operator  *() const;
                 T *operator ->() const;
@@ -63,13 +67,9 @@ namespace tigre
 
             private:
 
-                Plugin(const Plugin &);
-                const Plugin &operator =(const Plugin &);
-
-                SharedLibrary _plugin;
-                SharedPtr<T> _ptr;
+                T *_ptr;
                 String _filename;
-
+                SharedPtr<SharedLibrary> _lib;
         };
 
         #include "Plugin.inl"

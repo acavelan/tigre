@@ -29,20 +29,31 @@ SOFTWARE.
 */
 
 template<class T>
-inline Plugin<T>::Plugin()
+inline Plugin<T>::Plugin() :
+    _ptr(0), _lib(new SharedLibrary())
 {
 }
 
 template<class T>
-inline Plugin<T>::Plugin(const String &filename) :
-    _plugin(filename), _filename(filename)
+inline Plugin<T>::Plugin(const Plugin &other) :
+    _ptr(0), _filename(other._filename), _lib(other._lib)
 {
-    _plugin.load();
+    load();
+}
+
+
+template<class T>
+inline Plugin<T>::Plugin(const String &filename) :
+    _lib(new SharedLibrary(filename)), _filename(filename)
+{
+    _lib->load();
 }
 
 template<class T>
 inline  Plugin<T>::~Plugin()
 {
+    if(_ptr)
+        delete _ptr;
 }
 
 template<class T>
@@ -55,13 +66,16 @@ template<class T>
 inline void Plugin<T>::load()
 {
     if(_ptr)
-        _ptr.clear();
+    {
+        delete _ptr;
+        _ptr = 0;
+    }
 
-    _plugin.load(_filename);
+    _lib->load(_filename);
 
     typedef T *(*init_f)();
 
-    init_f init = (init_f)_plugin.resolve("init_plugin");
+    init_f init = (init_f)_lib->resolve("init_plugin");
 
     _ptr = init();
 }
@@ -75,15 +89,29 @@ inline void Plugin<T>::load(const String &filename)
 }
 
 template<class T>
-inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
+inline const Plugin<T> &Plugin<T>::operator =(const Plugin &other)
 {
-    _filename = filename;
+    _filename = other._filename;
+    _lib = other._lib;
 
     load();
 
     return *this;
 }
 
+template<class T>
+inline const Plugin<T> &Plugin<T>::operator =(const String &filename)
+{
+    load(filename);
+
+    return *this;
+}
+
+template <class T>
+inline T *Plugin<T>::ptr() const
+{
+    return _ptr;
+}
 
 template<class T>
 inline T &Plugin<T>::operator *() const
@@ -94,11 +122,11 @@ inline T &Plugin<T>::operator *() const
 template<class T>
 T *Plugin<T>::operator ->() const
 {
-    return _ptr.ptr();
+    return _ptr;
 }
 
 template<class T>
 inline Plugin<T>::operator T*() const
 {
-    return _ptr.ptr();
+    return _ptr;
 }
