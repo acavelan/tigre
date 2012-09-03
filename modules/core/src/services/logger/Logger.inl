@@ -28,3 +28,48 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
+Logger::Logger() :
+    verbosity(log::EVERYTHING)
+{
+}
+
+Logger::~Logger()
+{
+    for(iterator it = _streams.begin(); it != _streams.end(); ++it)
+        delete it->second;
+
+    _streams.clear();
+}
+
+LogStream &Logger::operator [](const String &stream)
+{
+    iterator it = _streams.find(stream);
+
+    LogStream *logstream = 0;
+
+    if(it == _streams.end())
+    {
+        logstream = new LogStream(writer, stream, verbosity);
+        _streams[stream] = logstream;
+    }
+    else
+        logstream = it->second;
+
+    return *logstream;
+}
+
+LogStream &Logger::operator [](log::log_level_t log_level)
+{
+    return (*this)["out"][log_level];
+}
+
+template <class T>
+LogStream &Logger::operator <<(const T &toLog)
+{
+    return (*this)["out"] << toLog;
+}
+
+LogStream &Logger::operator<<(LogStream &(*manipulator)(LogStream&))
+{
+    return manipulator((*this)["out"]);
+}

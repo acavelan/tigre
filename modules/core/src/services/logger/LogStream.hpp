@@ -28,34 +28,42 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef LOGSTREAM_H
+#define LOGSTREAM_H
 
-#include <map>
+#include <sstream>
 
 #include "config.h"
 #include "String.hpp"
 #include "Plugin.hpp"
-#include "Service.hpp"
-#include "LogStream.hpp"
 #include "ILogWriter.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        class Logger : public Service<Logger>
+        namespace log
+        {
+            enum log_level_t
+            {
+                NOTHING = 0,
+                CRITICAL,
+                ERROR,
+                WARNING,
+                INFO,
+                DEBUG,
+                EVERYTHING
+            };
+        }
+
+        class LogStream
         {
             public:
 
                 Plugin<ILogWriter> writer;
 
-                log::log_level_t verbosity;
-
-                Logger();
-                ~Logger();
-
-                LogStream &operator [](const String &stream);
+                LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::log_level_t &verbosity);
+                ~LogStream();
 
                 LogStream &operator [](log::log_level_t log_level);
 
@@ -64,16 +72,23 @@ namespace tigre
 
                 LogStream &operator<<(LogStream &(*manipulator)(LogStream&));
 
+                void flush();
+
             private:
 
-                typedef std::map<String, LogStream*>::iterator iterator;
-                typedef std::map<String, LogStream*>::const_iterator const_iterator;
-
-                std::map<String, LogStream*> _streams;
+                String _channel;
+                log::log_level_t _log_level;
+                const log::log_level_t &_verbosity;
+                std::ostringstream _stream;
         };
 
-        #include "Logger.inl"
+        namespace log
+        {
+            LogStream &endl(LogStream &stream);
+        }
+
+        #include "LogStream.inl"
     }
 }
 
-#endif // LOGGER_H
+#endif // LOGSTREAM_H

@@ -28,52 +28,51 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
-
-#include <map>
-
-#include "config.h"
-#include "String.hpp"
-#include "Plugin.hpp"
-#include "Service.hpp"
-#include "LogStream.hpp"
-#include "ILogWriter.hpp"
-
-namespace tigre
+LogStream::LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::log_level_t &verbosity) :
+    writer(writer), _channel(channel), _log_level(log::EVERYTHING), _verbosity(verbosity)
 {
-    namespace core
-    {
-        class Logger : public Service<Logger>
-        {
-            public:
-
-                Plugin<ILogWriter> writer;
-
-                log::log_level_t verbosity;
-
-                Logger();
-                ~Logger();
-
-                LogStream &operator [](const String &stream);
-
-                LogStream &operator [](log::log_level_t log_level);
-
-                template <class T>
-                LogStream &operator <<(const T &toLog);
-
-                LogStream &operator<<(LogStream &(*manipulator)(LogStream&));
-
-            private:
-
-                typedef std::map<String, LogStream*>::iterator iterator;
-                typedef std::map<String, LogStream*>::const_iterator const_iterator;
-
-                std::map<String, LogStream*> _streams;
-        };
-
-        #include "Logger.inl"
-    }
+    writer->setChannel(channel);
 }
 
-#endif // LOGGER_H
+LogStream::~LogStream()
+{
+}
+
+LogStream &LogStream::operator [](log::log_level_t log_level)
+{
+    Assert(log_level >= log::NOTHING && log_level < log::EVERYTHING);
+
+    _log_level = log_level;
+
+    return *this;
+}
+
+template <class T>
+LogStream &LogStream::operator <<(const T &toLog)
+{
+    if(_log_level <= _verbosity)
+        _stream << toLog;
+
+    return *this;
+}
+
+LogStream &LogStream::operator<<(LogStream &(*manipulator)(LogStream&))
+{
+    return manipulator(*this);
+}
+
+void LogStream::flush()
+{
+    writer->write(_stream.str().c_str());
+    _stream.str("");
+}
+
+namespace log
+{
+    LogStream &endl(LogStream &stream)
+    {
+        stream << "\n";
+        stream.flush();
+        return stream;
+    }
+}
