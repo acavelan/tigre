@@ -28,16 +28,3 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-void Logger::log(const String &message)
-{
-    writer->write(message);
-}
-
-template <class T>
-inline Logger &Logger::operator <<(const T &toLog)
-{
-    std::ostringstream stream;
-    stream << toLog;
-    writer->write(stream.str().c_str());
-    return *this;
-}

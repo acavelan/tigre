@@ -31,6 +31,7 @@ SOFTWARE.
 #include <iostream>
 
 #include "StdWriter.hpp"
+#include "Exceptions.hpp"
 #include "Plugin.hpp"
 
 namespace tigre
@@ -40,6 +41,16 @@ namespace tigre
         void StdWriter::write(const String &message)
         {
             std::cout << message << std::flush;
+        }
+
+        void StdWriter::setChannel(const String &channel)
+        {
+            _channel = channel;
+        }
+
+        const String &StdWriter::channel() const
+        {
+            return _channel;
         }
 
         EXPORT_PLUGIN(StdWriter)

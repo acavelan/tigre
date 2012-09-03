@@ -46,6 +46,13 @@ namespace tigre
             public:
 
                 void write(const String &message);
+
+                void setChannel(const String &channel);
+                const String &channel() const;
+
+            private:
+
+                String _channel;
         };
     }
 }

@@ -43,6 +43,9 @@ namespace tigre
 
                 virtual ~ILogWriter(){}
                 virtual void write(const String &message) = 0;
+
+                virtual void setChannel(const String &channel) = 0;
+                virtual const String &channel() const = 0;
         };
     }
 }
