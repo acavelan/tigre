@@ -36,7 +36,6 @@ SOFTWARE.
 #include "config.h"
 #include "String.hpp"
 #include "Plugin.hpp"
-#include "Service.hpp"
 #include "LogStream.hpp"
 #include "ILogWriter.hpp"
 
@@ -44,7 +43,7 @@ namespace tigre
 {
     namespace core
     {
-        class Logger : public Service<Logger>
+        class Logger
         {
             public:
 
