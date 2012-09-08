@@ -31,14 +31,16 @@ SOFTWARE.
 #ifndef SHAREDPTR_H
 #define SHAREDPTR_H
 
+#include "config.h"
 #include "Exceptions.hpp"
+#include "RefCount.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        template<class T>
-        class SharedPtr
+        template<class T, template <class> class Ownership = RefCount>
+        class SharedPtr : public Ownership<T>
         {
             public:
 
@@ -46,9 +48,6 @@ namespace tigre
                 SharedPtr(const SharedPtr &copy);
                 SharedPtr(T *pointer);
                 ~SharedPtr();
-
-                void clear();
-                int count() const;
 
                 T *ptr() const;
 
@@ -64,7 +63,6 @@ namespace tigre
                 void swap(SharedPtr &ptr);
 
                 T *_data;
-                int *_counter;
         };
 
         #include "SharedPtr.inl"

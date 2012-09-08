@@ -28,103 +28,75 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-template <class T>
-inline SharedPtr<T>::SharedPtr() :
-    _data(0), _counter(0)
+template <class T, template <class> class Ownership>
+inline SharedPtr<T, Ownership>::SharedPtr() :
+    _data(0)
 {
 }
 
-template <class T>
-inline SharedPtr<T>::SharedPtr(const SharedPtr<T> &copy) :
-    _data(copy._data), _counter(copy._counter)
+template <class T, template <class> class Ownership>
+inline SharedPtr<T, Ownership>::SharedPtr(const SharedPtr<T, Ownership> &copy) :
+    Ownership<T>(copy), _data(Ownership<T>::clone(copy._data))
 {
-    if(_counter)
-        ++(*_counter);
 }
 
-template <class T>
-inline SharedPtr<T>::SharedPtr(T *pointer) :
-    _data(pointer), _counter(0)
+template <class T, template <class> class Ownership>
+inline SharedPtr<T, Ownership>::SharedPtr(T *pointer) :
+    _data(pointer)
 {
-    if(_data)
-        _counter = new int(1);
 }
 
-template <class T>
-inline SharedPtr<T>::~SharedPtr()
+template <class T, template <class> class Ownership>
+inline SharedPtr<T, Ownership>::~SharedPtr()
 {
-    if(_data && _counter && --(*_counter) == 0)
-    {
-        delete _data;
-        delete _counter;
-    }
+    Ownership<T>::release(_data);
 }
 
-template <class T>
-inline void SharedPtr<T>::clear()
+template <class T, template <class> class Ownership>
+inline void SharedPtr<T, Ownership>::swap(SharedPtr<T, Ownership> &ptr)
 {
-    if(_data && _counter && --(*_counter) == 0)
-    {
-        delete _data;
-        delete _counter;
-        _data = 0;
-        _counter = 0;
-    }
-}
-
-template <class T>
-inline int SharedPtr<T>::count() const
-{
-    if(_counter)
-        return *_counter;
-    else
-        return 0;
-}
-
-template <class T>
-inline void SharedPtr<T>::swap(SharedPtr<T> &ptr)
-{
+    Ownership<T>::swap(ptr);
     std::swap(_data, ptr._data);
-    std::swap(_counter, ptr._counter);
 }
 
-template <class T>
-inline T *SharedPtr<T>::ptr() const
+template <class T, template <class> class Ownership>
+inline T *SharedPtr<T, Ownership>::ptr() const
 {
     return _data;
 }
 
-template <class T>
-inline T &SharedPtr<T>::operator  *() const
+template <class T, template <class> class Ownership>
+inline T &SharedPtr<T, Ownership>::operator  *() const
 {
     Assert(_data != 0);
     return *_data;
 }
 
-template <class T>
-inline T *SharedPtr<T>::operator ->() const
+template <class T, template <class> class Ownership>
+inline T *SharedPtr<T, Ownership>::operator ->() const
 {
     Assert(_data != 0);
     return _data;
 }
 
-template <class T>
-inline SharedPtr<T>::operator    T*() const
+template <class T, template <class> class Ownership>
+inline SharedPtr<T, Ownership>::operator    T*() const
 {
     return _data;
 }
 
-template <class T>
-inline const SharedPtr<T> &SharedPtr<T>::operator =(const SharedPtr<T> &pointer)
+template <class T, template <class> class Ownership>
+inline const SharedPtr<T, Ownership> &SharedPtr<T, Ownership>::operator =(const SharedPtr<T, Ownership> &pointer)
 {
-    SharedPtr<T>(pointer).swap(*this);
+    SharedPtr<T, Ownership>(pointer).swap(*this);
     return *this;
 }
 
-template <class T>
-inline const SharedPtr<T> &SharedPtr<T>::operator =(T *ptr)
+template <class T, template <class> class Ownership>
+inline const SharedPtr<T, Ownership> &SharedPtr<T, Ownership>::operator =(T *ptr)
 {
     if(_data != ptr)
-        SharedPtr<T>(ptr).swap(*this);
+        SharedPtr<T, Ownership>(ptr).swap(*this);
+
     return *this;
 }

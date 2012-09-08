@@ -32,6 +32,8 @@ SOFTWARE.
 // making the char type useless and causing compatibility problems
 typedef char Char;
 
+typedef unsigned long Handle;
+
 // If defined, Assertions will do nothing
 /// TIGRE_NO_ASSERT
 

@@ -28,46 +28,50 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef REFPTR_H
-#define REFPTR_H
+#ifndef REFCOUNT_H
+#define REFCOUNT_H
 
-#include "Exceptions.hpp"
+#include "config.h"
 
 namespace tigre
 {
     namespace core
     {
-        template<class T>
-        class RefPtr
+        template <class T>
+        class RefCount
         {
-            public:
+            public :
 
-                RefPtr();
-                RefPtr(const RefPtr &copy);
-                RefPtr(T *pointer);
-                ~RefPtr();
+                RefCount() :
+                    _ref_counter(new int(1))
+                {
+                }
 
-                void clear();
-                int count() const;
+                T *clone(T *ptr)
+                {
+                    ++*_ref_counter;
+                    return ptr;
+                }
 
-                T *ptr() const;
+                void release(T *ptr)
+                {
+                    if(--*_ref_counter == 0)
+                    {
+                        delete _ref_counter;
+                        delete ptr;
+                    }
+                }
 
-                T &operator  *() const;
-                T *operator ->() const;
-                operator    T*() const;
-
-                const RefPtr &operator =(const RefPtr &pointer);
-                const RefPtr &operator =(T *ptr);
+                void swap(RefCount &other)
+                {
+                    std::swap(other._ref_counter, _ref_counter);
+                }
 
             private :
 
-                void swap(RefPtr &ptr);
-
-                T *_data;
+                int *_ref_counter;
         };
-
-        #include "RefPtr.inl"
     }
 }
 
-#endif // REFPTR_H
+#endif // REFCOUNT_H
