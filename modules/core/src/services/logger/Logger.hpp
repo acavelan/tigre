@@ -49,14 +49,16 @@ namespace tigre
 
                 Plugin<ILogWriter> writer;
 
-                log::log_level_t verbosity;
+                log::LogLevel verbosity;
 
                 Logger();
                 ~Logger();
 
-                LogStream &operator [](const String &stream);
+                LogStream &getStream(const String &name);
 
-                LogStream &operator [](log::log_level_t log_level);
+                LogStream &operator [](const String &name);
+
+                LogStream &operator ()(log::LogLevel log_level);
 
                 template <class T>
                 LogStream &operator <<(const T &toLog);

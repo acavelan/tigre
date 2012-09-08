@@ -41,16 +41,16 @@ Logger::~Logger()
     _streams.clear();
 }
 
-LogStream &Logger::operator [](const String &stream)
+LogStream &Logger::getStream(const String &name)
 {
-    iterator it = _streams.find(stream);
+    iterator it = _streams.find(name);
 
     LogStream *logstream = 0;
 
     if(it == _streams.end())
     {
-        logstream = new LogStream(writer, stream, verbosity);
-        _streams[stream] = logstream;
+        logstream = new LogStream(writer, name, verbosity);
+        _streams[name] = logstream;
     }
     else
         logstream = it->second;
@@ -58,18 +58,23 @@ LogStream &Logger::operator [](const String &stream)
     return *logstream;
 }
 
-LogStream &Logger::operator [](log::log_level_t log_level)
+LogStream &Logger::operator [](const String &name)
 {
-    return (*this)["out"][log_level];
+    return getStream(name);
+}
+
+LogStream &Logger::operator ()(log::LogLevel log_level)
+{
+    return getStream("out")(log_level);
 }
 
 template <class T>
 LogStream &Logger::operator <<(const T &toLog)
 {
-    return (*this)["out"] << toLog;
+    return getStream("out") << toLog;
 }
 
 LogStream &Logger::operator<<(LogStream &(*manipulator)(LogStream&))
 {
-    return manipulator((*this)["out"]);
+    return manipulator(getStream("out"));
 }

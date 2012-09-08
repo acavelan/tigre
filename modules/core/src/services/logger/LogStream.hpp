@@ -44,7 +44,7 @@ namespace tigre
     {
         namespace log
         {
-            enum log_level_t
+            enum LogLevel
             {
                 NOTHING = 0,
                 CRITICAL,
@@ -62,10 +62,10 @@ namespace tigre
 
                 Plugin<ILogWriter> writer;
 
-                LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::log_level_t &verbosity);
+                LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::LogLevel &verbosity);
                 ~LogStream();
 
-                LogStream &operator [](log::log_level_t log_level);
+                LogStream &operator ()(log::LogLevel log_level);
 
                 template <class T>
                 LogStream &operator <<(const T &toLog);
@@ -77,8 +77,8 @@ namespace tigre
             private:
 
                 String _channel;
-                log::log_level_t _log_level;
-                const log::log_level_t &_verbosity;
+                log::LogLevel _log_level;
+                const log::LogLevel &_verbosity;
                 std::ostringstream _stream;
         };
 

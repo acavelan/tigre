@@ -28,7 +28,7 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-LogStream::LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::log_level_t &verbosity) :
+LogStream::LogStream(const Plugin<ILogWriter> &writer, const String &channel, const log::LogLevel &verbosity) :
     writer(writer), _channel(channel), _log_level(log::EVERYTHING), _verbosity(verbosity)
 {
     writer->setChannel(channel);
@@ -38,7 +38,7 @@ LogStream::~LogStream()
 {
 }
 
-LogStream &LogStream::operator [](log::log_level_t log_level)
+LogStream &LogStream::operator ()(log::LogLevel log_level)
 {
     Assert(log_level >= log::NOTHING && log_level < log::EVERYTHING);
 
