@@ -35,7 +35,7 @@ namespace tigre
     namespace core
     {
         AssertException::AssertException(const String &file, int line, const String &condition) :
-            Exception("Assert Exception ["+ file + ":" + String::number(line) + "]: " + condition + " check failed")
+            Exception("Assert Exception ["+ file + ":" + String::number(line) + "]: Assert(" + condition + ") failed")
         {}
 
         LoadingFailedException::LoadingFailedException(const String &filename, const String &message) :

@@ -60,7 +60,7 @@ inline void Event<TArg>::clear()
 }
 
 template<typename TArg>
-inline void Event<TArg>::operator +=(IEventHandler<TArg> *listener)
+inline void Event<TArg>::operator +=(ArgHandler<TArg> *listener)
 {
     _listeners.push_back(listener);
 }
@@ -80,7 +80,7 @@ inline void Event<TArg>::send(const TArg args)
 }
 
 template<class T, typename TArg>
-inline IEventHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args))
+inline ArgHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args))
 {
     return new EventHandler<T, TArg>(inst, TFunc);
 }

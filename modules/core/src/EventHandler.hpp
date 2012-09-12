@@ -32,14 +32,14 @@ SOFTWARE.
 #define EVENT_HANDLER_H
 
 #include "config.h"
-#include "IEventHandler.hpp"
+#include "ArgHandler.hpp"
 
 namespace tigre
 {
     namespace core
     {
         template<class T, typename TArg>
-        class EventHandler : public IEventHandler<TArg>
+        class EventHandler : public ArgHandler<TArg>
         {
             public:
 
@@ -55,7 +55,7 @@ namespace tigre
         };
 
         template<class T, typename TArg>
-        IEventHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args));
+        ArgHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args));
 
         #include "EventHandler.inl"
     }

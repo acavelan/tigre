@@ -28,50 +28,56 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-inline ResourceManager::iterator ResourceManager::begin()
+template <class T>
+inline typename ResourceManager<T>::iterator ResourceManager<T>::begin()
 {
     return _resources.begin();
 }
 
-inline ResourceManager::iterator ResourceManager::end()
+template <class T>
+inline typename ResourceManager<T>::iterator ResourceManager<T>::end()
 {
     return _resources.end();
 }
 
-inline ResourceManager::ResourceManager(Logger &logger) :
+template <class T>
+inline ResourceManager<T>::ResourceManager(Logger &logger) :
     _logger(logger)
 {
 }
 
-inline ResourceManager::~ResourceManager()
+template <class T>
+inline ResourceManager<T>::~ResourceManager()
 {
     if(_resources.size() > 0)
     {
-        _logger << "ResourceManager > Deleting remaining resources ...\n";
+        _logger(log::WARNING) << "ResourceManager > Deleting remaining resources ..." << log::endl;
+
         for(iterator it = begin(); it != end(); ++it)
-            _logger << "ResourceManager > " << it->first << " (x" << it->second->refCount() << ")\n";
+            _logger(log::WARNING) << "ResourceManager > " << it->first << " (x" << it->second->refCount() << ")" << log::endl;
 
         clear();
 
-        _logger << "ResourceManager > Done\n";
+        _logger(log::WARNING) << "ResourceManager > Done" << log::endl;
     }
 }
 
 template <class T>
-inline T* ResourceManager::get(const String &name) const
+inline T *ResourceManager<T>::get(const String &name) const
 {
     const_iterator it = _resources.find(name);
 
     if(it != _resources.end())
     {
         it->second->grab();
-        return static_cast<T*>(it->second);
+        return it->second;
     }
 
     return 0;
 }
 
-inline void ResourceManager::add(IResource *resource)
+template <class T>
+inline T *ResourceManager<T>::add(T *resource)
 {
     Assert(resource != 0);
 
@@ -79,12 +85,15 @@ inline void ResourceManager::add(IResource *resource)
 
     if(it == _resources.end())
     {
-        resource->onRelease += slot(this, &ResourceManager::manage);
+        resource->onDelete += slot(this, &ResourceManager::onDelete);
         _resources[resource->name()] = resource;
     }
+
+    return resource;
 }
 
-inline void ResourceManager::remove(const String &name)
+template <class T>
+inline void ResourceManager<T>::remove(const String &name)
 {
     iterator it = _resources.find(name);
 
@@ -92,15 +101,17 @@ inline void ResourceManager::remove(const String &name)
         _resources.erase(it);
 }
 
-inline void ResourceManager::clear()
+template <class T>
+inline void ResourceManager<T>::clear()
 {
     for(iterator it = begin(); it != end(); ++it)
         delete it->second;
+
     _resources.clear();
 }
 
-inline void ResourceManager::manage(IResource *resource)
+template <class T>
+inline void ResourceManager<T>::onDelete(Resource *resource)
 {
-    if(resource->refCount() == 0)
-        remove(resource->name());
+    remove(resource->name());
 }

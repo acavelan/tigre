@@ -28,7 +28,29 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-template<typename TArg>
-IEventHandler<TArg>::~IEventHandler()
+#ifndef ARG_HANDLER_H
+#define ARG_HANDLER_H
+
+#include "config.h"
+
+namespace tigre
 {
+    namespace core
+    {
+        template<typename TArg>
+        class ArgHandler
+        {
+            public:
+
+                virtual ~ArgHandler(){}
+
+                virtual void send(const TArg args) = 0;
+
+            protected:
+
+                ArgHandler(){}
+        };
+    }
 }
+
+#endif // ARG_HANDLER_H

@@ -28,41 +28,47 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef IRESOURCE_H
-#define IRESOURCE_H
-
-#include "config.h"
-#include "String.hpp"
-#include "Event.hpp"
-#include "IReferenceCounted.hpp"
+#include "Resource.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        class SHARED IResource : public IReferenceCounted
+        Resource::Resource(const String &name) :
+            _name(name), _ref_counter(1)
         {
-            public:
+        }
 
-                Event<IResource*> onGrab;
-                Event<IResource*> onRelease;
+        Resource::~Resource()
+        {
+        }
 
-                virtual void grab();
-                virtual void release();
+        void Resource::grab()
+        {
+            _ref_counter++;
+        }
 
-                IResource(const String &name);
-                virtual ~IResource();
+        void Resource::release()
+        {
+            _ref_counter--;
 
-                const String &name() const;
+            if(_ref_counter == 0)
+            {
+                onDelete.send(this);
+                delete this;
+            }
+        }
 
-            private:
+        unsigned int Resource::refCount() const
+        {
+            return _ref_counter;
+        }
 
-                IResource(const IResource &);
-                const IResource &operator =(const IResource &);
-
-                String _name;
-        };
+        const String &Resource::name() const
+        {
+            return _name;
+        }
     }
 }
 
-#endif // IRESOURCE_H
+// typedef SharedPtr<T, ExtRefCount>

@@ -28,8 +28,8 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef IREFERENCE_COUNTED_H
-#define IREFERENCE_COUNTED_H
+#ifndef EXTREFCOUNT_H
+#define EXTREFCOUNT_H
 
 #include "config.h"
 
@@ -37,23 +37,33 @@ namespace tigre
 {
     namespace core
     {
-        class SHARED IReferenceCounted
+        template <class T>
+        class ExtRefCount
         {
-            public:
+            public :
 
-                IReferenceCounted();
-                virtual ~IReferenceCounted();
+                T *clone(T *ptr)
+                {
+                    if(ptr)
+                        ptr->grab();
+                    return ptr;
+                }
 
-                virtual void grab();
-                virtual void release();
+                void release(T *ptr)
+                {
+                    if(ptr)
+                        ptr->release();
+                }
 
-                unsigned int refCount() const;
+                void swap(ExtRefCount &)
+                {
+                }
 
-            protected:
+            private :
 
-                int _ref_count;
+                int *_ref_counter;
         };
     }
 }
 
-#endif // IREFERENCE_COUNTED_H
+#endif // EXTREFCOUNT_H

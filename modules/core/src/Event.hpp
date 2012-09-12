@@ -48,15 +48,15 @@ namespace tigre
                 Event();
                 ~Event();
 
-                typedef typename std::vector<IEventHandler<TArg>*>::iterator iterator;
-                typedef typename std::vector<IEventHandler<TArg>*>::const_iterator const_iterator;
+                typedef typename std::vector<ArgHandler<TArg>*>::iterator iterator;
+                typedef typename std::vector<ArgHandler<TArg>*>::const_iterator const_iterator;
 
                 iterator begin();
                 iterator end();
 
                 void clear();
 
-                void operator +=(IEventHandler<TArg> *listener);
+                void operator +=(ArgHandler<TArg> *listener);
 
                 template<class T>
                 void connect(T *inst, void (T::*TFunc)(const TArg args));
@@ -65,11 +65,11 @@ namespace tigre
 
             private:
 
-                std::vector<IEventHandler<TArg>*> _listeners;
+                std::vector<ArgHandler<TArg>*> _listeners;
         };
 
         template<class T, typename TArg>
-        IEventHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args));
+        ArgHandler<TArg> *slot(T *inst, void (T::*TFunc)(const TArg args));
 
         #include "Event.inl"
     }

@@ -28,34 +28,31 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#include "IReferenceCounted.hpp"
+#ifndef REFERENCE_COUNTED_H
+#define REFERENCE_COUNTED_H
+
+#include "config.h"
 
 namespace tigre
 {
     namespace core
     {
-        IReferenceCounted::IReferenceCounted() :
-            _ref_count(1)
+        class SHARED ReferenceCounted
         {
-        }
+            public:
 
-        IReferenceCounted::~IReferenceCounted()
-        {
-        }
+                virtual ~ReferenceCounted(){}
 
-        void IReferenceCounted::grab()
-        {
-            _ref_count++;
-        }
+                virtual void grab() = 0;
+                virtual void release() = 0;
 
-        void IReferenceCounted::release()
-        {
-            _ref_count--;
-        }
+                virtual unsigned int refCount() const = 0;
 
-        unsigned int IReferenceCounted::refCount() const
-        {
-            return _ref_count;
-        }
+            protected:
+
+                ReferenceCounted(){}
+        };
     }
 }
+
+#endif // REFERENCE_COUNTED_H

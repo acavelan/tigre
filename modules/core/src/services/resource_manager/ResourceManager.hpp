@@ -36,7 +36,7 @@ SOFTWARE.
 #include "config.h"
 #include "String.hpp"
 #include "Exceptions.hpp"
-#include "IResource.hpp"
+#include "Resource.hpp"
 
 #include "services/logger/Logger.hpp"
 
@@ -44,12 +44,13 @@ namespace tigre
 {
     namespace core
     {
+        template<class T>
         class ResourceManager
         {
             public:
 
-                typedef std::map<String, IResource*>::iterator iterator;
-                typedef std::map<String, IResource*>::const_iterator const_iterator;
+                typedef typename std::map<String, T*>::iterator iterator;
+                typedef typename std::map<String, T*>::const_iterator const_iterator;
 
                 iterator begin();
                 iterator end();
@@ -57,22 +58,24 @@ namespace tigre
                 ResourceManager(Logger &logger);
                 ~ResourceManager();
 
-                template <class T>
                 T* get(const String &name) const;
 
-                void add(IResource *resource);
+                T *add(T *resource);
+
                 void remove(const String &name);
+
+                unsigned int count() const;
 
                 void clear();
 
-                void manage(IResource *resource);
-
             private:
+
+                void onDelete(Resource *resource);
 
                 ResourceManager(const ResourceManager &);
                 const ResourceManager &operator =(const ResourceManager &);
 
-                std::map<String, IResource*> _resources;
+                std::map<String, T*> _resources;
                 Logger &_logger;
         };
 
