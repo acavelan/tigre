@@ -199,6 +199,17 @@ namespace tigre
             return _data.c_str();
         }
 
+        const std::string &String::toStdString() const
+        {
+            return _data;
+        }
+
+        std::string &String::toStdString()
+        {
+            return _data;
+        }
+
+
         short String::toShort(bool *ok, int base) const
         {
             char* end = 0;
@@ -319,6 +330,11 @@ namespace tigre
             String result(unicode);
             result._data += str._data;
             return result;
+        }
+
+        std::istream &getline(std::istream &is, String &str)
+        {
+            return std::getline(is, str.toStdString());
         }
     }
 }

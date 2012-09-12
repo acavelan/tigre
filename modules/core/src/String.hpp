@@ -95,6 +95,9 @@ namespace tigre
                 // Converters
                 const char *toCString() const;
 
+                std::string &toStdString();
+                const std::string &toStdString() const;
+
                 short toShort(bool *ok = 0, int base = 10) const;
                 unsigned short toUShort(bool *ok = 0, int base = 10) const;
 
@@ -125,6 +128,8 @@ namespace tigre
 
                 std::string _data;
         };
+
+        std::istream &getline(std::istream &is, String &str);
 
         #include "String.inl"
     }
