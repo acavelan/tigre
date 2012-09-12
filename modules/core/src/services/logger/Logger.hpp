@@ -32,46 +32,64 @@ SOFTWARE.
 #define LOGGER_H
 
 #include <map>
+#include <sstream>
 
 #include "config.h"
 #include "String.hpp"
 #include "Plugin.hpp"
-#include "LogStream.hpp"
-#include "ILogWriter.hpp"
+#include "LogWriter.hpp"
 
 namespace tigre
 {
     namespace core
     {
+        class Logger;
+
+        namespace log
+        {
+            enum LogLevel
+            {
+                NOTHING = 0,
+                CRITICAL,
+                ERROR,
+                WARNING,
+                INFO,
+                DEBUG,
+                EVERYTHING
+            };
+        }
+
         class Logger
         {
             public:
 
-                Plugin<ILogWriter> writer;
+                Plugin<LogWriter> writer;
 
                 log::LogLevel verbosity;
 
-                Logger();
+                Logger(const String &name = "out");
                 ~Logger();
 
-                LogStream &getStream(const String &name);
-
-                LogStream &operator [](const String &name);
-
-                LogStream &operator ()(log::LogLevel log_level);
+                Logger &operator ()(log::LogLevel log_level = log::EVERYTHING);
 
                 template <class T>
-                LogStream &operator <<(const T &toLog);
+                Logger &operator <<(const T &toLog);
 
-                LogStream &operator<<(LogStream &(*manipulator)(LogStream&));
+                Logger &operator <<(Logger &(*manipulator)(Logger&));
+
+                void flush();
 
             private:
 
-                typedef std::map<String, LogStream*>::iterator iterator;
-                typedef std::map<String, LogStream*>::const_iterator const_iterator;
-
-                std::map<String, LogStream*> _streams;
+                String _name;
+                log::LogLevel _log_level;
+                std::ostringstream _stream;
         };
+
+        namespace log
+        {
+            Logger &endl(Logger &stream);
+        }
 
         #include "Logger.inl"
     }

@@ -28,53 +28,54 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-Logger::Logger() :
-    verbosity(log::EVERYTHING)
+Logger::Logger(const String &name) :
+    verbosity(log::EVERYTHING), _name(name), _log_level(log::EVERYTHING)
 {
 }
 
 Logger::~Logger()
 {
-    for(iterator it = _streams.begin(); it != _streams.end(); ++it)
-        delete it->second;
-
-    _streams.clear();
+    flush();
 }
 
-LogStream &Logger::getStream(const String &name)
+Logger &Logger::operator ()(log::LogLevel log_level)
 {
-    iterator it = _streams.find(name);
+    _log_level = log_level;
 
-    LogStream *logstream = 0;
-
-    if(it == _streams.end())
-    {
-        logstream = new LogStream(writer, name, verbosity);
-        _streams[name] = logstream;
-    }
-    else
-        logstream = it->second;
-
-    return *logstream;
-}
-
-LogStream &Logger::operator [](const String &name)
-{
-    return getStream(name);
-}
-
-LogStream &Logger::operator ()(log::LogLevel log_level)
-{
-    return getStream("out")(log_level);
+    return *this;
 }
 
 template <class T>
-LogStream &Logger::operator <<(const T &toLog)
+Logger &Logger::operator <<(const T &toLog)
 {
-    return getStream("out") << toLog;
+    _stream << toLog;
+
+    return *this;
 }
 
-LogStream &Logger::operator<<(LogStream &(*manipulator)(LogStream&))
+Logger &Logger::operator <<(Logger &(*manipulator)(Logger&))
 {
-    return manipulator(getStream("out"));
+    return manipulator(*this);
+}
+
+void Logger::flush()
+{
+    Assert(writer != 0);
+
+    writer->write(_name, _stream.str().c_str());
+
+    _stream.str("");
+
+    _log_level = log::EVERYTHING;
+}
+
+namespace log
+{
+    Logger &endl(Logger &stream)
+    {
+        stream << "\n";
+        stream.flush();
+
+        return stream;
+    }
 }

@@ -38,19 +38,9 @@ namespace tigre
 {
     namespace core
     {
-        void StdWriter::write(const String &message)
+        void StdWriter::write(const String&, const String &message)
         {
             std::cout << message << std::flush;
-        }
-
-        void StdWriter::setChannel(const String &channel)
-        {
-            _channel = channel;
-        }
-
-        const String &StdWriter::channel() const
-        {
-            return _channel;
         }
 
         EXPORT_PLUGIN(StdWriter)

@@ -28,8 +28,8 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef ILOGWRITER_H
-#define ILOGWRITER_H
+#ifndef LOGWRITER_H
+#define LOGWRITER_H
 
 #include "String.hpp"
 
@@ -37,17 +37,19 @@ namespace tigre
 {
     namespace core
     {
-        class ILogWriter
+        class LogWriter
         {
             public:
 
-                virtual ~ILogWriter(){}
-                virtual void write(const String &message) = 0;
+                virtual ~LogWriter(){}
 
-                virtual void setChannel(const String &channel) = 0;
-                virtual const String &channel() const = 0;
+                virtual void write(const String &name, const String &message) = 0;
+
+            protected:
+
+                LogWriter(){}
         };
     }
 }
 
-#endif // ILOGWRITER_H
+#endif // LOGWRITER_H

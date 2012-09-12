@@ -28,33 +28,26 @@ SOFTWARE.
 --------------------------------------------------------------------------------
 */
 
-#ifndef LOGWRITER_H
-#define LOGWRITER_H
+#ifndef STDWRITER_H
+#define STDWRITER_H
 
 #include <map>
 
 #include "config.h"
 #include "String.hpp"
-#include "../../ILogWriter.hpp"
+#include "../../LogWriter.hpp"
 
 namespace tigre
 {
     namespace core
     {
-        class SHARED StdWriter : public ILogWriter
+        class SHARED StdWriter : public LogWriter
         {
             public:
 
-                void write(const String &message);
-
-                void setChannel(const String &channel);
-                const String &channel() const;
-
-            private:
-
-                String _channel;
+                void write(const String &name, const String &message);
         };
     }
 }
 
-#endif // LOGWRITER_H
+#endif // STDWRITER_H
