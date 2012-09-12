@@ -30,17 +30,9 @@ SOFTWARE.
 
 template<class T>
 inline Plugin<T>::Plugin() :
-    _ptr(0), _lib(new SharedLibrary())
+    _lib(new SharedLibrary())
 {
 }
-
-template<class T>
-inline Plugin<T>::Plugin(const Plugin &other) :
-    _ptr(0), _filename(other._filename), _lib(other._lib)
-{
-    load();
-}
-
 
 template<class T>
 inline Plugin<T>::Plugin(const String &filename) :
@@ -52,8 +44,7 @@ inline Plugin<T>::Plugin(const String &filename) :
 template<class T>
 inline  Plugin<T>::~Plugin()
 {
-    if(_ptr)
-        delete _ptr;
+    _ptr = 0;
 }
 
 template<class T>
@@ -65,12 +56,6 @@ inline const String &Plugin<T>::name() const
 template<class T>
 inline void Plugin<T>::load()
 {
-    if(_ptr)
-    {
-        delete _ptr;
-        _ptr = 0;
-    }
-
     _lib->load(_filename);
 
     typedef T *(*init_f)();
@@ -86,17 +71,6 @@ inline void Plugin<T>::load(const String &filename)
     _filename = filename;
 
     load();
-}
-
-template<class T>
-inline const Plugin<T> &Plugin<T>::operator =(const Plugin &other)
-{
-    _filename = other._filename;
-    _lib = other._lib;
-
-    load();
-
-    return *this;
 }
 
 template<class T>
