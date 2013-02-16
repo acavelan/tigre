@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,46 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef RENDERER_H
+#define RENDERER_H
+
+#include "opengl.h"
+
+/**
+ * Base class for the Renderer
+ *
+ * The goal of this class is to abstract everything that concerns
+ * native 3D API calls.
+ *
+ * Renderer can be implemented through OpenGL (Linux / Windows), 
+ * OpenGL ES 1.1 / 2.0 (phones, tablets), or even DirectX.
+ */
+ 
+class Renderer
+{
+    public:
+		
+		virtual ~Renderer() {}
+		
+		virtual void printGLString(const char *name, GLenum s) = 0;
+		virtual void checkGlError(const char* op) = 0;
+		
+		virtual void setViewport(int x, int y, int width, int height) = 0;
+        virtual void setViewport(int width, int height) = 0;
+
+        virtual int getX() const = 0;
+        virtual int getY() const = 0;
+
+        virtual int getWidth() const = 0;
+        virtual int getHeight() const = 0;
+
+        virtual void swapBuffers() = 0;
+        
+        virtual GLuint loadShader(GLenum shaderType, const char *pSource) = 0;
+        virtual GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) = 0;
+    
+};
+
+#endif

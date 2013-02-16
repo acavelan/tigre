@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,47 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef OPENGL_RENDERER_H
+#define OPENGL_RENDERER_H
+
+// Must exist somehwere
+#include "opengl.h"
+
+#include "Renderer.hpp"
+#include "Display.hpp"
+
+class OpenGLRenderer : public Renderer
+{
+    public:
+
+        OpenGLRenderer(Display *display);
+        ~OpenGLRenderer();
+        
+        virtual void initialize();
+        
+        void printGLString(const char *name, GLenum s);
+		void checkGlError(const char* op);
+
+        void setViewport(int x, int y, int width, int height);
+        void setViewport(int width, int height);
+
+        int getX() const;
+        int getY() const;
+
+        int getWidth() const;
+        int getHeight() const;
+
+        void swapBuffers();
+
+        GLuint loadShader(GLenum shaderType, const char *pSource);
+        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+
+    private:
+
+		Display *_display;
+        int _x, _y, _width, _height;
+};
+
+#endif

@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,52 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#include "GLFWDisplay.hpp"
+#include "Log.hpp"
+
+GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
+    _valid(false), _width(width), _height(height), _fullscreen(fullscreen)
+{
+	glfwInit();
+}
+
+GLFWDisplay::~GLFWDisplay()
+{
+	glfwTerminate();
+}
+
+void GLFWDisplay::initialize()
+{
+	if(_fullscreen && glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_FULLSCREEN))
+		_valid = true;
+    else if(glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_WINDOW))
+		_valid = true;
+}
+
+bool GLFWDisplay::valid() const
+{
+	return _valid;
+}
+
+void GLFWDisplay::resize(int width, int height)
+{
+    _width = width;
+    _height = height;
+}
+
+int GLFWDisplay::getWidth() const
+{
+    return _width;
+}
+
+int GLFWDisplay::getHeight() const
+{
+    return _height;
+}
+
+void GLFWDisplay::swapBuffers()
+{
+    glfwSwapBuffers();
+}

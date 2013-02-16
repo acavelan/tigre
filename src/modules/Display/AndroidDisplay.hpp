@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,43 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef GLES2DISPLAY_H
+#define GLES2DISPLAY_H
+
+#include <EGL/egl.h>
+
+#include "Display.hpp"
+
+class AndroidDisplay : public Display
+{
+    public:
+
+        AndroidDisplay();
+        ~AndroidDisplay();
+
+        virtual int initialize(ANativeWindow *window);
+
+        virtual void destroy();
+
+		virtual bool valid() const;
+				
+        virtual void resize(int width, int height);
+        
+        virtual int getWidth() const;
+        virtual int getHeight() const;
+        
+        virtual void swapBuffers();
+        
+    private:
+		
+        EGLDisplay _display;
+        EGLSurface _surface;
+        EGLContext _context;
+		
+		bool _valid;
+        int _width, _height;
+};
+
+#endif

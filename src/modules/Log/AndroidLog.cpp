@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,33 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#include <android/log.h>
+
+#include "Log.hpp"
+
+void Log::info(const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	__android_log_vprint(ANDROID_LOG_INFO, APP_NAME, fmt, args);
+	va_end(args);
+}
+
+void Log::warning(const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	__android_log_vprint(ANDROID_LOG_WARN, APP_NAME, fmt, args);
+	va_end(args);
+}
+
+void Log::error(const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	__android_log_vprint(ANDROID_LOG_ERROR, APP_NAME, fmt, args);
+	va_end(args);
+}
+

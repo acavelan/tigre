@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,37 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef GLFW_DISPLAY_H
+#define GLFW_DISPLAY_H
+
+#include <GL/glfw.h>
+#include "Display.hpp"
+
+class GLFWDisplay : public Display
+{
+    public:
+
+        GLFWDisplay(int width, int height, bool fullscreen = false);
+        ~GLFWDisplay();
+
+        virtual void initialize();
+
+		virtual bool valid() const;
+				
+        virtual void resize(int width, int height);
+        
+        virtual int getWidth() const;
+        virtual int getHeight() const;
+        
+        virtual void swapBuffers();
+        
+    private:
+		
+		bool _valid;
+        int _width, _height;
+        bool _fullscreen;
+};
+
+#endif

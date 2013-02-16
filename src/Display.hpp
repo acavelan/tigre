@@ -1,3 +1,4 @@
+/*
 TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
 
 Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
@@ -19,3 +20,36 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
+/**
+ * Base class for the Display
+ *
+ * The goal of this class is to abstract everything that concerns
+ * widgets management, OpenGL or context creation.
+ *
+ * The use is the implementation of its choice (e.g OpenGL)
+ */
+
+class Display
+{
+    public:
+		
+		virtual ~Display() {}
+		
+		virtual bool valid() const = 0;
+		
+		virtual void resize(int width, int height) = 0;
+		
+		virtual int getWidth() const = 0;
+
+        virtual int getHeight() const = 0;
+        
+        virtual void swapBuffers() = 0;
+    
+};
+
+#endif
