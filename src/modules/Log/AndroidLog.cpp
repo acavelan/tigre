@@ -26,6 +26,8 @@ SOFTWARE.
 
 #include "Log.hpp"
 
+#define APP_NAME "TIGRE"
+
 void Log::info(const char *fmt, ...)
 {
 	va_list args;

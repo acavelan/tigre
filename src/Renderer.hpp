@@ -25,7 +25,15 @@ SOFTWARE.
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "opengl.h"
+#include "config.h"
+
+#if defined(OS_LINUX)
+	#include <GL/gl.h>
+	#include <GL/glext.h>
+#elif defined(OS_ANDROID)
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+#endif
 
 /**
  * Base class for the Renderer

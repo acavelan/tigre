@@ -25,9 +25,6 @@ SOFTWARE.
 #ifndef OPENGL_RENDERER_H
 #define OPENGL_RENDERER_H
 
-// Must exist somehwere
-#include "opengl.h"
-
 #include "Renderer.hpp"
 #include "Display.hpp"
 

@@ -30,7 +30,7 @@ SOFTWARE.
 class Log
 {
 	public:
-	
+		
 		static void info(const char *fmt, ...);
 		
 		static void warning(const char *fmt, ...);
