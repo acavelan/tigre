@@ -1,11 +1,31 @@
 TIGRE (Tiny Graphics Rendering Engine)
 
-What is TIGRE ?
+What is Tigre ?
 ================
-TIGRE is a set of libraries dedicated to advanced visualization and/or video game development.
-TIGRE is easy to install, to use, and to understand.
-TIGRE is free and open source (MIT Licence).
-TIGRE is cross-platform.
+
+Tigre is a set of libraries dedicated to advanced visualization and/or 
+video game development.
+
+Tigre is free, open source and cross-platform.
+
+Philosphy
+==========
+
+Antoine de Saint-Exupéry said :
+
+"A designer knows he has achieved perfection not when there is nothing 
+left to add, but when there is nothing left to take away.”
+
+Tigre is designed to be simple before everything else.
+
+Platforms
+==========
+
+- Linux
+- Android
+- Windows
+
+It should be easy to port the engine on any platform that supports C++.
 
 License
 ========
