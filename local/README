@@ -1,4 +1,24 @@
-Put all local dependancies here. (if not already installed)
+Put all local dependencies here. (if not already installed)
+
+Dependencies:
+==============
 
 GLFWDisplay => glfw
-OpenGLRenderer => OpenGL, glm
+OpenGLRenderer => glm
+
+Note:
+======
+
+Mobile developpement requires OpenGL ES 2.0 or higher
+Developpement for Linux, Mac OS or Windows requires OpenGL 3.0 or higher
+
+Install:
+=========
+
+glfw:
+- Link: http://sourceforge.net/projects/glfw/?source=dlp
+- Extract it under glfw-2.7.7/
+
+glm:
+- Link: http://sourceforge.net/projects/ogl-math/
+- Extract glm/glm under glm/
