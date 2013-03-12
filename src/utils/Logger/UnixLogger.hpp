@@ -22,42 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef OPENGL_RENDERER_H
-#define OPENGL_RENDERER_H
+#ifndef UNIXLOGGER_H
+#define UNIXLOGGER_H
 
-#include "Renderer.hpp"
-#include "Display.hpp"
+#include "../Logger.hpp"
 
-class OpenGLRenderer : public Renderer
+namespace tigre
 {
-    public:
-
-        OpenGLRenderer(Display *display);
-        ~OpenGLRenderer();
-        
-        virtual void initialize();
-        
-        void printGLString(const char *name, GLenum s);
-		void checkGlError(const char* op);
-
-        void setViewport(int x, int y, int width, int height);
-        void setViewport(int width, int height);
-
-        int getX() const;
-        int getY() const;
-
-        int getWidth() const;
-        int getHeight() const;
-
-        void swapBuffers();
-
-        GLuint loadShader(GLenum shaderType, const char *pSource);
-        GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
-
-    private:
-
-		Display *_display;
-        int _x, _y, _width, _height;
-};
+	namespace utils
+	{
+		class UnixLogger : public Logger
+		{
+			public:
+				
+				void info(const char *fmt, ...);
+				
+				void warning(const char *fmt, ...);
+			
+				void error(const char *fmt, ...);
+		};
+	}
+}
 
 #endif

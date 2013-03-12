@@ -22,36 +22,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <android/log.h>
+#include "GLFWDisplay.hpp"
 
-#include "AndroidLogger.hpp"
-
-AndroidLogger::AndroidLogger(const std::string &tag) :
-	_tag(tag)
+namespace tigre
 {
-}
+	namespace graphics
+	{
+		GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
+			_valid(false), _width(width), _height(height), _fullscreen(fullscreen)
+		{
+			glfwInit();
+		}
 
-void AndroidLogger::info(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_INFO, _tag.c_str(), fmt, args);
-	va_end(args);
-}
+		GLFWDisplay::~GLFWDisplay()
+		{
+			glfwTerminate();
+		}
 
-void AndroidLogger::warning(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_WARN, _tag.c_str(), fmt, args);
-	va_end(args);
-}
+		void GLFWDisplay::initialize()
+		{
+			if(_fullscreen && glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_FULLSCREEN))
+				_valid = true;
+			else if(glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_WINDOW))
+				_valid = true;
+		}
 
-void AndroidLogger::error(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_ERROR, _tag.c_str(), fmt, args);
-	va_end(args);
-}
+		bool GLFWDisplay::valid() const
+		{
+			return _valid;
+		}
 
+		void GLFWDisplay::resize(int width, int height)
+		{
+			_width = width;
+			_height = height;
+		}
+
+		int GLFWDisplay::getWidth() const
+		{
+			return _width;
+		}
+
+		int GLFWDisplay::getHeight() const
+		{
+			return _height;
+		}
+
+		void GLFWDisplay::swapBuffers()
+		{
+			glfwSwapBuffers();
+		}
+	}
+}

@@ -22,41 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLES2DISPLAY_H
-#define GLES2DISPLAY_H
+#ifndef ANDROIDLOGGER_H
+#define ANDROIDLOGGER_H
 
-#include <EGL/egl.h>
+#include <string>
 
-#include "Display.hpp"
+#include "../Logger.hpp"
 
-class AndroidDisplay : public Display
+namespace tigre
 {
-    public:
-
-        AndroidDisplay();
-        ~AndroidDisplay();
-
-        virtual int initialize(ANativeWindow *window);
-
-        virtual void destroy();
-
-		virtual bool valid() const;
+	namespace utils
+	{
+		class AndroidLogger : public Logger
+		{
+			public:
 				
-        virtual void resize(int width, int height);
-        
-        virtual int getWidth() const;
-        virtual int getHeight() const;
-        
-        virtual void swapBuffers();
-        
-    private:
-		
-        EGLDisplay _display;
-        EGLSurface _surface;
-        EGLContext _context;
-		
-		bool _valid;
-        int _width, _height;
-};
+				AndroidLogger(const std::string &tag);
+				
+				void info(const char *fmt, ...);
+				
+				void warning(const char *fmt, ...);
+				
+				void error(const char *fmt, ...);
+			
+			private:
+				
+				std::string _tag;
+		};
+	}
+}
 
 #endif

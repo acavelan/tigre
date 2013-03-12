@@ -22,35 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#include <cstdio>
+#include <cstdarg>
 
-#include <GL/glfw.h>
-#include "Display.hpp"
+#include "UnixLogger.hpp"
 
-class GLFWDisplay : public Display
+namespace tigre
 {
-    public:
+	namespace utils
+	{
+		void UnixLogger::info(const char *fmt, ...)
+		{
+			va_list args;
+			va_start(args, fmt);
+			vprintf(fmt, args);
+			va_end(args);
+		}
 
-        GLFWDisplay(int width, int height, bool fullscreen = false);
-        ~GLFWDisplay();
+		void UnixLogger::warning(const char *fmt, ...)
+		{
+			va_list args;
+			va_start(args, fmt);
+			vprintf(fmt, args);
+			va_end(args);
+		}
 
-        virtual void initialize();
+		void UnixLogger::error(const char *fmt, ...)
+		{
+			va_list args;
+			va_start(args, fmt);
+			vprintf(fmt, args);
+			va_end(args);
+		}
+	}
+}
 
-		virtual bool valid() const;
-				
-        virtual void resize(int width, int height);
-        
-        virtual int getWidth() const;
-        virtual int getHeight() const;
-        
-        virtual void swapBuffers();
-        
-    private:
-		
-		bool _valid;
-        int _width, _height;
-        bool _fullscreen;
-};
-
-#endif

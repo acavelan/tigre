@@ -22,52 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef GLFW_DISPLAY_H
+#define GLFW_DISPLAY_H
 
-#include "config.h"
+#include <GL/glfw.h>
+#include "../Display.hpp"
 
-#if defined(OS_LINUX)
-	#include <GL/gl.h>
-	#include <GL/glext.h>
-#elif defined(OS_ANDROID)
-	#include <GLES2/gl2.h>
-	#include <GLES2/gl2ext.h>
-#endif
-
-/**
- * Base class for the Renderer
- *
- * The goal of this class is to abstract everything that concerns
- * native 3D API calls.
- *
- * Renderer can be implemented through OpenGL (Linux / Windows), 
- * OpenGL ES 1.1 / 2.0 (phones, tablets), or even DirectX.
- */
- 
-class Renderer
+namespace tigre
 {
-    public:
-		
-		virtual ~Renderer() {}
-		
-		virtual void printGLString(const char *name, GLenum s) = 0;
-		virtual void checkGlError(const char* op) = 0;
-		
-		virtual void setViewport(int x, int y, int width, int height) = 0;
-        virtual void setViewport(int width, int height) = 0;
+	namespace graphics
+	{
+		class GLFWDisplay : public Display
+		{
+			public:
 
-        virtual int getX() const = 0;
-        virtual int getY() const = 0;
+				GLFWDisplay(int width, int height, bool fullscreen = false);
+				~GLFWDisplay();
 
-        virtual int getWidth() const = 0;
-        virtual int getHeight() const = 0;
+				virtual void initialize();
 
-        virtual void swapBuffers() = 0;
-        
-        virtual GLuint loadShader(GLenum shaderType, const char *pSource) = 0;
-        virtual GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) = 0;
-    
-};
+				virtual bool valid() const;
+						
+				virtual void resize(int width, int height);
+				
+				virtual int getWidth() const;
+				virtual int getHeight() const;
+				
+				virtual void swapBuffers();
+				
+			private:
+				
+				bool _valid;
+				int _width, _height;
+				bool _fullscreen;
+		};
+	}
+}
 
 #endif

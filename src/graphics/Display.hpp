@@ -22,20 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
-#include <stdarg.h>
+/**
+ * Base class for the Display
+ *
+ * The goal of this class is to abstract everything that concerns
+ * widgets management, OpenGL or context creation.
+ *
+ * The use is the implementation of its choice (e.g OpenGL)
+ */
 
-class Logger
+namespace tigre
 {
-	public:
-		
-		virtual void info(const char *fmt, ...) = 0;
-		
-		virtual void warning(const char *fmt, ...) = 0;
-		
-		virtual void error(const char *fmt, ...) = 0;
-};
+	namespace graphics
+	{
+		class Display
+		{
+			public:
+				
+				virtual ~Display() {}
+				
+				virtual bool valid() const = 0;
+				
+				virtual void resize(int width, int height) = 0;
+				
+				virtual int getWidth() const = 0;
+
+				virtual int getHeight() const = 0;
+				
+				virtual void swapBuffers() = 0;
+			
+		};
+	}
+}
 
 #endif

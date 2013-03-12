@@ -1,0 +1,47 @@
+Indentation:
+=============
+
+Allman style, also known as ANSI style or BSD style. This is what Tigre
+uses but you are free to use your favorite indent style.
+
+Conventions:
+=============
+
+Tigre uses its own coding conventions to be as simple as possible:
+
+* Naming:
+- private attributes start with an underscore (ex: _name)
+- namespaces, functions and methods start with a lowercase letter
+- the underscore is use as a separator for C code (ex: some_cool_name)
+- whereas a captial letter is prefered in C++ (ex: someCoolName)
+
+* Comments:
+- C style comments are used for documentation (ex: /** ... */)
+- C++ double-dash comments are also used inside a block to give a 
+specific information on a particular line (ex: // here is a tip)
+- comments lenght can exceed 80 characters but it has to remain resonable
+
+* Space:
+- Tigre uses a simple line as a vertical separator
+
+Architecture:
+==============
+
+- namespaces are written in lowercase
+- the namespace holds the interfaces and fully cross-platform code.
+- the subdirectories are named after their interface and it can hold 
+platform-dependent code or multiple implementations of a class.
+
+::tigre
+	::core
+		- Resource
+		- ResourceManager
+	::utils
+		- Logger
+	::graphics
+		- Display
+		- Renderer
+	::android
+		- Application
+
+

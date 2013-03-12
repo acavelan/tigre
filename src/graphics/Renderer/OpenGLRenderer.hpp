@@ -22,28 +22,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ANDROIDLOGGER_H
-#define ANDROIDLOGGER_H
+#ifndef OPENGL_RENDERER_H
+#define OPENGL_RENDERER_H
 
-#include <string>
+#include "../Renderer.hpp"
+#include "../Display.hpp"
 
-#include "Logger.hpp"
-
-class AndroidLogger : public Logger
+namespace tigre
 {
-	public:
-		
-		AndroidLogger(const std::string &tag);
-		
-		void info(const char *fmt, ...);
-		
-		void warning(const char *fmt, ...);
-		
-		void error(const char *fmt, ...);
-	
-	private:
-		
-		std::string _tag;
-};
+	namespace graphics
+	{
+		class OpenGLRenderer : public Renderer
+		{
+			public:
+
+				OpenGLRenderer(Display *display);
+				~OpenGLRenderer();
+				
+				virtual void initialize();
+				
+				void printGLString(const char *name, GLenum s);
+				void checkGlError(const char* op);
+
+				void setViewport(int x, int y, int width, int height);
+				void setViewport(int width, int height);
+
+				int getX() const;
+				int getY() const;
+
+				int getWidth() const;
+				int getHeight() const;
+
+				void swapBuffers();
+
+				GLuint loadShader(GLenum shaderType, const char *pSource);
+				GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
+
+			private:
+
+				Display *_display;
+				int _x, _y, _width, _height;
+		};
+	}
+}
 
 #endif

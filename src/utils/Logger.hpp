@@ -22,20 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef UNIXLOGGER_H
-#define UNIXLOGGER_H
+#ifndef LOGGER_H
+#define LOGGER_H
 
-#include "Logger.hpp"
+#include <stdarg.h>
 
-class UnixLogger : public Logger
+namespace tigre
 {
-	public:
-		
-		void info(const char *fmt, ...);
-		
-		void warning(const char *fmt, ...);
-	
-		void error(const char *fmt, ...);
-};
+	namespace utils
+	{
+		class Logger
+		{
+			public:
+				
+				virtual void info(const char *fmt, ...) = 0;
+				
+				virtual void warning(const char *fmt, ...) = 0;
+				
+				virtual void error(const char *fmt, ...) = 0;
+		};
+	}
+}
 
 #endif
