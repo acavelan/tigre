@@ -25,7 +25,6 @@ SOFTWARE.
 #include <cstdlib>
 
 #include "AndroidDisplay.hpp"
-#include "Log.hpp"
 
 AndroidDisplay::AndroidDisplay() :
     _valid(false), _width(0), _height(0)
@@ -90,7 +89,7 @@ int AndroidDisplay::initialize(ANativeWindow *window)
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
     {
-        Log::error("Unable to eglMakeCurrent");
+        //Log::error("Unable to eglMakeCurrent");
         return -1;
     }
 

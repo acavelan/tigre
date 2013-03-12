@@ -22,49 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "GLFWDisplay.hpp"
+#ifndef LOGGER_H
+#define LOGGER_H
 
-GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
-    _valid(false), _width(width), _height(height), _fullscreen(fullscreen)
-{
-	glfwInit();
-}
+#include <stdarg.h>
 
-GLFWDisplay::~GLFWDisplay()
+class Logger
 {
-	glfwTerminate();
-}
+	public:
+		
+		virtual void info(const char *fmt, ...) = 0;
+		
+		virtual void warning(const char *fmt, ...) = 0;
+		
+		virtual void error(const char *fmt, ...) = 0;
+};
 
-void GLFWDisplay::initialize()
-{
-	if(_fullscreen && glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_FULLSCREEN))
-		_valid = true;
-    else if(glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_WINDOW))
-		_valid = true;
-}
-
-bool GLFWDisplay::valid() const
-{
-	return _valid;
-}
-
-void GLFWDisplay::resize(int width, int height)
-{
-    _width = width;
-    _height = height;
-}
-
-int GLFWDisplay::getWidth() const
-{
-    return _width;
-}
-
-int GLFWDisplay::getHeight() const
-{
-    return _height;
-}
-
-void GLFWDisplay::swapBuffers()
-{
-    glfwSwapBuffers();
-}
+#endif

@@ -24,31 +24,34 @@ SOFTWARE.
 
 #include <android/log.h>
 
-#include "Log.hpp"
+#include "AndroidLogger.hpp"
 
-#define APP_NAME "TIGRE"
+AndroidLogger::AndroidLogger(const std::string &tag) :
+	_tag(tag)
+{
+}
 
-void Log::info(const char *fmt, ...)
+void AndroidLogger::info(const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_INFO, APP_NAME, fmt, args);
+	__android_log_vprint(ANDROID_LOG_INFO, _tag.c_str(), fmt, args);
 	va_end(args);
 }
 
-void Log::warning(const char *fmt, ...)
+void AndroidLogger::warning(const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_WARN, APP_NAME, fmt, args);
+	__android_log_vprint(ANDROID_LOG_WARN, _tag.c_str(), fmt, args);
 	va_end(args);
 }
 
-void Log::error(const char *fmt, ...)
+void AndroidLogger::error(const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	__android_log_vprint(ANDROID_LOG_ERROR, APP_NAME, fmt, args);
+	__android_log_vprint(ANDROID_LOG_ERROR, _tag.c_str(), fmt, args);
 	va_end(args);
 }
 

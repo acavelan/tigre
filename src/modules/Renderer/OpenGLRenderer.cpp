@@ -25,7 +25,6 @@ SOFTWARE.
 #include <cstdlib>
 
 #include "OpenGLRenderer.hpp"
-#include "Log.hpp"
 
 OpenGLRenderer::OpenGLRenderer(Display *display) :
     _display(display), _x(0), _y(0), _width(0), _height(0)
@@ -40,7 +39,7 @@ void OpenGLRenderer::initialize()
 {
 	if(!_display->valid())
 	{
-		Log::error("Calling OpenGLRenderer::initialize() before initializing the display\n");
+		//Log::error("Calling OpenGLRenderer::initialize() before initializing the display\n");
 		return;
 	}
 	
@@ -51,13 +50,13 @@ void OpenGLRenderer::initialize()
 void OpenGLRenderer::printGLString(const char *name, GLenum s)
 {
     const char *v = (const char *) glGetString(s);
-    Log::info("GL %s = %s\n", name, v);
+    //Log::info("GL %s = %s\n", name, v);
 }
 
 void OpenGLRenderer::checkGlError(const char* op)
 {
-    for(GLint error = glGetError(); error; error = glGetError())
-        Log::error("before %s glError (0x%x)\n", op, error);
+    //for(GLint error = glGetError(); error; error = glGetError())
+      //  Log::error("before %s glError (0x%x)\n", op, error);
 }
 
 void OpenGLRenderer::setViewport(int x, int y, int width, int height)
@@ -122,7 +121,7 @@ GLuint OpenGLRenderer::loadShader(GLenum shaderType, const char *pSource)
                 if (buf)
                 {
                     glGetShaderInfoLog(shader, infoLen, NULL, buf);
-                    Log::error("Could not compile shader %d:\n%s\n", shaderType, buf);
+                    //Log::error("Could not compile shader %d:\n%s\n", shaderType, buf);
                     free(buf);
                 }
                 glDeleteShader(shader);
@@ -147,9 +146,9 @@ GLuint OpenGLRenderer::createProgram(const char *pVertexSource, const char *pFra
     if (program)
     {
         glAttachShader(program, vertexShader);
-        checkGlError("glAttachShader");
+        //checkGlError("glAttachShader");
         glAttachShader(program, pixelShader);
-        checkGlError("glAttachShader");
+        //checkGlError("glAttachShader");
         glLinkProgram(program);
         GLint linkStatus = GL_FALSE;
 
@@ -164,7 +163,7 @@ GLuint OpenGLRenderer::createProgram(const char *pVertexSource, const char *pFra
                 if (buf)
                 {
                     glGetProgramInfoLog(program, bufLength, NULL, buf);
-                    Log::error("Could not link program:\n%s\n", buf);
+                    //Log::error("Could not link program:\n%s\n", buf);
                     free(buf);
                 }
             }

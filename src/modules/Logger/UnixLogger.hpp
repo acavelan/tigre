@@ -22,32 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdio>
-#include <cstdarg>
+#ifndef UNIXLOGGER_H
+#define UNIXLOGGER_H
 
-#include "Log.hpp"
+#include "Logger.hpp"
 
-void Log::info(const char *fmt, ...)
+class UnixLogger : public Logger
 {
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
+	public:
+		
+		void info(const char *fmt, ...);
+		
+		void warning(const char *fmt, ...);
+	
+		void error(const char *fmt, ...);
+};
 
-void Log::warning(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-
-void Log::error(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	vprintf(fmt, args);
-	va_end(args);
-}
-
+#endif

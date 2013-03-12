@@ -22,49 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "GLFWDisplay.hpp"
+#ifndef ANDROIDLOGGER_H
+#define ANDROIDLOGGER_H
 
-GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
-    _valid(false), _width(width), _height(height), _fullscreen(fullscreen)
-{
-	glfwInit();
-}
+#include <string>
 
-GLFWDisplay::~GLFWDisplay()
-{
-	glfwTerminate();
-}
+#include "Logger.hpp"
 
-void GLFWDisplay::initialize()
+class AndroidLogger : public Logger
 {
-	if(_fullscreen && glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_FULLSCREEN))
-		_valid = true;
-    else if(glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_WINDOW))
-		_valid = true;
-}
+	public:
+		
+		AndroidLogger(const std::string &tag);
+		
+		void info(const char *fmt, ...);
+		
+		void warning(const char *fmt, ...);
+		
+		void error(const char *fmt, ...);
+	
+	private:
+		
+		std::string _tag;
+};
 
-bool GLFWDisplay::valid() const
-{
-	return _valid;
-}
-
-void GLFWDisplay::resize(int width, int height)
-{
-    _width = width;
-    _height = height;
-}
-
-int GLFWDisplay::getWidth() const
-{
-    return _width;
-}
-
-int GLFWDisplay::getHeight() const
-{
-    return _height;
-}
-
-void GLFWDisplay::swapBuffers()
-{
-    glfwSwapBuffers();
-}
+#endif
