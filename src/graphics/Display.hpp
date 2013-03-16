@@ -30,8 +30,6 @@ SOFTWARE.
  *
  * The goal of this class is to abstract everything that concerns
  * widgets management, OpenGL or context creation.
- *
- * The use is the implementation of its choice (e.g OpenGL)
  */
 
 namespace tigre
