@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#include <GL/glfw.h>
+
 #include "GLFWDisplay.hpp"
 
 namespace tigre
@@ -71,6 +73,11 @@ namespace tigre
 		void GLFWDisplay::swapBuffers()
 		{
 			glfwSwapBuffers();
+		}
+		
+		bool GLFWDisplay::run()
+		{
+			return !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
 		}
 	}
 }

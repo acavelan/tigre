@@ -25,7 +25,6 @@ SOFTWARE.
 #ifndef GLFW_DISPLAY_H
 #define GLFW_DISPLAY_H
 
-#include <GL/glfw.h>
 #include "../Display.hpp"
 
 namespace tigre
@@ -49,6 +48,9 @@ namespace tigre
 				virtual int getHeight() const;
 				
 				virtual void swapBuffers();
+				
+				// temporary
+				bool run();
 				
 			private:
 				
