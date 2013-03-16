@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "config.h"
+#include "config/os.h"
 
 #if defined(OS_LINUX)
 	#include <GL/gl.h>
