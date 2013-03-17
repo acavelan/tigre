@@ -18,6 +18,8 @@ Install:
 glfw:
 - Link: http://sourceforge.net/projects/glfw/?source=dlp
 - Extract it under glfw-2.7.7/
+- Edit glfw-2.7.7/compile.sh and add the '-fPIC' option to GLFW_LIB_CFLAGS
+- Compile it with "make x11"
 
 glm:
 - Link: http://sourceforge.net/projects/ogl-math/

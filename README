@@ -29,6 +29,8 @@ Platforms
 
 It should be easy to port the engine on any platform that supports C++.
 
+Please read TIGRE for more technical informations.
+
 License
 ========
 TIGRE is made available under the MIT License.

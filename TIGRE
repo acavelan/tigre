@@ -1,3 +1,33 @@
+Architecture:
+==============
+
+- namespaces are written in lowercase
+- namespaces hold interfaces and fully cross-platform code.
+- subdirectories are named after their interface and it can hold 
+platform-dependent code or multiple implementations of one class.
+
+::tigre
+	::core
+		- Resource
+		- ResourceManager
+	::utils
+		- Logger
+	::graphics
+		- Display
+		- Renderer
+	::android
+		- Application
+
+Compilation:
+=============
+
+Tigre is very modular, like a bunch of Lego pieces, and it would be nonsense to 
+provide one very specific build since everyone is likely to need something 
+different.
+
+Tigre provides some examples that you can use as a start-up guide, including 
+different ways to compile the library, so you can easily adapt it to your needs.
+
 Indentation:
 =============
 
@@ -23,25 +53,4 @@ specific information on a particular line (ex: // here is a tip)
 
 * Space:
 - Tigre uses a simple line as a vertical separator
-
-Architecture:
-==============
-
-- namespaces are written in lowercase
-- the namespace holds the interfaces and fully cross-platform code.
-- the subdirectories are named after their interface and it can hold 
-platform-dependent code or multiple implementations of a class.
-
-::tigre
-	::core
-		- Resource
-		- ResourceManager
-	::utils
-		- Logger
-	::graphics
-		- Display
-		- Renderer
-	::android
-		- Application
-
 
