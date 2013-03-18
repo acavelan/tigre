@@ -25,13 +25,13 @@ SOFTWARE.
 #include <cstdio>
 #include <cstdarg>
 
-#include "UnixLogger.hpp"
+#include "ConsoleLogger.hpp"
 
 namespace tigre
 {
 	namespace utils
 	{
-		void UnixLogger::info(const char *fmt, ...)
+		void ConsoleLogger::info(const char *fmt, ...)
 		{
 			va_list args;
 			va_start(args, fmt);
@@ -39,7 +39,7 @@ namespace tigre
 			va_end(args);
 		}
 
-		void UnixLogger::warning(const char *fmt, ...)
+		void ConsoleLogger::warning(const char *fmt, ...)
 		{
 			va_list args;
 			va_start(args, fmt);
@@ -47,7 +47,7 @@ namespace tigre
 			va_end(args);
 		}
 
-		void UnixLogger::error(const char *fmt, ...)
+		void ConsoleLogger::error(const char *fmt, ...)
 		{
 			va_list args;
 			va_start(args, fmt);

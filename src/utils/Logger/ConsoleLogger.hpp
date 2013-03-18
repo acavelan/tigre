@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef UNIXLOGGER_H
-#define UNIXLOGGER_H
+#ifndef CONSOLELOGGER_H
+#define CONSOLELOGGER_H
 
 #include "../Logger.hpp"
 
@@ -31,7 +31,7 @@ namespace tigre
 {
 	namespace utils
 	{
-		class UnixLogger : public Logger
+		class ConsoleLogger : public Logger
 		{
 			public:
 				
