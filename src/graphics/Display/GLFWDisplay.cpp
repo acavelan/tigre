@@ -74,10 +74,5 @@ namespace tigre
 		{
 			glfwSwapBuffers();
 		}
-		
-		bool GLFWDisplay::run()
-		{
-			return !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
-		}
 	}
 }
