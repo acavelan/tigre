@@ -13,10 +13,12 @@ platform-dependent code or multiple implementations of one class.
 	::utils
 		- Logger
 	::graphics
-		- Display
 		- Renderer
-	::android
-		- Application
+		- Display
+		::android
+			- Application
+		::glfw
+			- Application
 
 Compilation:
 =============
