@@ -33,12 +33,10 @@ namespace tigre
 		GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
 			_valid(false), _width(width), _height(height), _fullscreen(fullscreen)
 		{
-			glfwInit();
 		}
 
 		GLFWDisplay::~GLFWDisplay()
 		{
-			glfwTerminate();
 		}
 
 		void GLFWDisplay::initialize()
