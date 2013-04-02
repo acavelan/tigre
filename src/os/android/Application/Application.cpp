@@ -26,7 +26,7 @@ SOFTWARE.
 
 namespace tigre
 {
-	namespace graphics
+	namespace os
 	{
 		namespace android
 		{
@@ -93,8 +93,8 @@ namespace tigre
 				return application->onInputEvent(event);
 			}
 
-			Application::Application(struct android_app *state, AndroidDisplay *display) :
-				_app(state), _display(display), _hasFocus(true), _loop(true)
+			Application::Application(struct android_app *state) :
+				_app(state)
 			{
 				app_dummy();
 
@@ -116,35 +116,20 @@ namespace tigre
 				int events;
 				struct android_poll_source *source;
 
-				while ((ident = ALooper_pollAll(_hasFocus ? 0 : -1, NULL, &events, (void**)&source)) >= 0)
+				while((ident = ALooper_pollAll(0, NULL, &events, (void**)&source)) >= 0)
 				{
-					if (source != NULL)
+					if(source != NULL)
 						source->process(_app, source);
 
 					if(ident == LOOPER_ID_USER)
 						this->onEvent();
 
-					if (_app->destroyRequested != 0)
+					if(_app->destroyRequested != 0)
 					{
-						this->close();
+						onDestroy();
 						return;
 					}
 				}
-			}
-
-			bool Application::hasFocus() const
-			{
-				return _hasFocus;
-			}
-
-			bool Application::loop() const
-			{
-				return _loop;
-			}
-
-			void Application::close()
-			{
-				_loop = false;
 			}
 
 			struct android_app *Application::getState() const
@@ -154,16 +139,9 @@ namespace tigre
 
 			void Application::onInputChanged() {}
 
-			void Application::onInitWindow()
-			{
-				if(_app->window != NULL)
-					_display->initialize(_app->window);
-			}
+			void Application::onInitWindow() {}
 
-			void Application::onTermWindow()
-			{
-				_display->destroy();
-			}
+			void Application::onTermWindow() {}
 
 			void Application::onWindowResized() {}
 
@@ -171,20 +149,11 @@ namespace tigre
 
 			void Application::onContentRectChanged() {}
 
-			void Application::onGainedFocus()
-			{
-				_hasFocus = true;
-			}
+			void Application::onGainedFocus() {}
 
-			void Application::onLostFocus()
-			{
-				_hasFocus = false;
-			}
+			void Application::onLostFocus() {}
 
-			void Application::onConfigChanged()
-			{
-				_display->resize(_display->getHeight(), _display->getWidth());
-			}
+			void Application::onConfigChanged() {}
 
 			void Application::onLowMemory() {}
 

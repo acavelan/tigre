@@ -31,7 +31,7 @@ namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : Display
+		class GLFWDisplay : public Display
 		{
 			public:
 

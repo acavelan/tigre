@@ -27,8 +27,6 @@ SOFTWARE.
 
 #include <android_native_app_glue.h>
 
-#include "../../Display/AndroidDisplay.hpp"
-
 /**
  * This class is built over the android_native_app_glue.
  *
@@ -39,7 +37,7 @@ SOFTWARE.
 
 namespace tigre
 {
-	namespace graphics
+	namespace os
 	{
 		namespace android
 		{
@@ -47,16 +45,10 @@ namespace tigre
 			{
 				public:
 
-					Application(struct android_app *state, AndroidDisplay *display);
+					Application(struct android_app *state);
 					virtual ~Application();
 
 					void pollEvent();
-
-					bool hasFocus() const;
-
-					bool loop() const;
-
-					void close();
 
 					struct android_app *getState() const;
 
@@ -178,11 +170,6 @@ namespace tigre
 				private:
 
 					struct android_app *_app;
-
-					AndroidDisplay *_display;
-
-					bool _hasFocus;
-					bool _loop;
 
 			};
 		}
