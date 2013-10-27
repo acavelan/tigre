@@ -2,23 +2,32 @@ Architecture:
 ==============
 
 - namespaces are written in lowercase
-- namespaces hold interfaces and fully cross-platform code.
-- subdirectories are named after their interface and it can hold 
-platform-dependent code or multiple implementations of one class.
+- a namespace holds a set of interfaces and cross-platform code
+- a subdirectory named after its interface (ex: Renderer/) can hold 
+multiple implementations of that interface, for different systems.
 
 ::tigre
 	::core
+		- Exceptions
 		- Resource
-		- ResourceManager
+		- Loader
 	::utils
 		- Logger
+		- Timer
 	::graphics
 		- Renderer
 		- Display
-		::android
-			- Application
-		::glfw
-			- Application
+		- Context
+		- Image
+		- Texture2D
+		- Mesh
+		- ModelMesh
+		- Shader
+		- Color
+		- Rectangle
+	::android
+		- Activity
+		
 
 Compilation:
 =============
@@ -27,7 +36,7 @@ Tigre is very modular, like a bunch of Lego pieces, and it would be nonsense to
 provide one very specific build since everyone is likely to need something 
 different.
 
-Tigre provides some examples that you can use as a start-up guide, including 
+Tigre provides some examples that you can use as a start-up build, including 
 different ways to compile the library, so you can easily adapt it to your needs.
 
 Indentation:
@@ -53,6 +62,6 @@ Tigre uses its own coding conventions to be as simple as possible:
 specific information on a particular line (ex: // here is a tip)
 - comments lenght can exceed 80 characters but it has to remain resonable
 
-* Space:
+* Spaces:
 - Tigre uses a simple line as a vertical separator
 

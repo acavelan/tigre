@@ -1,9 +1,12 @@
-Files (vertex, ressources)
-normals / lights + checks
-vao
-
-android -> SOIL
-
-model, texture, -> renderer factory -> remove Image and Mesh depency 
-
-resourcemanager
+Tigre
+	- Update android implementations of ImageLoader
+	- Add a ResourceManager<T>
+	- Add a ContentManager<T> with cross-platform loaders
+	- Add checks in the OpenGLRenderer
+	- Use VAOs in the OpenGLRenderer
+	- Add an OpenGL 2.x renderer
+	
+Sample:	
+	- Add sample to git repositiory
+	- Add normals and light
+	
