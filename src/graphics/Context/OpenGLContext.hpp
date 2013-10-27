@@ -49,8 +49,8 @@ namespace tigre
 		{
 			public:
 			
-				GLuint program;
-				GLuint ports[shader::count];
+				GLint program;
+				GLint ports[shader::count];
 		};
 		
 		class OpenGLContext : public Context
