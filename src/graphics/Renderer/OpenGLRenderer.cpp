@@ -213,12 +213,15 @@ namespace tigre
 		
 		void OpenGLRenderer::destroy(Texture2D *texture)
 		{
-			OpenGLTexture *glTexture = _glTextures[texture->token];
-			
-			glDeleteTextures(1, &glTexture->textureId);
-			
-			delete glTexture;
-			core::resource::release(texture);
+			if(texture)
+			{
+				OpenGLTexture *glTexture = _glTextures[texture->token];
+				
+				glDeleteTextures(1, &glTexture->textureId);
+				
+				delete glTexture;
+				core::resource::release(texture);
+			}
 		}
 		
 		// Mesh
@@ -259,22 +262,33 @@ namespace tigre
 			OpenGLModelMesh *glModel = _glModels[model->token];
 			OpenGLShader *shader = _context->getCurrentShader();
 			
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
-			glVertexAttribPointer(shader->ports[shader::position], 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-			//glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
-			//glVertexAttribPointer(shader->ports[shader::normal], 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
-			glVertexAttribPointer(shader->ports[shader::texCoord], 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-			glEnableVertexAttribArray(shader->ports[shader::position]);
-			//glEnableVertexAttribArray(shader->normal);
-			glEnableVertexAttribArray(shader->ports[shader::texCoord]);
-
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
-			glDrawElements(GL_TRIANGLES, model->indexCount, GL_UNSIGNED_INT, 0);
-			//glDrawElements(GL_LINES, model->getMesh()->getIndexCount(), GL_UNSIGNED_INT, 0);
+			if(model->vertexCount && shader->ports[shader::position] >= 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
+				glVertexAttribPointer(shader->ports[shader::position], 3, GL_FLOAT, GL_FALSE, 0, 0);
+				glEnableVertexAttribArray(shader->ports[shader::position]);
+			}
+			
+			if(model->normalCount && shader->ports[shader::normal] >= 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
+				glVertexAttribPointer(shader->ports[shader::normal], 3, GL_FLOAT, GL_FALSE, 0, 0);
+				glEnableVertexAttribArray(shader->ports[shader::normal]);
+			}
+			
+			if(model->texCoordCount && shader->ports[shader::texCoord] >= 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
+				glVertexAttribPointer(shader->ports[shader::texCoord], 2, GL_FLOAT, GL_FALSE, 0, 0);
+				glEnableVertexAttribArray(shader->ports[shader::texCoord]);
+			}
+			
+			if(model->indexCount)
+			{
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
+				glDrawElements(GL_TRIANGLES, model->indexCount, GL_UNSIGNED_INT, 0);
+				//glDrawElements(GL_LINES, model->getMesh()->getIndexCount(), GL_UNSIGNED_INT, 0);
+			}
 		}
 		
 		void OpenGLRenderer::destroy(ModelMesh *model)

@@ -1,5 +1,6 @@
 Tigre
 	- Update android implementations of ImageLoader
+	- Add android project in earth sample
 	- Add a ResourceManager<T>
 	- Add a ContentManager<T> with cross-platform loaders
 	- Add checks in the OpenGLRenderer
