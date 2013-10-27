@@ -28,7 +28,7 @@ namespace tigre
 {
 	namespace core
 	{
-		Resource::Resource() : _refCount(0)
+		Resource::Resource() : _refCount(1)
 		{
 		}
 

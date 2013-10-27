@@ -82,13 +82,16 @@ namespace tigre
 				
 				void clear(const Color &color);
 								
-				void load(Shader *shader);
-				void unload(Shader *shader);
+				Shader* createShader(ShaderSource *shaderSource);
+				void destroy(Shader *shader);
 				void setShader(Shader *shader);
 				
 				OpenGLShader *getCurrentShader();
 
 			private:
+			
+				GLuint createShader(GLenum shaderType, const char *source);
+				GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader);
 
 				Display *_display;
 				

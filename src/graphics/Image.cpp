@@ -29,53 +29,13 @@ namespace tigre
 	namespace graphics
 	{
 		Image::Image() :
-			_channels(0), _width(0), _height(0), _data(0)
+			channels(0), width(0), height(0), pixels(0)
 		{
 		}
 		
 		Image::~Image()
 		{
-			if(_data) delete[] _data;
-		}
-		
-		void Image::setWidth(int width)
-		{
-			_width = width;
-		}
-		
-		void Image::setHeight(int height)
-		{
-			_height = height;
-		}
-		
-		void Image::setChannels(int channels)
-		{
-			_channels = channels;
-		}
-		
-		void Image::setData(unsigned char *data)
-		{
-			_data = data;
-		}
-		
-		int Image::getWidth() const
-		{
-			return _width;
-		}
-		
-		int Image::getHeight() const
-		{
-			return _height;
-		}
-		
-		int Image::getChannels() const
-		{
-			return _channels;
-		}
-		
-		unsigned char *Image::getData()
-		{
-			return _data;
+			if(pixels) delete[] pixels;
 		}
 	}
 }

@@ -27,6 +27,8 @@ SOFTWARE.
 
 #include <string>
 
+#include "../core/Resource.hpp"
+
 namespace tigre
 {
 	namespace graphics
@@ -48,14 +50,25 @@ namespace tigre
 			const int count = 8;
 		}
 		
-		class Shader
+		class ShaderSource
 		{
 			public:
 				
+				virtual ~ShaderSource() {}
+				
 				std::string vertexShader;
 				std::string fragmentShader;
+		};
+		
+		class Shader : public core::Resource
+		{
+			public:
 				
-				int shaderId;
+				Shader();
+				
+				virtual ~Shader();
+				
+				int token;
 		};
 	}                            
 }

@@ -28,40 +28,13 @@ namespace tigre
 {
 	namespace graphics
 	{
-		Texture2D::Texture2D(Image *image) : 
-			_bound(false), _image(image), _textureId(-1)
+		Texture2D::Texture2D() :
+			token(-1), width(0), height(0)
 		{
-			core::resource::grab(image);
 		}
 		
 		Texture2D::~Texture2D()
 		{
-			core::resource::release(_image);
-		}
-			
-		Image *Texture2D::getImage()
-		{
-			return _image;
-		}
-		
-		bool Texture2D::isBound() const
-		{
-			return _bound;
-		}
-		
-		void Texture2D::isBound(bool bound)
-		{
-			_bound = bound;
-		}
-		
-		int Texture2D::getTextureId() const
-		{
-			return _textureId;
-		}
-				
-		void Texture2D::setTextureId(int id)
-		{
-			_textureId = id;
 		}
 	}
 }

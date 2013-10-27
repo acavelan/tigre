@@ -25,6 +25,8 @@ SOFTWARE.
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "Mesh.hpp"
+#include "Image.hpp"
 #include "Texture2D.hpp"
 #include "ModelMesh.hpp"
 #include "Rectangle.hpp"
@@ -43,24 +45,25 @@ namespace tigre
 				
 				virtual void destroy() = 0;
 				
-				virtual void load(Texture2D *texture) = 0;
-				
-				virtual void unload(Texture2D *texture) = 0;
+				// Texture
+				virtual Texture2D* createTexture2D(Image *image) = 0;
 				
 				virtual void bindTexture(Texture2D *texture) = 0;
-				
-				virtual void load(ModelMesh *model) = 0;
-				
-				virtual void unload(ModelMesh *model) = 0;
-				
-				virtual void draw(ModelMesh *model) = 0;
 				
 				virtual void draw(Texture2D *texture) = 0;
 				
 				virtual void draw(Texture2D *texture, Rectangle target) = 0;
 				
 				virtual void draw(Texture2D *texture, Rectangle origin, Rectangle target) = 0;
-		
+				
+				virtual void destroy(Texture2D *texture) = 0;
+				
+				// Mesh
+				virtual ModelMesh* createModelMesh(Mesh *mesh) = 0;
+				
+				virtual void draw(ModelMesh *model) = 0;
+				
+				virtual void destroy(ModelMesh *model) = 0;
 		};
 	}
 }

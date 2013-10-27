@@ -36,23 +36,12 @@ namespace tigre
 			public:
 				
 				Image();
+				
 				virtual ~Image();
-				
-				void setWidth(int width);
-				void setHeight(int height);
-				void setChannels(int channels);
-				void setData(unsigned char *data);
-				
-				int getWidth() const;
-				int getHeight() const;
-				int getChannels() const;
-				unsigned char *getData();
-				
-			private:
-				
-				int _channels;
-				int _width, _height;
-				unsigned char *_data;
+			
+				int channels;
+				int width, height;
+				unsigned char *pixels;
 		};
 	}
 }

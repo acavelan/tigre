@@ -25,35 +25,23 @@ SOFTWARE.
 #ifndef TEXTURE2D_H
 #define TEXTURE2D_H
 
-#include "Image.hpp"
+#include "../core/Resource.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class Texture2D
+		class Texture2D : public core::Resource
 		{
 			public:
 				
-				Texture2D(Image *image);
+				Texture2D();
 				
 				virtual ~Texture2D();
-			
-				Image *getImage();
 				
-				bool isBound() const;
+				int token;
 				
-				void isBound(bool bound);
-				
-				int getTextureId() const;
-				
-				void setTextureId(int id);
-				
-			private:
-				
-				bool _bound;
-				Image *_image;
-				int _textureId;
+				int width, height;
 		};
 	}
 }

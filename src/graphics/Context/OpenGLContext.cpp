@@ -117,7 +117,7 @@ namespace tigre
 			glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 		}
 		
-		GLuint createShader(GLenum shaderType, const char *source)
+		GLuint OpenGLContext::createShader(GLenum shaderType, const char *source)
 		{
 			GLuint shader = glCreateShader(shaderType);
 			if(shader)
@@ -151,7 +151,7 @@ namespace tigre
 			return shader;
 		}
 
-		GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader)
+		GLuint OpenGLContext::createShaderProgram(GLuint vertexShader, GLuint fragmentShader)
 		{
 			GLuint program = glCreateProgram();
 			if(program)
@@ -191,14 +191,17 @@ namespace tigre
 			return program;
 		}
 		
-		void OpenGLContext::load(Shader *shader)
+		Shader* OpenGLContext::createShader(ShaderSource *shaderSource)
 		{
 			OpenGLShader *glShader = new OpenGLShader();
-			shader->shaderId = _glShaders.size();
+			Shader *shader = new Shader();
+			
+			shader->token = _glShaders.size();
+			
 			_glShaders.push_back(glShader);
 			
-			GLuint vert = createShader(GL_VERTEX_SHADER, shader->vertexShader.c_str());
-			GLuint frag = createShader(GL_FRAGMENT_SHADER, shader->fragmentShader.c_str());
+			GLuint vert = createShader(GL_VERTEX_SHADER, shaderSource->vertexShader.c_str());
+			GLuint frag = createShader(GL_FRAGMENT_SHADER, shaderSource->fragmentShader.c_str());
 			
 			glShader->program = createShaderProgram(vert, frag);
 			glShader->ports[shader::projection] = glGetUniformLocation(glShader->program, "projMat");
@@ -209,24 +212,28 @@ namespace tigre
 			glShader->ports[shader::normal] = glGetAttribLocation(glShader->program, "normal");
 			glShader->ports[shader::texCoord] = glGetAttribLocation(glShader->program, "texCoord");
 			glShader->ports[shader::texture0] = glGetAttribLocation(glShader->program, "texture0");
+			
+			return shader;
 		}
 				
-		void OpenGLContext::unload(Shader *shader)
+		void OpenGLContext::destroy(Shader *shader)
 		{
 			if(shader)
 			{
-				OpenGLShader *glShader = _glShaders[shader->shaderId];
+				OpenGLShader *glShader = _glShaders[shader->token];
 				
 				if(glShader->program)
 					glDeleteProgram(glShader->program);
 				
 				delete glShader;
+				
+				core::resource::release(shader);
 			}
 		}
 		
 		void OpenGLContext::setShader(Shader *shader)
 		{
-			OpenGLShader *glShader = _glShaders[shader->shaderId];
+			OpenGLShader *glShader = _glShaders[shader->token];
 			
 			if(shader)
 				_currentShader = glShader;

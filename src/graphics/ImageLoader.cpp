@@ -56,10 +56,11 @@ namespace tigre
 				SOIL_free_image_data(data);
 				
 				Image *image = new Image();
-				image->setWidth(width);
-				image->setHeight(height);
-				image->setChannels(channels);
-				image->setData(pixels);
+				image->width = width;
+				image->height = height;
+				image->channels = channels;
+				image->pixels = pixels;
+				
 				return image;
 			}
 		}

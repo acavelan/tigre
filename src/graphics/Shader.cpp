@@ -22,32 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MODELMESH_H
-#define MODELMESH_H
-
-#include "../core/Resource.hpp"
+#include "Shader.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class ModelMesh : public core::Resource
+		Shader::Shader() : token(-1)
 		{
-			public:
-				
-				ModelMesh();
-				
-				virtual ~ModelMesh();
-				
-				int token;
-				
-				unsigned int vertexCount;
-				unsigned int normalCount;
-				unsigned int texCoordCount;
-				unsigned int indexCount;
-				
-		};
+		}
+
+		Shader::~Shader()
+		{
+		}
 	}
 }
-
-#endif

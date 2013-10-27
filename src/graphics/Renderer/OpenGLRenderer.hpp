@@ -37,7 +37,7 @@ namespace tigre
 		class OpenGLTexture
 		{
 			public:
-				
+
 				GLuint textureId;
 		};
 		
@@ -67,23 +67,25 @@ namespace tigre
 				
 				void destroy();
 				
-				void load(Texture2D *texture);
-				
-				void unload(Texture2D *texture);
+				// Texture
+				Texture2D* createTexture2D(Image *image);
 				
 				void bindTexture(Texture2D *texture);
-				
-				void load(ModelMesh *model);
-				
-				void unload(ModelMesh *model);
-				
-				void draw(ModelMesh *model);
 				
 				void draw(Texture2D *texture);
 				
 				void draw(Texture2D *texture, Rectangle target);
 				
 				void draw(Texture2D *texture, Rectangle origin, Rectangle target);
+				
+				void destroy(Texture2D *texture);
+				
+				// Mesh
+				ModelMesh* createModelMesh(Mesh *mesh);
+				
+				void draw(ModelMesh *model);
+				
+				void destroy(ModelMesh *model);
 			
 			private:
 				

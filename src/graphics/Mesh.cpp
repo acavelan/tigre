@@ -1,3 +1,27 @@
+/*
+TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
+
+Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #include "Mesh.hpp"
 
 namespace tigre
@@ -5,81 +29,17 @@ namespace tigre
 	namespace graphics
 	{
 		Mesh::Mesh() : 
-			_vertices(0), _normals(0), _texCoords(0), _indices(0),
-			_vertexCount(0), _normalCount(0), _texCoordCount(0), _indexCount(0)
+			vertices(0), normals(0), texCoords(0), indices(0),
+			vertexCount(0), normalCount(0), texCoordCount(0), indexCount(0)
 		{
 		}
 
 		Mesh::~Mesh()
 		{
-			if(_vertices) delete[] _vertices;
-			if(_normals) delete[] _normals;
-			if(_texCoords) delete[] _texCoords;
-			if(_indices) delete[] _indices;
-		}
-				
-		void Mesh::setVertices(float *vertices, unsigned int vertexCount)
-		{
-			_vertices = vertices;
-			_vertexCount = vertexCount;
-		}
-
-		void Mesh::setNormals(float *normals, unsigned int normalCount)
-		{
-			_normals = normals;
-			_normalCount = normalCount;
-		}
-
-		void Mesh::setTexCoords(float *texCoords, unsigned int texCoordCount)
-		{
-			_texCoords = texCoords;
-			_texCoordCount = texCoordCount;
-		}
-
-		void Mesh::setIndices(unsigned int *indices, unsigned int indexCount)
-		{
-			_indices = indices;
-			_indexCount = indexCount;
-		}
-
-		unsigned int Mesh::getVertexCount() const
-		{
-			return _vertexCount;
-		}
-
-		unsigned int Mesh::getNormalCount() const
-		{
-			return _normalCount;
-		}
-
-		unsigned int Mesh::getTexCoordCount() const
-		{
-			return _texCoordCount;
-		}
-
-		unsigned int Mesh::getIndexCount() const
-		{
-			return _indexCount;
-		}
-
-		float *Mesh::getVertices() const
-		{
-			return _vertices;
-		}
-
-		float *Mesh::getNormals() const
-		{
-			return _normals;
-		}
-
-		float *Mesh::getTexCoords() const
-		{
-			return _texCoords;
-		}
-
-		unsigned int *Mesh::getIndices() const
-		{
-			return _indices;
+			if(vertices) delete[] vertices;
+			if(normals) delete[] normals;
+			if(texCoords) delete[] texCoords;
+			if(indices) delete[] indices;
 		}
 	}
 }

@@ -28,30 +28,12 @@ namespace tigre
 {
 	namespace graphics
 	{
-		ModelMesh::ModelMesh(Mesh *mesh) : 
-			_mesh(mesh), _modelMeshId(-1)
+		ModelMesh::ModelMesh() : token(-1)
 		{
-			core::resource::grab(mesh);
 		}
 		
 		ModelMesh::~ModelMesh()
 		{
-			core::resource::release(_mesh);
-		}
-		
-		Mesh *ModelMesh::getMesh() const
-		{
-			return _mesh;
-		}
-				
-		int ModelMesh::getModelMeshId() const
-		{
-			return _modelMeshId;
-		}
-		
-		void ModelMesh::setModelMeshId(int id)
-		{
-			_modelMeshId = id;
 		}
 	}
 }

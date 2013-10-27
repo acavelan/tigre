@@ -82,12 +82,18 @@ namespace tigre
 			glDeleteBuffers(3, _quad.vbo);
 		}
 		
-		void OpenGLRenderer::load(Texture2D *texture)
+		// Texture
+		Texture2D* OpenGLRenderer::createTexture2D(Image *image)
 		{
-			Image *image = texture->getImage();
+			Texture2D *texture = new Texture2D();
+			
+			texture->token = _glTextures.size();
+			
 			OpenGLTexture *glTexture = new OpenGLTexture();
 			
-			texture->setTextureId(_glTextures.size());
+			texture->width = image->width;
+			texture->height = image->height;
+			
 			_glTextures.push_back(glTexture);
 			
 			glGenTextures(1, &glTexture->textureId);
@@ -96,12 +102,12 @@ namespace tigre
 			glTexImage2D(GL_TEXTURE_2D, 
 				0, 
 				GL_RGB, 
-				image->getWidth(), 
-				image->getHeight(), 
+				texture->width, 
+				texture->height, 
 				0, 
 				GL_RGB, 
 				GL_UNSIGNED_BYTE, 
-				image->getData()
+				image->pixels
 			);
 			
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -110,20 +116,15 @@ namespace tigre
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 			
 			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-				
-		void OpenGLRenderer::unload(Texture2D *texture)
-		{
-			OpenGLTexture *glTexture = _glTextures[texture->getTextureId()];
-			glDeleteTextures(1, &glTexture->textureId);
-			delete glTexture;
+			
+			return texture;
 		}
 		
 		void OpenGLRenderer::bindTexture(Texture2D *texture)
 		{
 			if(texture)
 			{
-				OpenGLTexture *glTexture = _glTextures[texture->getTextureId()];
+				OpenGLTexture *glTexture = _glTextures[texture->token];
 				OpenGLShader *shader = _context->getCurrentShader();
 				
 				glActiveTexture(GL_TEXTURE0);
@@ -133,68 +134,13 @@ namespace tigre
 			else
 				glBindTexture(GL_TEXTURE_2D, 0);
 		}
-				
-		void OpenGLRenderer::load(ModelMesh *model)
-		{
-			OpenGLModelMesh *glModel = new OpenGLModelMesh();
-			model->setModelMeshId(_glModels.size());
-			_glModels.push_back(glModel);
-			
-			glGenBuffers(4, glModel->vbo);
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
-			glBufferData(GL_ARRAY_BUFFER, model->getMesh()->getVertexCount() * sizeof(float), model->getMesh()->getVertices(), GL_STATIC_DRAW);
-
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
-			glBufferData(GL_ARRAY_BUFFER, model->getMesh()->getNormalCount() * sizeof(float), model->getMesh()->getNormals(), GL_STATIC_DRAW);
-
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
-			glBufferData(GL_ARRAY_BUFFER, model->getMesh()->getTexCoordCount() * sizeof(float), model->getMesh()->getTexCoords(), GL_STATIC_DRAW);
-
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->getMesh()->getIndexCount() * sizeof(unsigned int), model->getMesh()->getIndices(), GL_STATIC_DRAW);
-		}
-				
-		void OpenGLRenderer::unload(ModelMesh *model)
-		{
-			if(model)
-			{
-				OpenGLModelMesh *glModel = _glModels[model->getModelMeshId()];
-				
-				glDeleteBuffers(4, glModel->vbo);
-				
-				delete glModel;
-			}
-		}
-
-		void OpenGLRenderer::draw(ModelMesh *model)
-		{
-			OpenGLModelMesh *glModel = _glModels[model->getModelMeshId()];
-			OpenGLShader *shader = _context->getCurrentShader();
-			
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
-			glVertexAttribPointer(shader->ports[shader::position], 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-			//glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
-			//glVertexAttribPointer(shader->ports[shader::normal], 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
-			glVertexAttribPointer(shader->ports[shader::texCoord], 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-			glEnableVertexAttribArray(shader->ports[shader::position]);
-			//glEnableVertexAttribArray(shader->normal);
-			glEnableVertexAttribArray(shader->ports[shader::texCoord]);
-
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
-			glDrawElements(GL_TRIANGLES, model->getMesh()->getIndexCount(), GL_UNSIGNED_INT, 0);
-			//glDrawElements(GL_LINES, model->getMesh()->getIndexCount(), GL_UNSIGNED_INT, 0);
-		}
 		
 		void OpenGLRenderer::draw(Texture2D *texture)
 		{
 			OpenGLShader *shader = _context->getCurrentShader();
-
+			
 			glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-			modelMat = glm::scale(modelMat, glm::vec3(texture->getImage()->getWidth(),texture->getImage()->getHeight(), 1.0f));
+			modelMat = glm::scale(modelMat, glm::vec3(texture->width, texture->height, 1.0f));
 			
 			_context->setMatrix4(shader::model, modelMat);
 			
@@ -214,7 +160,7 @@ namespace tigre
 		void OpenGLRenderer::draw(Texture2D*, Rectangle target)
 		{
 			OpenGLShader *shader = _context->getCurrentShader();
-
+		
 			glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), glm::vec3((float)target.x, (float)target.y, 0.0f));
 			modelMat = glm::scale(modelMat, glm::vec3((float)target.width, (float)target.height, 1.0f));
 			
@@ -236,7 +182,7 @@ namespace tigre
 		void OpenGLRenderer::draw(Texture2D *texture, Rectangle origin, Rectangle target)
 		{
 			OpenGLShader *shader = _context->getCurrentShader();
-
+			
 			glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), glm::vec3((float)target.x, (float)target.y, 0.0f));
 			modelMat = glm::scale(modelMat, glm::vec3((float)target.width, (float)target.height, 1.0f));
 			
@@ -244,10 +190,9 @@ namespace tigre
 			
 			glBindBuffer(GL_ARRAY_BUFFER, _quad.vbo[0]);
 			glVertexAttribPointer(shader->ports[shader::position], 2, GL_FLOAT, GL_FALSE, 0, 0);
-			
-			Image *image = texture->getImage();
-			int width = image->getWidth();
-			int height = image->getHeight();
+
+			const int width = texture->width;
+			const int height = texture->height;
 			
 			const GLfloat texCoords[12] = {
 				(float)origin.y/height, (float)origin.width/width,
@@ -264,6 +209,86 @@ namespace tigre
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quad.vbo[2]);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
+		}
+		
+		void OpenGLRenderer::destroy(Texture2D *texture)
+		{
+			OpenGLTexture *glTexture = _glTextures[texture->token];
+			
+			glDeleteTextures(1, &glTexture->textureId);
+			
+			delete glTexture;
+			core::resource::release(texture);
+		}
+		
+		// Mesh
+		ModelMesh* OpenGLRenderer::createModelMesh(Mesh *mesh)
+		{
+			ModelMesh *model = new ModelMesh();
+			
+			model->token = _glModels.size();
+			
+			OpenGLModelMesh *glModel = new OpenGLModelMesh();
+			
+			model->vertexCount = mesh->vertexCount;
+			model->normalCount = mesh->normalCount;
+			model->texCoordCount = mesh->texCoordCount;
+			model->indexCount = mesh->indexCount;
+			
+			_glModels.push_back(glModel);
+			
+			glGenBuffers(4, glModel->vbo);
+			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
+			glBufferData(GL_ARRAY_BUFFER, mesh->vertexCount * sizeof(float), mesh->vertices, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
+			glBufferData(GL_ARRAY_BUFFER, mesh->normalCount * sizeof(float), mesh->normals, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
+			glBufferData(GL_ARRAY_BUFFER, mesh->texCoordCount * sizeof(float), mesh->texCoords, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indexCount * sizeof(unsigned int), mesh->indices, GL_STATIC_DRAW);
+			
+			return model;
+		}
+		
+				
+		void OpenGLRenderer::draw(ModelMesh *model)
+		{
+			OpenGLModelMesh *glModel = _glModels[model->token];
+			OpenGLShader *shader = _context->getCurrentShader();
+			
+			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[0]);
+			glVertexAttribPointer(shader->ports[shader::position], 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+			//glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[1]);
+			//glVertexAttribPointer(shader->ports[shader::normal], 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+			glBindBuffer(GL_ARRAY_BUFFER, glModel->vbo[2]);
+			glVertexAttribPointer(shader->ports[shader::texCoord], 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+			glEnableVertexAttribArray(shader->ports[shader::position]);
+			//glEnableVertexAttribArray(shader->normal);
+			glEnableVertexAttribArray(shader->ports[shader::texCoord]);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glModel->vbo[3]);
+			glDrawElements(GL_TRIANGLES, model->indexCount, GL_UNSIGNED_INT, 0);
+			//glDrawElements(GL_LINES, model->getMesh()->getIndexCount(), GL_UNSIGNED_INT, 0);
+		}
+		
+		void OpenGLRenderer::destroy(ModelMesh *model)
+		{
+			if(model)
+			{
+				OpenGLModelMesh *glModel = _glModels[model->token];
+				
+				glDeleteBuffers(4, glModel->vbo);
+				
+				delete glModel;
+				
+				core::resource::release(model);
+			}
 		}
 	}
 }

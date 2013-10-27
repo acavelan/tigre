@@ -36,32 +36,14 @@ namespace tigre
 			public:
 				
 				Mesh();
+				
 				virtual ~Mesh();
 				
-				void destroy();
+				float *vertices, *normals, *texCoords;
 				
-				void setVertices(float *vertices, unsigned int vertexCount);
-				void setNormals(float *normals, unsigned int normalCount);
-				void setTexCoords(float *texCoords, unsigned int texCoordCount);
-				void setIndices(unsigned int *indices, unsigned int indexCount);
-				
-				unsigned int getVertexCount() const;
-				unsigned int getNormalCount() const;
-				unsigned int getTexCoordCount() const;
-				unsigned int getIndexCount() const;
+				unsigned int *indices;
 
-				float *getVertices() const;
-				float *getNormals() const;
-				float *getTexCoords() const;
-				unsigned int *getIndices() const;
-			
-			protected:
-				
-				float *_vertices, *_normals, *_texCoords;
-				
-				unsigned int *_indices;
-
-				unsigned int _vertexCount, _normalCount, _texCoordCount, _indexCount;
+				unsigned int vertexCount, normalCount, texCoordCount, indexCount;
 		};
 	}
 }
