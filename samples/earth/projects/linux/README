@@ -1,0 +1,7 @@
+Use scons to compile both the tigre library and the earth sample:
+
+Compile:
+scons -f tigre.py -f app.py 
+
+Clean:
+scons -f tigre.py -f app.py -c
