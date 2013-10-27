@@ -48,7 +48,7 @@ void Application::init()
     noTextureShader.fragmentShader = noTextureFragmentShader;
     _noTextureShader = _context->createShader(&noTextureShader);
     
-    SphereMesh sphereMesh(4, 32, 32);
+    SphereMesh sphereMesh(8, 32, 32);
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
     ImageLoader loader;
@@ -115,8 +115,6 @@ void Application::drawFrame()
     _context->clear(color::Black);
     _context->setShader(_defaultShader);
     
-    // 3D
-    
     // Earth
     _context->setMatrix4(shader::projection, _projMat);
     _context->setMatrix4(shader::view, _viewMat);
@@ -127,12 +125,11 @@ void Application::drawFrame()
     
     _renderer->bindTexture(_texture);
     _renderer->draw(_sphere);
-    _renderer->bindTexture(0);
     
     // Light
     mat4 light = rotate(mat4(1.0f), _angle, vec3(0.0f, 1.0f, 0.0f));
-    light = translate(light, vec3(-7.0f, 0.0f, 0.0f));
-    light = scale(light, vec3(0.1f));
+    light = translate(light, vec3(-10.0f, 5.0f, 0.0f));
+    light = scale(light, vec3(0.05f));
 	
 	_context->setShader(_noTextureShader);
 	_context->setMatrix4(shader::projection, _projMat);
@@ -141,7 +138,7 @@ void Application::drawFrame()
     _context->setColor4(shader::color, color::Yellow);
     _renderer->draw(_sphere);
     
-    // 2D
+    // Texture
     _context->setShader(_defaultShader);
     _context->setMatrix4(shader::projection, _projMat2D);
     _context->setMatrix4(shader::view, _viewMat2D);
@@ -151,6 +148,6 @@ void Application::drawFrame()
     _renderer->bindTexture(_texture);
     _renderer->draw(_texture, Rectangle(0, 0, _texture->width/8, _texture->height/8));
 
-	// Limit to 60 FPS*/
+	// Limit to 60 FPS
     _display->swapBuffers();
 }
