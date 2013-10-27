@@ -22,46 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Texture2D.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		Texture2D::Texture2D(Image *image) : 
+			_bound(false), _image(image), _textureId(-1)
 		{
-			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
+			core::resource::grab(image);
+		}
+		
+		Texture2D::~Texture2D()
+		{
+			core::resource::release(_image);
+		}
+			
+		Image *Texture2D::getImage()
+		{
+			return _image;
+		}
+		
+		bool Texture2D::isBound() const
+		{
+			return _bound;
+		}
+		
+		void Texture2D::isBound(bool bound)
+		{
+			_bound = bound;
+		}
+		
+		int Texture2D::getTextureId() const
+		{
+			return _textureId;
+		}
 				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
+		void Texture2D::setTextureId(int id)
+		{
+			_textureId = id;
+		}
 	}
 }
-
-#endif

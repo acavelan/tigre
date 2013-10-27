@@ -22,46 +22,60 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Image.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		Image::Image() :
+			_channels(0), _width(0), _height(0), _data(0)
 		{
-			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
-				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
+		}
+		
+		Image::~Image()
+		{
+			if(_data) delete[] _data;
+		}
+		
+		void Image::setWidth(int width)
+		{
+			_width = width;
+		}
+		
+		void Image::setHeight(int height)
+		{
+			_height = height;
+		}
+		
+		void Image::setChannels(int channels)
+		{
+			_channels = channels;
+		}
+		
+		void Image::setData(unsigned char *data)
+		{
+			_data = data;
+		}
+		
+		int Image::getWidth() const
+		{
+			return _width;
+		}
+		
+		int Image::getHeight() const
+		{
+			return _height;
+		}
+		
+		int Image::getChannels() const
+		{
+			return _channels;
+		}
+		
+		unsigned char *Image::getData()
+		{
+			return _data;
+		}
 	}
 }
-
-#endif

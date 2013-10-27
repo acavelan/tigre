@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef ANDROID_APPLICATION_H
-#define ANDROID_APPLICATION_H
+#ifndef ANDROID_Activity_H
+#define ANDROID_Activity_H
 
 #include <android_native_app_glue.h>
 
@@ -41,12 +41,12 @@ namespace tigre
 	{
 		namespace android
 		{
-			class Application
+			class Activity
 			{
 				public:
 
-					Application(struct android_app *state);
-					virtual ~Application();
+					Activity(struct android_app *state);
+					virtual ~Activity();
 
 					void pollEvent();
 

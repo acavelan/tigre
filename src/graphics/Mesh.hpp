@@ -22,44 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef MESH_H
+#define MESH_H
 
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "../core/Resource.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		class Mesh : public core::Resource
 		{
 			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
 				
-				void init();
+				Mesh();
+				virtual ~Mesh();
 				
 				void destroy();
 				
-				bool valid() const;
+				void setVertices(float *vertices, unsigned int vertexCount);
+				void setNormals(float *normals, unsigned int normalCount);
+				void setTexCoords(float *texCoords, unsigned int texCoordCount);
+				void setIndices(unsigned int *indices, unsigned int indexCount);
 				
-				void resize(int width, int height);
+				unsigned int getVertexCount() const;
+				unsigned int getNormalCount() const;
+				unsigned int getTexCoordCount() const;
+				unsigned int getIndexCount() const;
+
+				float *getVertices() const;
+				float *getNormals() const;
+				float *getTexCoords() const;
+				unsigned int *getIndices() const;
+			
+			protected:
 				
-				int getWidth() const;
+				float *_vertices, *_normals, *_texCoords;
 				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				unsigned int *_indices;
+
+				unsigned int _vertexCount, _normalCount, _texCoordCount, _indexCount;
 		};
 	}
 }

@@ -25,26 +25,10 @@ SOFTWARE.
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "config/os.hpp"
+#include "Texture2D.hpp"
+#include "ModelMesh.hpp"
+#include "Rectangle.hpp"
 
-#if defined(OS_LINUX)
-	#include <GL/gl.h>
-	#include <GL/glext.h>
-#elif defined(OS_ANDROID)
-	#include <GLES2/gl2.h>
-	#include <GLES2/gl2ext.h>
-#endif
-
-/**
- * Base class for the Renderer
- *
- * The goal of this class is to abstract everything that concerns
- * native 3D API calls.
- *
- * Renderer can be implemented through OpenGL (Linux / Windows), 
- * OpenGL ES 1.1 / 2.0 (phones, tablets), or even DirectX.
- */
- 
 namespace tigre
 {
 	namespace graphics
@@ -55,23 +39,28 @@ namespace tigre
 				
 				virtual ~Renderer() {}
 				
-				virtual void printGLString(const char *name, GLenum s) = 0;
-				virtual void checkGlError(const char* op) = 0;
+				virtual void init() = 0;
 				
-				virtual void setViewport(int x, int y, int width, int height) = 0;
-				virtual void setViewport(int width, int height) = 0;
-
-				virtual int getX() const = 0;
-				virtual int getY() const = 0;
-
-				virtual int getWidth() const = 0;
-				virtual int getHeight() const = 0;
-
-				virtual void swapBuffers() = 0;
+				virtual void destroy() = 0;
 				
-				virtual GLuint loadShader(GLenum shaderType, const char *pSource) = 0;
-				virtual GLuint createProgram(const char *pVertexSource, const char *pFragmentSource) = 0;
-			
+				virtual void load(Texture2D *texture) = 0;
+				
+				virtual void unload(Texture2D *texture) = 0;
+				
+				virtual void bindTexture(Texture2D *texture) = 0;
+				
+				virtual void load(ModelMesh *model) = 0;
+				
+				virtual void unload(ModelMesh *model) = 0;
+				
+				virtual void draw(ModelMesh *model) = 0;
+				
+				virtual void draw(Texture2D *texture) = 0;
+				
+				virtual void draw(Texture2D *texture, Rectangle target) = 0;
+				
+				virtual void draw(Texture2D *texture, Rectangle origin, Rectangle target) = 0;
+		
 		};
 	}
 }

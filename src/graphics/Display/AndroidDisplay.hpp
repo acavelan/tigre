@@ -39,22 +39,25 @@ namespace tigre
 
 				AndroidDisplay();
 				~AndroidDisplay();
-
-				virtual int initialize(ANativeWindow *window);
-
-				virtual void destroy();
-
-				virtual bool valid() const;
-						
-				virtual void resize(int width, int height);
 				
-				virtual int getWidth() const;
-				virtual int getHeight() const;
+				void setWindow(ANativeWindow *window);
 				
-				virtual void swapBuffers();
+				void init();
+
+				void destroy();
+
+				bool valid() const;
+				
+				void resize(int width, int height);
+				
+				int getWidth() const;
+				int getHeight() const;
+				
+				void swapBuffers();
 				
 			private:
 				
+				ANativeWindow *_window;
 				EGLDisplay _display;
 				EGLSurface _surface;
 				EGLContext _context;

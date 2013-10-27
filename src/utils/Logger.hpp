@@ -35,11 +35,12 @@ namespace tigre
 		{
 			public:
 				
-				virtual void info(const char *fmt, ...) = 0;
+				virtual void info(const char *fmt, ...) const = 0;
 				
-				virtual void warning(const char *fmt, ...) = 0;
+				virtual void warning(const char *fmt, ...) const = 0;
 				
-				virtual void error(const char *fmt, ...) = 0;
+				virtual void error(const char *fmt, ...) const = 0;
+				
 		};
 	}
 }

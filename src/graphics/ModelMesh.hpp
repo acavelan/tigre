@@ -22,44 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef MODELMESH_H
+#define MODELMESH_H
 
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Mesh.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		class ModelMesh
 		{
 			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
 				
-				void init();
+				ModelMesh(Mesh *mesh);
 				
-				void destroy();
+				virtual ~ModelMesh();
 				
-				bool valid() const;
+				Mesh *getMesh() const;
 				
-				void resize(int width, int height);
+				int getModelMeshId() const;
 				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
+				void setModelMeshId(int id);
 				
 			private:
+			
+				Mesh *_mesh;
 				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				int _modelMeshId;
+				
 		};
 	}
 }

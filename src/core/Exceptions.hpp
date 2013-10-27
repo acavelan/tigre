@@ -22,46 +22,50 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
 
-#include <GLFW/glfw3.h>
+#include <string>
+#include <exception>
 
-#include "../Display.hpp"
+#ifndef TIGRE_NO_ASSERT
+	#define Assert(condition) if (!(condition)) throw AssertException(__FILE__, __LINE__, #condition)
+#else
+	inline void doNothing(bool) {}
+	#define Assert(condition) doNothing(!(condition))
+#endif
 
 namespace tigre
 {
-	namespace graphics
-	{
-		class GLFWDisplay : public Display
-		{
-			public:
+    namespace core
+    {
+        class Exception : public std::exception
+        {
+            public:
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
+                Exception(const std::string &message = "");
+
+                virtual ~Exception() throw();
+
+                virtual const char *what() const throw();
+
+            private:
 				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+                std::string _message;
+        };
+        
+        class NotImplementedException : public Exception
+        {
+			public:
+				NotImplementedException(const std::string &message = "") : Exception(message) {}
 		};
-	}
+		
+        class LoadingFailed : public Exception
+		{
+			public:	
+				LoadingFailed(const std::string &message = "") : Exception(message) {}
+		};
+    }
 }
 
 #endif

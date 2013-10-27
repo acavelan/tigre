@@ -22,31 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <GL/glfw.h>
-
 #include "GLFWDisplay.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		GLFWDisplay::GLFWDisplay(int width, int height, bool fullscreen) :
-			_valid(false), _width(width), _height(height), _fullscreen(fullscreen)
+		GLFWDisplay::GLFWDisplay(GLFWwindow *window) : 
+			_window(window), _width(0), _height(0)
 		{
 		}
 
 		GLFWDisplay::~GLFWDisplay()
 		{
+			destroy();
 		}
-
-		void GLFWDisplay::initialize()
+		
+		void GLFWDisplay::init()
 		{
-			if(_fullscreen && glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_FULLSCREEN))
-				_valid = true;
-			else if(glfwOpenWindow(_width, _height, 5, 6, 5, 0, 8, 0, GLFW_WINDOW))
-				_valid = true;
+			glfwGetWindowSize(_window, &_width, &_height);
+			
+			_valid = true;
 		}
-
+		
+		void GLFWDisplay::destroy()
+		{
+		}
+	
 		bool GLFWDisplay::valid() const
 		{
 			return _valid;
@@ -56,6 +58,8 @@ namespace tigre
 		{
 			_width = width;
 			_height = height;
+			
+			glfwSetWindowSize(_window, _width, _height);
 		}
 
 		int GLFWDisplay::getWidth() const
@@ -70,7 +74,7 @@ namespace tigre
 
 		void GLFWDisplay::swapBuffers()
 		{
-			glfwSwapBuffers();
+			glfwSwapBuffers(_window);
 		}
 	}
 }

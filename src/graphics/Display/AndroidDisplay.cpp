@@ -31,7 +31,7 @@ namespace tigre
 	namespace graphics
 	{
 		AndroidDisplay::AndroidDisplay() :
-			_valid(false), _width(0), _height(0)
+			_window(0), _valid(false), _width(0), _height(0)
 		{
 		}
 
@@ -39,8 +39,13 @@ namespace tigre
 		{
 			destroy();
 		}
-
-		int AndroidDisplay::initialize(ANativeWindow *window)
+		
+		void AndroidDisplay::setWindow(ANativeWindow *window)
+		{
+			_window = window;
+		}
+		
+		void AndroidDisplay::init()
 		{
 			// initialize OpenGL ES and EGL
 
@@ -80,9 +85,9 @@ namespace tigre
 			 * ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID. */
 			eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
 
-			ANativeWindow_setBuffersGeometry(window, 0, 0, format);
+			ANativeWindow_setBuffersGeometry(_window, 0, 0, format);
 
-			surface = eglCreateWindowSurface(display, config, window, NULL);
+			surface = eglCreateWindowSurface(display, config, _window, NULL);
 
 			EGLint contextAttrs[] = {
 				EGL_CONTEXT_CLIENT_VERSION, 2,
@@ -94,7 +99,6 @@ namespace tigre
 			if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
 			{
 				//Log::error("Unable to eglMakeCurrent");
-				return -1;
 			}
 
 			eglQuerySurface(display, surface, EGL_WIDTH, &w);
@@ -107,8 +111,6 @@ namespace tigre
 			_height = h;
 			
 			_valid = true;
-			
-			return 0;
 		}
 
 		void AndroidDisplay::destroy()

@@ -22,46 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#include <string>
+#include <string.h>
 
-#include <GLFW/glfw3.h>
+#include "ImageLoader.hpp"
 
-#include "../Display.hpp"
+#include "SOIL.h"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		Image *ImageLoader::loadFromFile(const std::string &filename)
 		{
-			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
+			int channels, width, height;
+			unsigned char *data = SOIL_load_image
+			(
+				filename.c_str(),
+				&width, &height, &channels,
+				SOIL_LOAD_AUTO
+			);
+			
+			if(!data)
+			{
+				std::string error = SOIL_last_result();
+				throw core::LoadingFailed(error);
+				return 0;
+			}
+			else
+			{
+				unsigned char *pixels = new unsigned char[width * height * channels];
+				memcpy(pixels, data, width * height * channels * sizeof(unsigned char));
+				SOIL_free_image_data(data);
 				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
+				Image *image = new Image();
+				image->setWidth(width);
+				image->setHeight(height);
+				image->setChannels(channels);
+				image->setData(pixels);
+				return image;
+			}
+		}
 	}
 }
-
-#endif

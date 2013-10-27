@@ -22,46 +22,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef SHADER_H
+#define SHADER_H
 
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include <string>
 
 namespace tigre
 {
 	namespace graphics
 	{
-		class GLFWDisplay : public Display
+		namespace shader
+		{				
+			// Uniforms
+			const int projection = 0;
+			const int view = 1;
+			const int model = 2;
+			const int color = 3;
+			
+			// Attributes
+			const int position = 4;
+			const int normal = 5;
+			const int texCoord = 6;
+			const int texture0 = 7;
+			
+			const int count = 8;
+		}
+		
+		class Shader
 		{
 			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
 				
-				void init();
+				std::string vertexShader;
+				std::string fragmentShader;
 				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				int shaderId;
 		};
-	}
+	}                            
 }
 
 #endif

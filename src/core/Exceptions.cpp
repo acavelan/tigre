@@ -22,46 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Exceptions.hpp"
 
 namespace tigre
 {
-	namespace graphics
-	{
-		class GLFWDisplay : public Display
-		{
-			public:
+    namespace core
+    {
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
-				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
-	}
+		Exception::Exception(const std::string &message) :
+			_message(message)
+		{
+		}
+
+		Exception::~Exception() throw() {}
+
+		const char *Exception::what() const throw()
+		{
+			return _message.c_str();
+		}
+    }
 }
 
-#endif

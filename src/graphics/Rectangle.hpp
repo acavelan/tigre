@@ -22,37 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
-
-#include <exception>
-
-#ifndef TIGRE_NO_ASSERT
-	#define Assert(condition) if (!(condition)) throw AssertException(__FILE__, __LINE__, #condition)
-#else
-	inline void doNothing(bool) {}
-	#define Assert(condition) doNothing(!(condition))
-#endif
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 namespace tigre
 {
-    namespace core
-    {
-        class Exception : public std::exception
-        {
-            public:
-
-                Exception(const std::string &message = "");
-
-                virtual ~Exception() throw();
-
-                virtual const char *what() const throw();
-
-            private:
+	namespace graphics
+	{
+		class Rectangle
+		{
+			public:
 				
-                String _message;
-        };
-    }
+				Rectangle(int x, int y, int width, int height);
+				
+				int x, y;
+				int width, height;
+		
+		};
+	}
 }
 
 #endif

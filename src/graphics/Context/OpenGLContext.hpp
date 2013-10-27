@@ -22,44 +22,82 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef OPENGL_CONTEXT_H
+#define OPENGL_CONTEXT_H
 
-#include <GLFW/glfw3.h>
+#include <vector>
+
+#include "config/os.hpp"
+
+#if defined(OS_LINUX)
+	#include <GL/gl.h>
+	#include <GL/glext.h>
+#elif defined(OS_ANDROID)
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+#endif
 
 #include "../Display.hpp"
+#include "../Context.hpp"
+#include "../../utils/Logger.hpp"
 
 namespace tigre
 {
 	namespace graphics
-	{
-		class GLFWDisplay : public Display
+	{	
+		class OpenGLShader
+		{
+			public:
+			
+				GLuint program;
+				GLuint ports[shader::count];
+		};
+		
+		class OpenGLContext : public Context
 		{
 			public:
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
+				OpenGLContext(Display *display);
+				~OpenGLContext();
 				
 				void init();
-				
 				void destroy();
 				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
+				void printGLString(GLenum s, const utils::Logger *log);
+				void checkGlError(const char* op, const utils::Logger *log);
+
+				void setViewport(int x, int y, int width, int height);
+				void setViewport(int width, int height);
+
+				int getX() const;
+				int getY() const;
+
 				int getWidth() const;
-				
 				int getHeight() const;
 				
-				void swapBuffers();
+				void setMatrix4(int port, const glm::mat4 &mat);
+				void setColor4(int port, const Color &color);
 				
+				void setColor(const Color &color);
+				
+				void clear(const Color &color);
+								
+				void load(Shader *shader);
+				void unload(Shader *shader);
+				void setShader(Shader *shader);
+				
+				OpenGLShader *getCurrentShader();
+
 			private:
+
+				Display *_display;
 				
-				GLFWwindow *_window;	
-							
-				bool _valid;
+				OpenGLShader *_currentShader;
+				std::vector<OpenGLShader*> _glShaders;
+				
+				int _x, _y;
 				int _width, _height;
+				
 		};
 	}
 }

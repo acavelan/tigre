@@ -22,46 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Color.hpp"
 
 namespace tigre
 {
-	namespace graphics
-	{
-		class GLFWDisplay : public Display
-		{
-			public:
+    namespace graphics
+    {
+        Color::Color() :
+			r(0.0f), g(0.0f), b(0.0f), a(0.0f)
+        {
+        }
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
-				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
-	}
+        Color::Color(float red, float green, float blue, float alpha) :
+            r(red), g(green), b(blue), a(alpha)
+        {
+        }
+
+        const Color color::White(1.0f, 1.0f, 1.0f, 1.0f);
+        const Color color::Black(0.0f, 0.0f, 0.0f, 1.0f);
+        const Color color::Red(1.0f, 0.0f, 0.0f, 1.0f);
+        const Color color::Green(0.0f, 1.0f, 0.0f, 1.0f);
+        const Color color::Blue(0.0f, 0.0f, 1.0f, 1.0f);
+        const Color color::Yellow(1.0f, 1.0f, 0.0f, 1.0f);
+    }
 }
-
-#endif

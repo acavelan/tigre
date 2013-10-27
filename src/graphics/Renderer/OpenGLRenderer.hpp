@@ -25,43 +25,74 @@ SOFTWARE.
 #ifndef OPENGL_RENDERER_H
 #define OPENGL_RENDERER_H
 
+#include <vector>
+
 #include "../Renderer.hpp"
-#include "../Display.hpp"
+#include "../Context/OpenGLContext.hpp"
 
 namespace tigre
 {
 	namespace graphics
-	{
+	{	
+		class OpenGLTexture
+		{
+			public:
+				
+				GLuint textureId;
+		};
+		
+		class OpenGLModelMesh
+		{
+			public:
+				
+				GLuint vbo[4];
+		};
+		
+		class OpenGLQuad
+		{
+			public:
+				
+				GLuint vbo[3];
+		};
+		
 		class OpenGLRenderer : public Renderer
 		{
 			public:
-
-				OpenGLRenderer(Display *display);
+			
+				OpenGLRenderer(OpenGLContext *context);
+				
 				~OpenGLRenderer();
 				
-				virtual void initialize();
+				void init();
 				
-				void printGLString(const char *name, GLenum s);
-				void checkGlError(const char* op);
-
-				void setViewport(int x, int y, int width, int height);
-				void setViewport(int width, int height);
-
-				int getX() const;
-				int getY() const;
-
-				int getWidth() const;
-				int getHeight() const;
-
-				void swapBuffers();
-
-				GLuint loadShader(GLenum shaderType, const char *pSource);
-				GLuint createProgram(const char *pVertexSource, const char *pFragmentSource);
-
+				void destroy();
+				
+				void load(Texture2D *texture);
+				
+				void unload(Texture2D *texture);
+				
+				void bindTexture(Texture2D *texture);
+				
+				void load(ModelMesh *model);
+				
+				void unload(ModelMesh *model);
+				
+				void draw(ModelMesh *model);
+				
+				void draw(Texture2D *texture);
+				
+				void draw(Texture2D *texture, Rectangle target);
+				
+				void draw(Texture2D *texture, Rectangle origin, Rectangle target);
+			
 			private:
+				
+				OpenGLContext *_context;
+				
+				OpenGLQuad _quad;
+				std::vector<OpenGLTexture*> _glTextures;
+				std::vector<OpenGLModelMesh*> _glModels;
 
-				Display *_display;
-				int _x, _y, _width, _height;
 		};
 	}
 }

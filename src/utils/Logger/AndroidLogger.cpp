@@ -34,8 +34,13 @@ namespace tigre
 			_tag(tag)
 		{
 		}
+		
+		void AndroidLogger::setTag(const std::string &tag)
+		{
+			_tag = tag;
+		}
 
-		void AndroidLogger::info(const char *fmt, ...)
+		void AndroidLogger::info(const char *fmt, ...) const
 		{
 			va_list args;
 			va_start(args, fmt);
@@ -43,7 +48,7 @@ namespace tigre
 			va_end(args);
 		}
 
-		void AndroidLogger::warning(const char *fmt, ...)
+		void AndroidLogger::warning(const char *fmt, ...) const
 		{
 			va_list args;
 			va_start(args, fmt);
@@ -51,7 +56,7 @@ namespace tigre
 			va_end(args);
 		}
 
-		void AndroidLogger::error(const char *fmt, ...)
+		void AndroidLogger::error(const char *fmt, ...) const
 		{
 			va_list args;
 			va_start(args, fmt);

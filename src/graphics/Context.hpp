@@ -22,44 +22,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef CONTEXT_H
+#define CONTEXT_H
 
-#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
-#include "../Display.hpp"
+#include "Color.hpp"
+#include "Shader.hpp"
 
+/**
+ * An OpenGL context represents many things. A context stores all of the state 
+ * associated with this instance of OpenGL. It represents the (potentially 
+ * visible) default framebuffer that rendering commands will draw to when not 
+ * drawing to a framebuffer object. Think of a context as an object that holds 
+ * all of OpenGL; when a context is destroyed, OpenGL is destroyed.
+ */
 namespace tigre
 {
 	namespace graphics
-	{
-		class GLFWDisplay : public Display
+	{	
+		class Context
 		{
 			public:
+				
+				virtual ~Context() {}
+				
+				virtual void init() = 0;
+				virtual void destroy() = 0;
+				
+				virtual void setViewport(int x, int y, int width, int height) = 0;
+				virtual void setViewport(int width, int height) = 0;
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
+				virtual int getX() const = 0;
+				virtual int getY() const = 0;
+
+				virtual int getWidth() const = 0;
+				virtual int getHeight() const = 0;
 				
-				void init();
+				virtual void setMatrix4(int port, const glm::mat4 &mat) = 0;
+				virtual void setColor4(int port, const Color &color) = 0;
 				
-				void destroy();
+				virtual void clear(const Color &color = color::White) = 0;
 				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				virtual void load(Shader *shader) = 0;
+				virtual void unload(Shader *shader) = 0;
+				virtual void setShader(Shader *shader) = 0;
+			
 		};
 	}
 }

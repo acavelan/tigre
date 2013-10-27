@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "Application.hpp"
+#include "Activity.hpp"
 
 namespace tigre
 {
@@ -32,7 +32,7 @@ namespace tigre
 		{
 			static void _app_handle_cmd(struct android_app *app, int32_t cmd)
 			{
-				Application *a = (Application*)app->userData;
+				Activity *a = (Activity*)app->userData;
 				switch (cmd)
 				{
 					case APP_CMD_INPUT_CHANGED:
@@ -88,12 +88,12 @@ namespace tigre
 
 			static int32_t _app_handle_input(struct android_app *app, AInputEvent *event)
 			{
-				Application *application = (Application*)app->userData;
+				Activity *activity = (Activity*)app->userData;
 
-				return application->onInputEvent(event);
+				return activity->onInputEvent(event);
 			}
 
-			Application::Application(struct android_app *state) :
+			Activity::Activity(struct android_app *state) :
 				_app(state)
 			{
 				app_dummy();
@@ -106,11 +106,11 @@ namespace tigre
 					this->onLoadState(_app->savedState);
 			}
 
-			Application::~Application()
+			Activity::~Activity()
 			{
 			}
 
-			void Application::pollEvent()
+			void Activity::pollEvent()
 			{
 				int ident;
 				int events;
@@ -132,50 +132,50 @@ namespace tigre
 				}
 			}
 
-			struct android_app *Application::getState() const
+			struct android_app *Activity::getState() const
 			{
 				return _app;
 			}
 
-			void Application::onInputChanged() {}
+			void Activity::onInputChanged() {}
 
-			void Application::onInitWindow() {}
+			void Activity::onInitWindow() {}
 
-			void Application::onTermWindow() {}
+			void Activity::onTermWindow() {}
 
-			void Application::onWindowResized() {}
+			void Activity::onWindowResized() {}
 
-			void Application::onWindowRedrawNeeded() {}
+			void Activity::onWindowRedrawNeeded() {}
 
-			void Application::onContentRectChanged() {}
+			void Activity::onContentRectChanged() {}
 
-			void Application::onGainedFocus() {}
+			void Activity::onGainedFocus() {}
 
-			void Application::onLostFocus() {}
+			void Activity::onLostFocus() {}
 
-			void Application::onConfigChanged() {}
+			void Activity::onConfigChanged() {}
 
-			void Application::onLowMemory() {}
+			void Activity::onLowMemory() {}
 
-			void Application::onStart() {}
+			void Activity::onStart() {}
 
-			void Application::onResume() {}
+			void Activity::onResume() {}
 
-			void Application::onSaveState() {}
+			void Activity::onSaveState() {}
 
-			void Application::onLoadState(void *state) {}
+			void Activity::onLoadState(void *state) {}
 
-			void Application::onPause() {}
+			void Activity::onPause() {}
 
-			void Application::onStop() {}
+			void Activity::onStop() {}
 
-			void Application::onDestroy() {}
+			void Activity::onDestroy() {}
 
-			void Application::onEvent() {}
+			void Activity::onEvent() {}
 
-			int Application::onInputEvent(AInputEvent* event) {}
+			int Activity::onInputEvent(AInputEvent* event) {}
 
-			int Application::getOrientation() const
+			int Activity::getOrientation() const
 			{
 				return AConfiguration_getOrientation(_app->config);
 			}

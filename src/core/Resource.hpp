@@ -22,45 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#ifndef RESOURCE_H
+#define RESOURCE_H
 
 namespace tigre
 {
-	namespace graphics
-	{
-		class GLFWDisplay : public Display
+	namespace core
+	{	
+		class Resource
 		{
 			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
 				
-				void init();
+				Resource();
+				virtual ~Resource();
 				
-				void destroy();
+				void grab();
 				
-				bool valid() const;
+				void release();
 				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
+				int getRefCount() const;
+			
 			private:
 				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				int _refCount;
 		};
+		
+		namespace resource
+		{
+			void grab(Resource *resource);
+			
+			void release(Resource *resource);
+		}
 	}
 }
 

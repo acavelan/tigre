@@ -42,6 +42,10 @@ namespace tigre
 				
 				virtual ~Display() {}
 				
+				virtual void destroy() = 0;
+				
+				virtual void init() = 0;
+				
 				virtual bool valid() const = 0;
 				
 				virtual void resize(int width, int height) = 0;

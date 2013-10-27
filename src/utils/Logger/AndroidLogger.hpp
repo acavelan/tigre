@@ -39,11 +39,13 @@ namespace tigre
 				
 				AndroidLogger(const std::string &tag);
 				
-				void info(const char *fmt, ...);
+				void setTag(const std::string &tag);
 				
-				void warning(const char *fmt, ...);
+				void info(const char *fmt, ...) const;
 				
-				void error(const char *fmt, ...);
+				void warning(const char *fmt, ...) const;
+				
+				void error(const char *fmt, ...) const;
 			
 			private:
 				

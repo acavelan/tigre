@@ -22,46 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
-
-#include <GLFW/glfw3.h>
-
-#include "../Display.hpp"
+#include "Timer.hpp"
 
 namespace tigre
 {
-	namespace graphics
+	namespace utils
 	{
-		class GLFWDisplay : public Display
+		Timer::Timer()
 		{
-			public:
-
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
-				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
-		};
+		}
+		
+		float Timer::start()
+		{
+			gettimeofday(&_start, 0);
+			return 0.0f;
+		}
+		
+		float Timer::tick()
+		{
+			float time = getTime();
+			start();
+			return time;
+		}
+		
+		float getElapsedTime(struct timeval t1, struct timeval t2)
+		{
+			return t2.tv_sec - t1.tv_sec + (float)(t2.tv_usec - t1.tv_usec) / 1000000;
+		}
+		
+		float Timer::getTime()
+		{
+			struct timeval now;
+			gettimeofday(&now, 0);
+			return getElapsedTime(_start, now);
+		}
 	}
 }
-
-#endif

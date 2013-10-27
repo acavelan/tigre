@@ -22,44 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef GLFW_DISPLAY_H
-#define GLFW_DISPLAY_H
+#ifndef LOADER_H
+#define LOADER_H
 
-#include <GLFW/glfw3.h>
+#include <string>
 
-#include "../Display.hpp"
+#include "Exceptions.hpp"
 
 namespace tigre
 {
-	namespace graphics
+	namespace core
 	{
-		class GLFWDisplay : public Display
+		template <class T>
+		class Loader
 		{
 			public:
 
-				GLFWDisplay(GLFWwindow *window);
-				~GLFWDisplay();
-				
-				void init();
-				
-				void destroy();
-				
-				bool valid() const;
-				
-				void resize(int width, int height);
-				
-				int getWidth() const;
-				
-				int getHeight() const;
-				
-				void swapBuffers();
-				
-			private:
-				
-				GLFWwindow *_window;	
-							
-				bool _valid;
-				int _width, _height;
+				virtual ~Loader() {}
+
+				virtual T *loadFromFile(const std::string &filename)
+				{
+					throw NotImplementedException("Failed to load " + filename + ": loadFromFile() not implemented for this class\n");
+					return 0;
+				}
+
+				virtual void saveToFile(const T*, const std::string &filename)
+				{
+					throw NotImplementedException("Failed to load " + filename + ": usaveToFile() not implemented for this class\n");
+				}
+
 		};
 	}
 }

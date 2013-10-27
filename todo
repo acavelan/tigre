@@ -1,0 +1,9 @@
+Files (vertex, ressources)
+normals / lights + checks
+vao
+
+android -> SOIL
+
+model, texture, -> renderer factory -> remove Image and Mesh depency 
+
+resourcemanager
