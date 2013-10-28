@@ -40,9 +40,9 @@ class Application
         tigre::graphics::Context *_context;
         tigre::graphics::Renderer *_renderer;
         
-        tigre::graphics::Texture2D *_texture;
+        tigre::graphics::Texture2D *_earthTex, *_whiteTex;
         tigre::graphics::ModelMesh *_sphere;
-        tigre::graphics::Shader *_defaultShader, *_noTextureShader;
+        tigre::graphics::Shader *_shader;
 		
 		int _width, _height;
 		

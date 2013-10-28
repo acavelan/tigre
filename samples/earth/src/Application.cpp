@@ -23,7 +23,7 @@ Application::Application(	utils::Logger *log,
 							Context *context,
 							Renderer *renderer) :
     _log(log), _display(display), _context(context), _renderer(renderer),
-    _texture(0), _sphere(0), _defaultShader(0), _noTextureShader(0),
+    _earthTex(0), _sphere(0), _shader(0), 
     _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
 {
     _log->info("Application(log, display, context, renderer)\n");
@@ -38,22 +38,21 @@ void Application::init()
 {	
     _log->info("create()\n");
     
-    ShaderSource defaultShader;
-    defaultShader.vertexShader = vertexShader;
-    defaultShader.fragmentShader = fragmentShader;
-    _defaultShader = _context->createShader(&defaultShader);
-    
-    ShaderSource noTextureShader;
-    noTextureShader.vertexShader = noTextureVertexShader;
-    noTextureShader.fragmentShader = noTextureFragmentShader;
-    _noTextureShader = _context->createShader(&noTextureShader);
+    ShaderSource shader;
+    shader.vertexShader = vertexShader;
+    shader.fragmentShader = fragmentShader;
+    _shader = _context->createShader(&shader);
     
     SphereMesh sphereMesh(8, 32, 32);
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
     ImageLoader loader;
     Image *image = loader.loadFromFile("../../media/earth.jpg");
-    _texture = _renderer->createTexture2D(image);
+    _earthTex = _renderer->createTexture2D(image);
+    release(image);
+    
+    image = loader.loadFromFile("../../media/white1x1.jpg");
+    _whiteTex = _renderer->createTexture2D(image);
     release(image);
     
     _width = _display->getWidth();
@@ -67,10 +66,10 @@ void Application::destroy()
 {
     _log->info("destroy()\n");
     
-    _context->destroy(_defaultShader);
-    _context->destroy(_noTextureShader);  
+    _context->destroy(_shader); 
     _renderer->destroy(_sphere);
-    _renderer->destroy(_texture);
+    _renderer->destroy(_earthTex);
+    _renderer->destroy(_whiteTex);
 }
 
 void Application::resize(int width, int height)
@@ -99,7 +98,7 @@ void Application::update(float delta)
 		_FPS++;
 	
     // Animation
-    _angle += delta * 20.0f;
+    _angle += delta * 15.0f;
     if(_angle > 360)
         _angle = 0;
 
@@ -113,7 +112,7 @@ void Application::update(float delta)
 void Application::drawFrame()
 {	
     _context->clear(color::Black);
-    _context->setShader(_defaultShader);
+    _context->setShader(_shader);
     
     // Earth
     _context->setMatrix4(shader::projection, _projMat);
@@ -123,7 +122,7 @@ void Application::drawFrame()
     
     _context->setMatrix4(shader::model, _modelMat);
     
-    _renderer->bindTexture(_texture);
+    _renderer->bindTexture(_earthTex);
     _renderer->draw(_sphere);
     
     // Light
@@ -131,22 +130,19 @@ void Application::drawFrame()
     light = translate(light, vec3(-10.0f, 5.0f, 0.0f));
     light = scale(light, vec3(0.05f));
 	
-	_context->setShader(_noTextureShader);
-	_context->setMatrix4(shader::projection, _projMat);
-    _context->setMatrix4(shader::view, _viewMat);
     _context->setMatrix4(shader::model, light);
     _context->setColor4(shader::color, color::Yellow);
+    _renderer->bindTexture(_whiteTex);
     _renderer->draw(_sphere);
     
     // Texture
-    _context->setShader(_defaultShader);
     _context->setMatrix4(shader::projection, _projMat2D);
     _context->setMatrix4(shader::view, _viewMat2D);
     _context->setMatrix4(shader::model, mat4(1.0f));
     _context->setColor4(shader::color, color::White);
     
-    _renderer->bindTexture(_texture);
-    _renderer->draw(_texture, Rectangle(0, 0, _texture->width/8, _texture->height/8));
+    _renderer->bindTexture(_earthTex);
+    _renderer->draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));
 
 	// Limit to 60 FPS
     _display->swapBuffers();
