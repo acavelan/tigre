@@ -25,6 +25,8 @@ SOFTWARE.
 #include <cstdlib>
 #include <string>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "OpenGLContext.hpp"
 
 #include "../../core/Exceptions.hpp"
@@ -35,7 +37,7 @@ namespace tigre
 	namespace graphics
 	{
 		OpenGLContext::OpenGLContext(Display *display) :
-			_display(display), _currentShader(0), _x(0), _y(0), _width(0), _height(0)
+			_display(display), _shader(0), _x(0), _y(0), _width(0), _height(0)
 		{
 		}
 
@@ -103,12 +105,12 @@ namespace tigre
 		
 		void OpenGLContext::setMatrix4(int port, const glm::mat4 &mat)
 		{
-			glUniformMatrix4fv(_currentShader->ports[port], 1, GL_FALSE, &mat[0][0]);
+			glUniformMatrix4fv(_shader->ports[port], 1, GL_FALSE, glm::value_ptr(mat));
 		}
 		
-		void OpenGLContext::setColor4(int port, const Color &color)
+		void OpenGLContext::setColor(const Color &color)
 		{
-			glUniform4f(_currentShader->ports[port], color.r, color.g, color.b, color.a);
+			glUniform4f(_shader->ports[shader::color], color.r, color.g, color.b, color.a);
 		}
 		
 		void OpenGLContext::clear(const Color &color)
@@ -204,9 +206,9 @@ namespace tigre
 			GLuint frag = createShader(GL_FRAGMENT_SHADER, shaderSource->fragmentShader.c_str());
 			
 			glShader->program = createShaderProgram(vert, frag);
-			glShader->ports[shader::projection] = glGetUniformLocation(glShader->program, "projMat");
-			glShader->ports[shader::view] = glGetUniformLocation(glShader->program, "viewMat");
-			glShader->ports[shader::model] = glGetUniformLocation(glShader->program, "modelMat");
+			glShader->ports[shader::projection] = glGetUniformLocation(glShader->program, "projection");
+			glShader->ports[shader::model] = glGetUniformLocation(glShader->program, "model");
+			glShader->ports[shader::view] = glGetUniformLocation(glShader->program, "view");
 			glShader->ports[shader::color] = glGetUniformLocation(glShader->program, "color");
 			glShader->ports[shader::position] = glGetAttribLocation(glShader->program, "position");
 			glShader->ports[shader::normal] = glGetAttribLocation(glShader->program, "normal");
@@ -236,16 +238,22 @@ namespace tigre
 			OpenGLShader *glShader = _glShaders[shader->token];
 			
 			if(shader)
-				_currentShader = glShader;
+				_shader = glShader;
 			else
-				_currentShader = 0;
+				_shader = 0;
 
-			glUseProgram(_currentShader->program);
+			glUseProgram(_shader->program);
+		}
+		
+		void OpenGLContext::setShader(Shader *shader, const Color &color)
+		{
+			setShader(shader);
+			setColor(color);
 		}
 		
 		OpenGLShader *OpenGLContext::getCurrentShader()
 		{
-			return _currentShader;
+			return _shader;
 		}
 	}
 }

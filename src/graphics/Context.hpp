@@ -60,14 +60,16 @@ namespace tigre
 				virtual int getHeight() const = 0;
 				
 				virtual void setMatrix4(int port, const glm::mat4 &mat) = 0;
-				virtual void setColor4(int port, const Color &color) = 0;
+				
+				virtual void setColor(const Color &color) = 0;
 				
 				virtual void clear(const Color &color = color::White) = 0;
 				
 				virtual Shader* createShader(ShaderSource *shaderSource) = 0;
 				virtual void destroy(Shader *shader) = 0;
+				
 				virtual void setShader(Shader *shader) = 0;
-			
+				virtual void setShader(Shader *shader, const Color &color) = 0;
 		};
 	}
 }

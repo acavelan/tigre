@@ -4,26 +4,24 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "graphics/ImageLoader.hpp"
 #include "graphics/Image.hpp"
 #include "graphics/Rectangle.hpp"
 
 #include "Application.hpp"
 #include "SphereMesh.hpp"
 #include "Shaders.hpp"
-    
-using namespace glm;
-using namespace tigre;
+
+using namespace kit;
 using namespace core;
 using namespace graphics;
-using namespace resource;
 
 Application::Application(	utils::Logger *log,
 							Display *display, 
 							Context *context,
-							Renderer *renderer) :
-    _log(log), _display(display), _context(context), _renderer(renderer),
-    _earthTex(0), _sphere(0), _shader(0), 
+							Renderer *renderer,
+							Content *content) :
+    _log(log), _display(display), _context(context), _renderer(renderer), 
+    _content(content), _earthTex(0), _sphere(0), _shader(0), 
     _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
 {
     _log->info("Application(log, display, context, renderer)\n");
@@ -46,20 +44,17 @@ void Application::init()
     SphereMesh sphereMesh(8, 32, 32);
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
-    ImageLoader loader;
-    Image *image = loader.loadFromFile("../../media/earth.jpg");
+    Image *image = _content->load<Image>("../../media/earth.jpg");
     _earthTex = _renderer->createTexture2D(image);
-    release(image);
+    _content->unload(image);
     
-    image = loader.loadFromFile("../../media/white1x1.jpg");
+    image = _content->load<Image>("../../media/white1x1.jpg");
     _whiteTex = _renderer->createTexture2D(image);
-    release(image);
+    _content->unload(image);
     
     _width = _display->getWidth();
     _height = _display->getHeight();
     resize(_width, _height);
-    
-    _modelMat = glm::scale(mat4(1.0f), vec3(1.0f));
 }
 
 void Application::destroy()
@@ -78,11 +73,11 @@ void Application::resize(int width, int height)
 	
 	_context->setViewport(width, height);
 		
-	_projMat = perspective(60.0f, (float)_context->getWidth() / (float)_context->getHeight(), 0.001f, 100000.f);
-	_projMat2D = ortho(0.0f, (float)width, 0.0f, (float)height, 0.0f, 10.0f);
+	_projection = perspective(60.0f, (float)_context->getWidth() / (float)_context->getHeight(), 0.001f, 100000.f);
+	_projection2D = ortho(0.0f, (float)width, 0.0f, (float)height, 0.0f, 10.0f);
 	
-	_viewMat = lookAt(vec3(20.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-	_viewMat2D = lookAt(vec3(0.0f, 0.0f, 5.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	_view = lookAt(vec3(20.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	_view2D = lookAt(vec3(0.0f, 0.0f, 5.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Application::update(float delta)
@@ -101,45 +96,39 @@ void Application::update(float delta)
     _angle += delta * 15.0f;
     if(_angle > 360)
         _angle = 0;
-
-    // Update all matrices
-    mat4 modelTranslate = scale(mat4(1.0f), vec3(1.0f));
-    mat4 modelRotate = rotate(modelRotate, 23.0f, vec3(0.0f, 0.0f, 1.0f));
-    modelRotate = rotate(modelTranslate, _angle, vec3(0.0f, 1.0f, 0.0f));
-    _modelMat = modelRotate;
 }
 
 void Application::drawFrame()
 {	
     _context->clear(color::Black);
-    _context->setShader(_shader);
+    _context->setShader(_shader, color::White);
+    _context->setMatrix4(shader::projection, _projection);
+    _context->setMatrix4(shader::view, _view);
     
     // Earth
-    _context->setMatrix4(shader::projection, _projMat);
-    _context->setMatrix4(shader::view, _viewMat);
+    mat4 model= rotate(mat4(1.0f), 23.0f, vec3(0.0f, 0.0f, 1.0f));
+    model = rotate(model, _angle, vec3(0.0f, 1.0f, 0.0f));
     
-    _context->setColor4(shader::color, color::White);
-    
-    _context->setMatrix4(shader::model, _modelMat);
+    _context->setMatrix4(shader::model, model);
     
     _renderer->bindTexture(_earthTex);
     _renderer->draw(_sphere);
     
     // Light
-    mat4 light = rotate(mat4(1.0f), _angle, vec3(0.0f, 1.0f, 0.0f));
-    light = translate(light, vec3(-10.0f, 5.0f, 0.0f));
-    light = scale(light, vec3(0.05f));
+    model = rotate(mat4(1.0f), _angle, vec3(0.0f, 1.0f, 0.0f));
+    model = translate(model, vec3(-10.0f, 5.0f, 0.0f));
+    model = scale(model, vec3(0.05f));
 	
-    _context->setMatrix4(shader::model, light);
-    _context->setColor4(shader::color, color::Yellow);
+    _context->setMatrix4(shader::model, model);
+    _context->setColor(color::Yellow);
+    
     _renderer->bindTexture(_whiteTex);
     _renderer->draw(_sphere);
     
     // Texture
-    _context->setMatrix4(shader::projection, _projMat2D);
-    _context->setMatrix4(shader::view, _viewMat2D);
-    _context->setMatrix4(shader::model, mat4(1.0f));
-    _context->setColor4(shader::color, color::White);
+    _context->setMatrix4(shader::projection, _projection2D);
+    _context->setMatrix4(shader::view, _view2D);
+    _context->setColor(color::White);
     
     _renderer->bindTexture(_earthTex);
     _renderer->draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));

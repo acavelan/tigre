@@ -25,8 +25,8 @@ SOFTWARE.
 #ifndef IMAGE_LOADER_H
 #define IMAGE_LOADER_H
 
-#include "../core/Loader.hpp"
 #include "Image.hpp"
+#include "../core/Loader.hpp"
 
 namespace tigre
 {

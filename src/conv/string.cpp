@@ -24,8 +24,9 @@ SOFTWARE.
 
 #include <cstdlib>
 #include <cstring>
-#include <string>
 #include <cstdio>
+#include <string>
+#include <algorithm>
 
 #include "string.hpp"
 
@@ -157,6 +158,40 @@ namespace tigre
 			char str[32];
 			sprintf(str, "%.*f", precision, n);
 			return std::string(str);
+		}
+		
+		std::string toLower(const std::string &str)
+		{
+			std::string lower(str.size(), ' ');
+
+			std::transform(str.begin(), str.end(), lower.begin(), static_cast<int (*)(int)>(std::tolower));
+
+			return lower;
+		}
+		
+		std::string toUpper(const std::string &str)
+		{
+			std::string upper(str.size(), ' ');
+
+			std::transform(str.begin(), str.end(), upper.begin(), static_cast<int (*)(int)>(std::toupper));
+
+			return upper;
+		}
+		
+		void split(const std::string &str, std::vector<std::string> &tokens, const std::string &delim)
+		{
+			tokens.clear();
+
+			for(std::string::size_type p1 = 0, p2 = 0; p1 != std::string::npos;)
+			{
+				p1 = str.find_first_not_of(delim, p1);
+				if(p1 != std::string::npos)
+				{
+					p2 = str.find_first_of(delim , p1);
+					tokens.push_back(str.substr(p1, p2 - p1));
+					p1 = p2;
+				}
+			}
 		}
 	}
 }

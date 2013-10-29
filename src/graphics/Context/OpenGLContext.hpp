@@ -76,7 +76,6 @@ namespace tigre
 				int getHeight() const;
 				
 				void setMatrix4(int port, const glm::mat4 &mat);
-				void setColor4(int port, const Color &color);
 				
 				void setColor(const Color &color);
 				
@@ -84,7 +83,9 @@ namespace tigre
 								
 				Shader* createShader(ShaderSource *shaderSource);
 				void destroy(Shader *shader);
+				
 				void setShader(Shader *shader);
+				void setShader(Shader *shader, const Color &color);
 				
 				OpenGLShader *getCurrentShader();
 
@@ -95,7 +96,7 @@ namespace tigre
 
 				Display *_display;
 				
-				OpenGLShader *_currentShader;
+				OpenGLShader *_shader;
 				std::vector<OpenGLShader*> _glShaders;
 				
 				int _x, _y;

@@ -26,6 +26,7 @@ SOFTWARE.
 #define CONV_STRING_H
 
 #include <string>
+#include <vector>
 
 namespace tigre
 {
@@ -46,6 +47,11 @@ namespace tigre
 		std::string toString(int n, int base = 10);
 		std::string toString(float n, int precision = 6);
 		std::string toString(double n, int precision = 6);
+		
+		std::string toLower(const std::string &str);
+		std::string toUpper(const std::string &str);
+		
+		void split(const std::string &str, std::vector<std::string> &tokens, const std::string &delim);
 	}
 }
 

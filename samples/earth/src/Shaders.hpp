@@ -9,16 +9,16 @@ static const char vertexShader[] =
     "out vec3 vnormal;                                                          \n"
     "out vec2 vtexCoord;                                                        \n"
     "out vec4 vcolor;                                                           \n"
-    "uniform mat4 projMat;                                            			\n"
-    "uniform mat4 viewMat;                                                   	\n"
-    "uniform mat4 modelMat;                                                  	\n"
+    "uniform mat4 projection;													\n"
+    "uniform mat4 model;														\n"
+    "uniform mat4 view;															\n"
     "uniform vec4 color = vec4(1.0, 1.0, 1.0, 1.0);                             \n"
     "void main()                                                                \n"
     "{                                                                          \n"
     "   vnormal = normal;                                                       \n"
     "   vtexCoord = texCoord;                                                   \n"
     "	vcolor = color;															\n"
-    "   gl_Position = projMat * viewMat * modelMat * vec4(position, 1.0);     	\n"
+    "   gl_Position = projection * view * model * vec4(position, 1.0);     		\n"
     "}                                                                          \n";
 
 static const char fragmentShader[] =

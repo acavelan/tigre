@@ -22,55 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef CONTENT_H
+#define CONTENT_H
 
-#include <string>
-
-#include "../core/Resource.hpp"
+#include "../graphics/Image.hpp"
+#include "../graphics/ImageLoader.hpp"
+#include "../core/ContentManager.hpp"
 
 namespace tigre
 {
-	namespace graphics
+	namespace kit
 	{
-		namespace shader
-		{				
-			// Uniforms
-			const int projection = 0;
-			const int model = 1;
-			const int view = 2;
-			const int color = 3;
-			
-			// Attributes
-			const int position = 4;
-			const int normal = 5;
-			const int texCoord = 6;
-			const int texture0 = 7;
-			
-			const int count = 8;
-		}
-		
-		class ShaderSource
+		class Content : public core::ContentManager<graphics::Image>
 		{
 			public:
 				
-				virtual ~ShaderSource() {}
+				Content()
+				{
+					registerLoader(new graphics::ImageLoader(), "jpg,bmp,png");
+				}
 				
-				std::string vertexShader;
-				std::string fragmentShader;
+				template<class T>
+				T* load(const std::string &filename)
+				{
+					return ContentManager<T>::load(filename);
+				}
+				
+				template<class T>
+				void save(const std::string &filename, const T *resource)
+				{
+					ContentManager<T>::save(filename, resource);
+				}
 		};
-		
-		class Shader : public core::Resource
-		{
-			public:
-				
-				Shader();
-				
-				virtual ~Shader();
-				
-				int token;
-		};
-	}                            
+	}
 }
 
 #endif

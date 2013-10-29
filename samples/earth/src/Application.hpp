@@ -12,14 +12,20 @@
 #include "graphics/Color.hpp"
 #include "graphics/Texture2D.hpp"
 
+#include "kit/Content.hpp"
+
+using namespace glm;
+using namespace tigre;
+
 class Application
 {
     public:
 
-        Application(tigre::utils::Logger *log,
-					tigre::graphics::Display *display, 
-					tigre::graphics::Context *context,
-					tigre::graphics::Renderer *renderer);
+        Application(utils::Logger *log,
+					graphics::Display *display, 
+					graphics::Context *context,
+					graphics::Renderer *renderer,
+					kit::Content *content);
 					
         ~Application();
 
@@ -35,14 +41,16 @@ class Application
 
     private:
 		
-		tigre::utils::Logger *_log;
-        tigre::graphics::Display *_display;
-        tigre::graphics::Context *_context;
-        tigre::graphics::Renderer *_renderer;
+		utils::Logger *_log;
+        graphics::Display *_display;
+        graphics::Context *_context;
+        graphics::Renderer *_renderer;
         
-        tigre::graphics::Texture2D *_earthTex, *_whiteTex;
-        tigre::graphics::ModelMesh *_sphere;
-        tigre::graphics::Shader *_shader;
+        kit::Content *_content;
+        
+        graphics::Texture2D *_earthTex, *_whiteTex;
+        graphics::ModelMesh *_sphere;
+        graphics::Shader *_shader;
 		
 		int _width, _height;
 		
@@ -52,10 +60,9 @@ class Application
 		
 		float _angle;
         
-        // Camera
-        glm::mat4 _projMat, _projMat2D;
-        glm::mat4 _viewMat, _viewMat2D;
-        glm::mat4 _modelMat;
+        // World
+        mat4 _projection, _projection2D;
+        mat4 _view, _view2D;
         
 };
 

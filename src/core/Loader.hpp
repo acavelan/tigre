@@ -46,7 +46,7 @@ namespace tigre
 					return 0;
 				}
 
-				virtual void saveToFile(const T*, const std::string &filename)
+				virtual void saveToFile(const std::string &filename, const T*)
 				{
 					throw NotImplementedException("Failed to load " + filename + ": usaveToFile() not implemented for this class\n");
 				}

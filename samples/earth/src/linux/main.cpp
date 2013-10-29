@@ -9,6 +9,8 @@
 #include "graphics/Context/OpenGLContext.hpp"
 #include "graphics/Renderer/OpenGLRenderer.hpp"
 
+#include "kit/Content.hpp"
+
 using namespace tigre;
 
 Application *handler = 0;
@@ -63,7 +65,9 @@ int main(int argc, char **argv)
 	context.printGLString(GL_VERSION, &appLogger);
 	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &appLogger);
 	
-	Application app(&appLogger, &display, &context, &renderer);
+	kit::Content content;
+	
+	Application app(&appLogger, &display, &context, &renderer, &content);
 	handler = &app;
 	
 	try
