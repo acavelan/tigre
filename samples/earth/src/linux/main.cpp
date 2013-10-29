@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	context.printGLString(GL_VERSION, &appLogger);
 	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &appLogger);
 	
-	kit::Content content;
+	kit::Content content(&renderer);
 	
 	Application app(&appLogger, &display, &context, &renderer, &content);
 	handler = &app;

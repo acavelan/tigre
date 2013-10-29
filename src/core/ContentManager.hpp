@@ -25,8 +25,6 @@ SOFTWARE.
 #ifndef CONTENT_MANAGER_H
 #define CONTENT_MANAGER_H
 
-//debug
-#include <cstdio>
 #include <map>
 #include <string>
 #include <vector>
@@ -59,15 +57,15 @@ namespace tigre
 					return resource;
 				}
 				
+				virtual void unload(T *resource)
+				{
+					resource::release(resource);
+				}
+				
 				virtual void save(const std::string &filename, const T *resource)
 				{
 					Loader<T> *loader = findLoader(filename);
 					loader->saveToFile(filename, resource);
-				}
-				
-				virtual void unload(T *resource)
-				{
-					resource::release(resource);
 				}
 				
 				void registerLoader(Loader<T> *loader, const std::string &extensions)
@@ -101,7 +99,7 @@ namespace tigre
 					if(it != _loaderMap.end())
 						return it->second;
 					else
-						throw LoadingFailed("No loaders for this extension: " + extension);
+						throw LoadingFailed("No loaders for this extension: " + extension + "\n");
 				}
 				
 				std::string getExtension(const std::string &filename) const

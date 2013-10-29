@@ -4,7 +4,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "graphics/Image.hpp"
 #include "graphics/Rectangle.hpp"
 
 #include "Application.hpp"
@@ -44,13 +43,8 @@ void Application::init()
     SphereMesh sphereMesh(8, 32, 32);
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
-    Image *image = _content->load<Image>("../../media/earth.jpg");
-    _earthTex = _renderer->createTexture2D(image);
-    _content->unload(image);
-    
-    image = _content->load<Image>("../../media/white1x1.jpg");
-    _whiteTex = _renderer->createTexture2D(image);
-    _content->unload(image);
+    _earthTex = _content->load<Texture2D>("../../media/earth.jpg");
+    _whiteTex = _content->load<Texture2D>("../../media/white1x1.jpg");
     
     _width = _display->getWidth();
     _height = _display->getHeight();
@@ -63,8 +57,8 @@ void Application::destroy()
     
     _context->destroy(_shader); 
     _renderer->destroy(_sphere);
-    _renderer->destroy(_earthTex);
-    _renderer->destroy(_whiteTex);
+    _content->unload(_earthTex);
+    _content->unload(_whiteTex);
 }
 
 void Application::resize(int width, int height)

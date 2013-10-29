@@ -25,9 +25,10 @@ SOFTWARE.
 #ifndef CONTENT_H
 #define CONTENT_H
 
+#include "../core/ContentManager.hpp"
 #include "../graphics/Image.hpp"
 #include "../graphics/ImageLoader.hpp"
-#include "../core/ContentManager.hpp"
+#include "../graphics/Renderer.hpp"
 
 namespace tigre
 {
@@ -37,23 +38,32 @@ namespace tigre
 		{
 			public:
 				
-				Content()
-				{
-					registerLoader(new graphics::ImageLoader(), "jpg,bmp,png");
-				}
+				Content(graphics::Renderer *renderer);
 				
 				template<class T>
-				T* load(const std::string &filename)
-				{
-					return ContentManager<T>::load(filename);
-				}
+				T* load(const std::string &filename);
 				
 				template<class T>
-				void save(const std::string &filename, const T *resource)
-				{
-					ContentManager<T>::save(filename, resource);
-				}
+				void unload(T *resource);
+				
+				template<class T>
+				void save(const std::string &filename, const T *resource);
+				
+				template<class T>
+				void registerLoader(core::Loader<T> *loader, const std::string &extensions);
+			
+			private:
+				
+				graphics::Renderer *_renderer;
 		};
+		
+		template<>
+		graphics::Texture2D* Content::load(const std::string &filename);
+
+		template<>
+		void Content::unload(graphics::Texture2D *texture);
+		
+		#include "Content.inl"
 	}
 }
 

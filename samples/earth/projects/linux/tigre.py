@@ -19,7 +19,8 @@ sources = [
 	src + '/graphics/Image.cpp',
 	src + '/graphics/Texture2D.cpp',
 	src + '/graphics/ImageLoader.cpp',
-	src + '/graphics/Rectangle.cpp'
+	src + '/graphics/Rectangle.cpp',
+	src + '/kit/Content.cpp'
 ]
 
 cpppath = [
