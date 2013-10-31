@@ -51,9 +51,8 @@ namespace tigre
 				
 				virtual T* load(const std::string &filename)
 				{
-					T *resource = 0;
 					Loader<T> *loader = findLoader(filename);
-					resource = loader->loadFromFile(filename);
+					T *resource = loader->loadFromFile(filename);
 					return resource;
 				}
 				
@@ -93,13 +92,21 @@ namespace tigre
 				Loader<T>* findLoader(const std::string &filename)
 				{
 					std::string extension = conv::toLower(getExtension(filename));
-				
+					
 					typename LoaderMap::iterator it = _loaderMap.find(extension);
 
 					if(it != _loaderMap.end())
 						return it->second;
+					
+					it = _loaderMap.find("*");
+					
+					bool any = (it != _loaderMap.end());
+					
+					if(any)
+						return it->second;
 					else
 						throw LoadingFailed("No loaders for this extension: " + extension + "\n");
+				
 				}
 				
 				std::string getExtension(const std::string &filename) const

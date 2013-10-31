@@ -36,7 +36,7 @@ namespace tigre
 		{
 			public:
 			
-				Image *loadFromFile(const std::string &filename);
+				Image* loadFromFile(const std::string &filename);
 				
 		};
 	}

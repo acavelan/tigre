@@ -50,7 +50,7 @@ namespace tigre
 			const int count = 8;
 		}
 		
-		class ShaderSource
+		class ShaderSource : public core::Resource
 		{
 			public:
 				

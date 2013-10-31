@@ -25,15 +25,14 @@ SOFTWARE.
 #include <string>
 #include <string.h>
 
-#include "ImageLoader.hpp"
-
 #include "SOIL.h"
+#include "ImageLoader.hpp"
 
 namespace tigre
 {
 	namespace graphics
 	{
-		Image *ImageLoader::loadFromFile(const std::string &filename)
+		Image* ImageLoader::loadFromFile(const std::string &filename)
 		{
 			int channels, width, height;
 			unsigned char *data = SOIL_load_image

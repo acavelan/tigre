@@ -8,7 +8,8 @@
 
 #include "Application.hpp"
 #include "SphereMesh.hpp"
-#include "Shaders.hpp"
+
+using namespace std;
 
 using namespace kit;
 using namespace core;
@@ -20,10 +21,10 @@ Application::Application(	utils::Logger *log,
 							Renderer *renderer,
 							Content *content) :
     _log(log), _display(display), _context(context), _renderer(renderer), 
-    _content(content), _earthTex(0), _sphere(0), _shader(0), 
+    _content(content), _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), 
     _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
 {
-    _log->info("Application(log, display, context, renderer)\n");
+    _log->info("Application(log, display, context, renderer, content)\n");
 }
 
 Application::~Application()
@@ -35,19 +36,20 @@ void Application::init()
 {	
     _log->info("create()\n");
     
-    ShaderSource shader;
-    shader.vertexShader = vertexShader;
-    shader.fragmentShader = fragmentShader;
-    _shader = _context->createShader(&shader);
-    
     SphereMesh sphereMesh(8, 32, 32);
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
-    _earthTex = _content->load<Texture2D>("../../media/earth.jpg");
-    _whiteTex = _content->load<Texture2D>("../../media/white1x1.jpg");
+    ShaderSource shaderSource;
+    shaderSource.vertexShader = _content->loadFile("../../content/shaders/texture.vert");
+    shaderSource.fragmentShader = _content->loadFile("../../content/shaders/texture.frag");
+    _shader = _context->createShader(shaderSource);
+    
+    _earthTex = _content->load<Texture2D>("../../content/textures/earth.jpg");
+    _whiteTex = _content->load<Texture2D>("../../content/textures/white1x1.jpg");
     
     _width = _display->getWidth();
     _height = _display->getHeight();
+    
     resize(_width, _height);
 }
 
@@ -56,9 +58,9 @@ void Application::destroy()
     _log->info("destroy()\n");
     
     _context->destroy(_shader); 
+    _renderer->destroy(_earthTex);
+    _renderer->destroy(_whiteTex);
     _renderer->destroy(_sphere);
-    _content->unload(_earthTex);
-    _content->unload(_whiteTex);
 }
 
 void Application::resize(int width, int height)

@@ -1,12 +1,9 @@
 Tigre
-	- Add a ShaderLoader
-	- Add a root directory for medias files in the ContentManager
-	- Update android implementations of ImageLoader
+	- Update android implementations of ImageLoader a,d Content.cpp
 	- Add android project in earth sample
-	- Add a ResourceManager<T>
-	- Use VAOs in the OpenGLRenderer
 	- Add an OpenGL 2.x renderer
+	- Externalize implementation of ContentManager
 	
 Sample:	
-	- Add normals and light
+	- Add light
 	

@@ -65,7 +65,7 @@ namespace tigre
 				
 				virtual void clear(const Color &color = color::White) = 0;
 				
-				virtual Shader* createShader(ShaderSource *shaderSource) = 0;
+				virtual Shader* createShader(const ShaderSource &shaderSource) = 0;
 				virtual void destroy(Shader *shader) = 0;
 				
 				virtual void setShader(Shader *shader) = 0;

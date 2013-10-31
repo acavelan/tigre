@@ -5,12 +5,6 @@ T* Content::load(const std::string &filename)
 }
 
 template<class T>
-void Content::unload(T *resource)
-{
-	ContentManager<T>::unload(resource);
-}
-
-template<class T>
 void Content::save(const std::string &filename, const T *resource)
 {
 	ContentManager<T>::save(filename, resource);

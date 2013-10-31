@@ -81,7 +81,7 @@ namespace tigre
 				
 				void clear(const Color &color);
 								
-				Shader* createShader(ShaderSource *shaderSource);
+				Shader* createShader(const ShaderSource &shaderSource);
 				void destroy(Shader *shader);
 				
 				void setShader(Shader *shader);

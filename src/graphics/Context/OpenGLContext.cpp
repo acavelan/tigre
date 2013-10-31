@@ -193,7 +193,7 @@ namespace tigre
 			return program;
 		}
 		
-		Shader* OpenGLContext::createShader(ShaderSource *shaderSource)
+		Shader* OpenGLContext::createShader(const ShaderSource &shaderSource)
 		{
 			OpenGLShader *glShader = new OpenGLShader();
 			Shader *shader = new Shader();
@@ -202,8 +202,8 @@ namespace tigre
 			
 			_glShaders.push_back(glShader);
 			
-			GLuint vert = createShader(GL_VERTEX_SHADER, shaderSource->vertexShader.c_str());
-			GLuint frag = createShader(GL_FRAGMENT_SHADER, shaderSource->fragmentShader.c_str());
+			GLuint vert = createShader(GL_VERTEX_SHADER, shaderSource.vertexShader.c_str());
+			GLuint frag = createShader(GL_FRAGMENT_SHADER, shaderSource.fragmentShader.c_str());
 			
 			glShader->program = createShaderProgram(vert, frag);
 			glShader->ports[shader::projection] = glGetUniformLocation(glShader->program, "projection");
