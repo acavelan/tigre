@@ -1,9 +1,8 @@
 Tigre
-	- Update android implementations of ImageLoader a,d Content.cpp
-	- Add android project in earth sample
+	- Android compatibility
+	- Windows compatibility
 	- Add an OpenGL 2.x renderer
-	- Externalize implementation of ContentManager
 	
 Sample:	
-	- Add light
+	- Add lights
 	
