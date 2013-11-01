@@ -22,35 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#ifndef CORE_H
+#define CORE_H
 
-namespace tigre
-{
-	namespace core
-	{	
-		class Resource
-		{
-			public:
-				
-				Resource();
-				virtual ~Resource();
-				
-				void grab();
-				
-				void release();
-				
-				int getRefCount() const;
-			
-			private:
-				
-				int _refCount;
-		};
-		
-		void grab(Resource *resource);
-		
-		void release(Resource *resource);
-	}
-}
 
 #endif

@@ -4,23 +4,23 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "core/file.hpp"
 #include "graphics/Rectangle.hpp"
 
 #include "Application.hpp"
 #include "SphereMesh.hpp"
 
 using namespace std;
-
-using namespace kit;
+using namespace glm;
 using namespace core;
 using namespace graphics;
 
-Application::Application(	utils::Logger *log,
-							Display *display, 
+Application::Application(	Display *display, 
 							Context *context,
 							Renderer *renderer,
+							Logger *logger,
 							Content *content) :
-    _log(log), _display(display), _context(context), _renderer(renderer), 
+    _display(display), _context(context), _renderer(renderer), _log(logger), 
     _content(content), _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), 
     _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
 {
@@ -40,12 +40,17 @@ void Application::init()
     _sphere = _renderer->createModelMesh(&sphereMesh);
     
     ShaderSource shaderSource;
-    shaderSource.vertexShader = _content->loadFile("../../content/shaders/texture.vert");
-    shaderSource.fragmentShader = _content->loadFile("../../content/shaders/texture.frag");
+    shaderSource.vertexShader = loadFile("../../content/shaders/texture.vert");
+    shaderSource.fragmentShader = loadFile("../../content/shaders/texture.frag");
     _shader = _context->createShader(shaderSource);
     
-    _earthTex = _content->load<Texture2D>("../../content/textures/earth.jpg");
-    _whiteTex = _content->load<Texture2D>("../../content/textures/white1x1.jpg");
+    Image *image = _content->load<Image>("../../content/textures/earth.jpg");
+    _earthTex = _renderer->createTexture2D(image);
+    release(image);
+    
+    image = _content->load<Image>("../../content/textures/white1x1.jpg");
+    _whiteTex = _renderer->createTexture2D(image);
+    release(image);
     
     _width = _display->getWidth();
     _height = _display->getHeight();

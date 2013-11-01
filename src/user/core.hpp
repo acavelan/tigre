@@ -22,27 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef CORE_H
+#define CORE_H
 
-#include <stdarg.h>
-
-namespace tigre
-{
-	namespace utils
-	{
-		class Logger
-		{
-			public:
-				
-				virtual void info(const char *fmt, ...) const = 0;
-				
-				virtual void warning(const char *fmt, ...) const = 0;
-				
-				virtual void error(const char *fmt, ...) const = 0;
-				
-		};
-	}
-}
+#include "../core/file.hpp"
+#include "../core/string.hpp"
+#include "../core/Loader.hpp"
+#include "../core/Resource.hpp"
+#include "../core/Exceptions.hpp"
+#include "../core/ContentLoader.hpp"
+#include "../core/Timer.hpp"
+#include "../core/Logger.hpp"
 
 #endif

@@ -1,31 +1,22 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "utils/Timer.hpp"
-#include "utils/Logger.hpp"
+#include "user/core.hpp"
+#include "user/graphics.hpp"
 
-#include "graphics/Display.hpp"
-#include "graphics/Context.hpp"
-#include "graphics/Renderer.hpp"
-#include "graphics/Shader.hpp"
-#include "graphics/ModelMesh.hpp"
-#include "graphics/Color.hpp"
-#include "graphics/Texture2D.hpp"
+#include "Content.hpp"
 
-#include "kit/Content.hpp"
-
-using namespace glm;
 using namespace tigre;
 
 class Application
 {
     public:
 
-        Application(utils::Logger *log,
-					graphics::Display *display, 
+        Application(graphics::Display *display, 
 					graphics::Context *context,
 					graphics::Renderer *renderer,
-					kit::Content *content);
+					core::Logger *logger,
+					Content *content);
 					
         ~Application();
 
@@ -41,12 +32,12 @@ class Application
 
     private:
 		
-		utils::Logger *_log;
         graphics::Display *_display;
         graphics::Context *_context;
         graphics::Renderer *_renderer;
         
-        kit::Content *_content;
+        core::Logger *_log;
+        Content *_content;
         
         graphics::Texture2D *_earthTex, *_whiteTex;
         graphics::ModelMesh *_sphere;
@@ -61,8 +52,8 @@ class Application
 		float _angle;
         
         // World
-        mat4 _projection, _projection2D;
-        mat4 _view, _view2D;
+        glm::mat4 _projection, _projection2D;
+        glm::mat4 _view, _view2D;
         
 };
 

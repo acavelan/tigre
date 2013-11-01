@@ -22,33 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef TIMER_H
-#define TIMER_H
-
-#include <sys/time.h>
+#include "Timer.hpp"
 
 namespace tigre
 {
-	namespace utils
-	{		
-		class Timer
+	namespace core
+	{
+		Timer::Timer()
 		{
-			public:
-			
-				Timer();
-				
-				float start();
-				
-				float tick();
-				
-				float getTime();
-			
-			private:
+		}
 		
-				struct timeval _start;
-			
-		};
+		float Timer::start()
+		{
+			gettimeofday(&_start, 0);
+			return 0.0f;
+		}
+		
+		float Timer::tick()
+		{
+			float time = getTime();
+			start();
+			return time;
+		}
+		
+		float getElapsedTime(struct timeval t1, struct timeval t2)
+		{
+			return t2.tv_sec - t1.tv_sec + (float)(t2.tv_usec - t1.tv_usec) / 1000000;
+		}
+		
+		float Timer::getTime()
+		{
+			struct timeval now;
+			gettimeofday(&now, 0);
+			return getElapsedTime(_start, now);
+		}
 	}
 }
-
-#endif

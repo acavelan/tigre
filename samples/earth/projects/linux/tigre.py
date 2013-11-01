@@ -8,10 +8,11 @@ root = '../../../..'
 src = root + '/src'
 
 sources = [
-	src + '/conv/string.cpp',
+	src + '/core/file.cpp',
+	src + '/core/string.cpp',
 	src + '/core/Resource.cpp',
 	src + '/core/Exceptions.cpp',
-	src + '/utils/Timer.cpp',
+	src + '/core/Timer.cpp',
 	src + '/graphics/Mesh.cpp',
 	src + '/graphics/ModelMesh.cpp',
 	src + '/graphics/Shader.cpp',
@@ -19,8 +20,7 @@ sources = [
 	src + '/graphics/Image.cpp',
 	src + '/graphics/Texture2D.cpp',
 	src + '/graphics/ImageLoader.cpp',
-	src + '/graphics/Rectangle.cpp',
-	src + '/kit/Content.cpp'
+	src + '/graphics/Rectangle.cpp'
 ]
 
 cpppath = [
@@ -39,7 +39,7 @@ if platform.system() == "Linux":
 	print "Compiling for : ", platform.system()
 	
 	sources.append([
-		src + '/utils/Logger/ConsoleLogger.cpp',
+		src + '/core/Logger/ConsoleLogger.cpp',
 		src + '/graphics/Display/GLFWDisplay.cpp',
 		src + '/graphics/Context/OpenGLContext.cpp',
 		src + '/graphics/Renderer/OpenGLRenderer.cpp'

@@ -50,21 +50,18 @@ namespace tigre
 		{
 			return _refCount;
 		}
-		
-		namespace resource
+	
+		void grab(Resource *resource)
 		{
-			void grab(Resource *resource)
-			{
-				resource->grab();
-			}
+			resource->grab();
+		}
+		
+		void release(Resource *resource)
+		{
+			resource->release();
 			
-			void release(Resource *resource)
-			{
-				resource->release();
-				
-				if(resource->getRefCount() <= 0)
-					delete resource;
-			}
+			if(resource->getRefCount() <= 0)
+				delete resource;
 		}
 	}
 }

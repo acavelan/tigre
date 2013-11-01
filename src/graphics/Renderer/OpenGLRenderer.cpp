@@ -220,7 +220,7 @@ namespace tigre
 				glDeleteTextures(1, &glTexture->textureId);
 				
 				delete glTexture;
-				core::resource::release(texture);
+				core::release(texture);
 			}
 		}
 		
@@ -301,7 +301,7 @@ namespace tigre
 				
 				delete glModel;
 				
-				core::resource::release(model);
+				core::release(model);
 			}
 		}
 	}

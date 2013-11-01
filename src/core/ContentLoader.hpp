@@ -22,34 +22,50 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#ifndef CONTENT_LOADER_H
+#define CONTENT_LOADER_H
+
+#include <map>
+#include <string>
+#include <vector>
+
+#include "file.hpp"
+#include "string.hpp"
+#include "Loader.hpp"
+#include "Resource.hpp"
+#include "Exceptions.hpp"
 
 namespace tigre
 {
 	namespace core
-	{	
-		class Resource
+	{
+		template <class T>
+		class ContentLoader
 		{
 			public:
+
+				virtual ~ContentLoader();
 				
-				Resource();
-				virtual ~Resource();
+				T* load(const std::string &filename);
 				
-				void grab();
+				void save(const std::string &filename, const T *resource);
 				
-				void release();
+				void registerLoader(Loader<T> *loader, const std::string &extensions);
 				
-				int getRefCount() const;
-			
-			private:
+				void unregisterLoaders();
 				
-				int _refCount;
+				Loader<T>* findLoader(const std::string &filename);
+				
+			protected:
+				
+				typedef std::map<std::string, Loader<T>*> LoaderMap;
+				typedef std::vector<Loader<T>*> LoaderList;
+				
+				LoaderList _loaderList;
+				LoaderMap _loaderMap;
 		};
 		
-		void grab(Resource *resource);
-		
-		void release(Resource *resource);
+		#include "ContentLoader.inl"
 	}
 }
 

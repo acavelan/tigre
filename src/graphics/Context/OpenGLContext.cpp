@@ -30,7 +30,7 @@ SOFTWARE.
 #include "OpenGLContext.hpp"
 
 #include "../../core/Exceptions.hpp"
-#include "../../conv/string.hpp"
+#include "../../core/string.hpp"
 
 namespace tigre
 {
@@ -58,12 +58,12 @@ namespace tigre
 		{
 		}
 
-		void OpenGLContext::printGLString(GLenum s, const utils::Logger *log)
+		void OpenGLContext::printGLString(GLenum s, const core::Logger *log)
 		{
 			log->info("%s\n", (const char*)glGetString(s));
 		}
 
-		void OpenGLContext::checkGlError(const char* op, const utils::Logger *log)
+		void OpenGLContext::checkGlError(const char* op, const core::Logger *log)
 		{
 			for(GLint error = glGetError(); error; error = glGetError())
 				log->error("%s glError (0x%x)\n", op, error);
@@ -140,7 +140,7 @@ namespace tigre
 						if(buf)
 						{
 							glGetShaderInfoLog(shader, infoLen, NULL, buf);
-							error += conv::toString((int)shaderType) + "\n" + buf + "\n";
+							error += core::toString((int)shaderType) + "\n" + buf + "\n";
 							delete[] buf;
 						}
 						glDeleteShader(shader);
@@ -229,7 +229,7 @@ namespace tigre
 				
 				delete glShader;
 				
-				core::resource::release(shader);
+				core::release(shader);
 			}
 		}
 		

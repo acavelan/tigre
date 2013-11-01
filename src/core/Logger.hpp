@@ -22,34 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#ifndef LOGGER_H
+#define LOGGER_H
+
+#include <stdarg.h>
 
 namespace tigre
 {
 	namespace core
-	{	
-		class Resource
+	{
+		class Logger
 		{
 			public:
 				
-				Resource();
-				virtual ~Resource();
+				virtual void info(const char *fmt, ...) const = 0;
 				
-				void grab();
+				virtual void warning(const char *fmt, ...) const = 0;
 				
-				void release();
+				virtual void error(const char *fmt, ...) const = 0;
 				
-				int getRefCount() const;
-			
-			private:
-				
-				int _refCount;
 		};
-		
-		void grab(Resource *resource);
-		
-		void release(Resource *resource);
 	}
 }
 

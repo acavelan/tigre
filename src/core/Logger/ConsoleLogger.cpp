@@ -22,35 +22,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#include <cstdio>
+#include <cstdarg>
+
+#include "ConsoleLogger.hpp"
 
 namespace tigre
 {
 	namespace core
-	{	
-		class Resource
+	{
+		ConsoleLogger::ConsoleLogger(const std::string &tag) :
+			_tag(tag)
 		{
-			public:
-				
-				Resource();
-				virtual ~Resource();
-				
-				void grab();
-				
-				void release();
-				
-				int getRefCount() const;
-			
-			private:
-				
-				int _refCount;
-		};
+		}
 		
-		void grab(Resource *resource);
+		void ConsoleLogger::setTag(const std::string &tag)
+		{
+			_tag = tag;
+		}
 		
-		void release(Resource *resource);
+		void ConsoleLogger::info(const char *fmt, ...) const
+		{
+			va_list args;
+			va_start(args, fmt);
+			printf("%s::", _tag.c_str());
+			vprintf(fmt, args);
+			va_end(args);
+		}
+
+		void ConsoleLogger::warning(const char *fmt, ...) const
+		{
+			va_list args;
+			va_start(args, fmt);
+			printf("%s::", _tag.c_str());
+			vprintf(fmt, args);
+			va_end(args);
+		}
+
+		void ConsoleLogger::error(const char *fmt, ...) const
+		{
+			va_list args;
+			va_start(args, fmt);
+			printf("%s::", _tag.c_str());
+			vprintf(fmt, args);
+			va_end(args);
+		}
 	}
 }
 
-#endif

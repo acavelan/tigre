@@ -22,35 +22,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#include <cstdio>
+
+#include "file.hpp"
+#include "Exceptions.hpp"
 
 namespace tigre
 {
 	namespace core
-	{	
-		class Resource
+	{
+		std::string loadFile(const std::string &filename)
 		{
-			public:
-				
-				Resource();
-				virtual ~Resource();
-				
-				void grab();
-				
-				void release();
-				
-				int getRefCount() const;
+			std::string source;
 			
-			private:
+			FILE *fp = fopen(filename.c_str(), "rb");
+			
+			if(fp)
+			{
+				fseek(fp, 0, SEEK_END);
+				long fsize = ftell(fp);
+				fseek(fp, 0, SEEK_SET);
 				
-				int _refCount;
-		};
+				source.resize(fsize + 1);
+				fread(&source[0], fsize, 1, fp);
+				source[fsize] = 0;
+				
+				fclose(fp);
+			}
+			else
+				throw core::LoadingFailed("Couldn't load " + filename + ": file not found\n");
+			
+			return source;
+		}
 		
-		void grab(Resource *resource);
-		
-		void release(Resource *resource);
+		std::string getExtension(const std::string &filename)
+		{
+			std::string extension = "";
+			bool find = false;
+			
+			int size = filename.size();
+			for(int i=size-1; i>0 && !find; i--)
+			{
+				if(filename[i] == '.') find = true;
+				else extension = filename[i] + extension;
+			}
+			
+			return extension;
+		}
 	}
 }
-
-#endif

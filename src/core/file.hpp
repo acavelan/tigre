@@ -22,36 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CONV_STRING_H
-#define CONV_STRING_H
+#ifndef CORE_FILE_H
+#define CORE_FILE_H
 
 #include <string>
-#include <vector>
 
 namespace tigre
 {
-	namespace conv
+	namespace core
 	{	
-		short toShort(const std::string &str, bool *ok = 0, int base = 10);
-		unsigned short toUShort(const std::string &str, bool *ok = 0, int base = 10);
-
-		int toInt(const std::string &str, bool *ok = 0, int base = 10);
-		unsigned int toUInt(const std::string &str, bool *ok = 0, int base = 10);
-
-		long toLong(const std::string &str, bool *ok = 0, int base = 10);
-		unsigned long toULong(const std::string &str, bool *ok = 0, int base = 10);
-
-		float toFloat(const std::string &str, bool *ok = 0);
-		double toDouble(const std::string &str, bool *ok = 0);
-
-		std::string toString(int n, int base = 10);
-		std::string toString(float n, int precision = 6);
-		std::string toString(double n, int precision = 6);
+		std::string loadFile(const std::string &filename);
 		
-		std::string toLower(const std::string &str);
-		std::string toUpper(const std::string &str);
-		
-		void split(const std::string &str, std::vector<std::string> &tokens, const std::string &delim);
+		std::string getExtension(const std::string &filename);
 	}
 }
 

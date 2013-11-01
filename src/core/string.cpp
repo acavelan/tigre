@@ -32,7 +32,7 @@ SOFTWARE.
 
 namespace tigre
 {
-	namespace conv
+	namespace core
 	{
 		short toShort(const std::string &str, bool *ok, int base)
 		{

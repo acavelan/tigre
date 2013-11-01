@@ -22,51 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdio>
-#include <cstdarg>
+#ifndef OS_H
+#define OS_H
 
-#include "ConsoleLogger.hpp"
+#if defined(_WIN64)
+	#define OS_WINDOWS
+	#define OS_WINDOWS_64
+#elif defined(_WIN32)
+	#define OS_WINDOWS
+	#define OS_WINDOWS_32
+#elif defined(__APPLE__)
+	#define OS_APPLE
+#elif defined(__ANDROID__)
+	#define OS_ANDROID
+#elif defined(__linux)
+	#define OS_LINUX
+	#define OS_UNIX
+#elif defined(__unix)
+	#define OS_UNIX
+#else
+	#define OS_UNKNOWN
+#endif
 
-namespace tigre
-{
-	namespace utils
-	{
-		ConsoleLogger::ConsoleLogger(const std::string &tag) :
-			_tag(tag)
-		{
-		}
-		
-		void ConsoleLogger::setTag(const std::string &tag)
-		{
-			_tag = tag;
-		}
-		
-		void ConsoleLogger::info(const char *fmt, ...) const
-		{
-			va_list args;
-			va_start(args, fmt);
-			printf("%s::", _tag.c_str());
-			vprintf(fmt, args);
-			va_end(args);
-		}
-
-		void ConsoleLogger::warning(const char *fmt, ...) const
-		{
-			va_list args;
-			va_start(args, fmt);
-			printf("%s::", _tag.c_str());
-			vprintf(fmt, args);
-			va_end(args);
-		}
-
-		void ConsoleLogger::error(const char *fmt, ...) const
-		{
-			va_list args;
-			va_start(args, fmt);
-			printf("%s::", _tag.c_str());
-			vprintf(fmt, args);
-			va_end(args);
-		}
-	}
-}
-
+#endif

@@ -1,17 +1,18 @@
 #include <GLFW/glfw3.h>
 
-#include "Application.hpp"
-
-#include "conv/string.hpp"
-#include "core/Exceptions.hpp"
-#include "utils/Logger/ConsoleLogger.hpp"
+#include "user/core.hpp"
+#include "user/graphics.hpp"
+#include "core/Logger/ConsoleLogger.hpp"
 #include "graphics/Display/GLFWDisplay.hpp"
 #include "graphics/Context/OpenGLContext.hpp"
 #include "graphics/Renderer/OpenGLRenderer.hpp"
 
-#include "kit/Content.hpp"
+#include "Content.hpp"
+#include "Application.hpp"
 
 using namespace tigre;
+using namespace core;
+using namespace graphics;
 
 Application *handler = 0;
 
@@ -33,8 +34,8 @@ int main(int argc, char **argv)
         
 	if(argc > 2)
 	{
-		width = conv::toInt(argv[1]);
-		height = conv::toInt(argv[2]);
+		width = toInt(argv[1]);
+		height = toInt(argv[2]);
 		if(argc > 3)
 			monitor = glfwGetPrimaryMonitor();
 	}
@@ -50,32 +51,33 @@ int main(int argc, char **argv)
     glfwSetWindowSizeCallback(window, onResize);
     glfwMakeContextCurrent(window);
     
-	utils::ConsoleLogger appLogger("Application"), mainLogger("main");
+	ConsoleLogger logger("Application");
 	
-	graphics::GLFWDisplay display(window);
-	graphics::OpenGLContext context(&display);
-	graphics::OpenGLRenderer renderer(&context); 
+	GLFWDisplay display(window);
+	OpenGLContext context(&display);
+	OpenGLRenderer renderer(&context); 
 	
 	display.init();
 	context.init();
 	renderer.init();
 	
-	context.printGLString(GL_VENDOR, &appLogger);
-	context.printGLString(GL_RENDERER, &appLogger);
-	context.printGLString(GL_VERSION, &appLogger);
-	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &appLogger);
+	context.printGLString(GL_VENDOR, &logger);
+	context.printGLString(GL_RENDERER, &logger);
+	context.printGLString(GL_VERSION, &logger);
+	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
 	
-	kit::Content content(&renderer);
+	Content content;
+	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
-	Application app(&appLogger, &display, &context, &renderer, &content);
+	Application app(&display, &context, &renderer, &logger, &content);
 	handler = &app;
 	
 	try
 	{
 		app.init();
-		context.checkGlError("create()", &mainLogger);
+		context.checkGlError("create()", &logger);
 		
-		tigre::utils::Timer timer;
+		Timer timer;
 		timer.start();
 
 		bool run = true;
@@ -83,7 +85,7 @@ int main(int argc, char **argv)
 		{		
 			app.update(timer.tick());
 			app.drawFrame();
-			context.checkGlError("drawFrame()", &mainLogger);
+			context.checkGlError("drawFrame()", &logger);
 			
 			run = !(glfwGetKey(window, GLFW_KEY_ESCAPE) || glfwWindowShouldClose(window));
 			
@@ -92,7 +94,7 @@ int main(int argc, char **argv)
 	}
 	catch(const core::Exception &e)
 	{
-		appLogger.error(e.what());
+		logger.error(e.what());
 	}
 	
 	glfwTerminate();

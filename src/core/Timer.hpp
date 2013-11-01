@@ -22,47 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CONTENT_H
-#define CONTENT_H
+#ifndef TIMER_H
+#define TIMER_H
 
-#include <string>
-
-#include "../core/ContentManager.hpp"
-#include "../graphics/Image.hpp"
-#include "../graphics/Renderer.hpp"
-#include "../graphics/Shader.hpp"
+#include <sys/time.h>
 
 namespace tigre
 {
-	namespace kit
-	{
-		class Content : public core::ContentManager<graphics::Image>
+	namespace core
+	{		
+		class Timer
 		{
 			public:
+			
+				Timer();
 				
-				Content(graphics::Renderer *renderer);
+				float start();
 				
-				template<class T>
-				T* load(const std::string &filename);
+				float tick();
 				
-				template<class T>
-				void save(const std::string &filename, const T *resource);
-				
-				template<class T>
-				void registerLoader(core::Loader<T> *loader, const std::string &extensions);
-				
-				std::string loadFile(const std::string &filename);
-				
+				float getTime();
+			
 			private:
-
-				graphics::Renderer *_renderer;
-		};
 		
-		// Texture specialization
-		template<>
-		graphics::Texture2D* Content::load(const std::string &filename);
-
-		#include "Content.inl"
+				struct timeval _start;
+			
+		};
 	}
 }
 

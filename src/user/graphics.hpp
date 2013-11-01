@@ -22,26 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
-#if defined(_WIN64)
-	#define OS_WINDOWS
-	#define OS_WINDOWS_64
-#elif defined(_WIN32)
-	#define OS_WINDOWS
-	#define OS_WINDOWS_32
-#elif defined(__APPLE__)
-	#define OS_APPLE
-#elif defined(__ANDROID__)
-	#define OS_ANDROID
-#elif defined(__linux)
-	#define OS_LINUX
-	#define OS_UNIX
-#elif defined(__unix)
-	#define OS_UNIX
-#else
-	#define OS_UNKNOWN
-#endif
+#include "../graphics/Color.hpp"
+#include "../graphics/Image.hpp"
+#include "../graphics/ImageLoader.hpp"
+#include "../graphics/Context.hpp"
+#include "../graphics/Display.hpp"
+#include "../graphics/Renderer.hpp"
+#include "../graphics/Mesh.hpp"
+#include "../graphics/ModelMesh.hpp"
+#include "../graphics/Shader.hpp"
+#include "../graphics/Texture2D.hpp"
+#include "../graphics/Rectangle.hpp"
 
 #endif

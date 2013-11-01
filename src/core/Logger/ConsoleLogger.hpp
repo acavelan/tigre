@@ -22,39 +22,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "Timer.hpp"
+#ifndef CONSOLELOGGER_H
+#define CONSOLELOGGER_H
+
+#include <string>
+
+#include "../Logger.hpp"
 
 namespace tigre
 {
-	namespace utils
+	namespace core
 	{
-		Timer::Timer()
+		class ConsoleLogger : public Logger
 		{
-		}
-		
-		float Timer::start()
-		{
-			gettimeofday(&_start, 0);
-			return 0.0f;
-		}
-		
-		float Timer::tick()
-		{
-			float time = getTime();
-			start();
-			return time;
-		}
-		
-		float getElapsedTime(struct timeval t1, struct timeval t2)
-		{
-			return t2.tv_sec - t1.tv_sec + (float)(t2.tv_usec - t1.tv_usec) / 1000000;
-		}
-		
-		float Timer::getTime()
-		{
-			struct timeval now;
-			gettimeofday(&now, 0);
-			return getElapsedTime(_start, now);
-		}
+			public:
+				
+				ConsoleLogger(const std::string &tag);
+				
+				void setTag(const std::string &tag);
+				
+				void info(const char *fmt, ...) const;
+				
+				void warning(const char *fmt, ...) const;
+			
+				void error(const char *fmt, ...) const;
+			
+			private:
+				
+				std::string _tag;
+		};
 	}
 }
+
+#endif
