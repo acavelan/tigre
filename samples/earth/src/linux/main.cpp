@@ -39,7 +39,9 @@ int main(int argc, char **argv)
 		if(argc > 3)
 			monitor = glfwGetPrimaryMonitor();
 	}
-        
+    
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    
 	window = glfwCreateWindow(width, height, "Game", monitor, 0);
     
     if(!window)
