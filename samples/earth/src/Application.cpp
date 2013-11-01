@@ -42,10 +42,10 @@ void Application::destroy()
 {
     _log->info("destroy()\n");
     
-    _context->destroy(_shader); 
-    _renderer->destroy(_earthTex);
-    _renderer->destroy(_whiteTex);
-    _renderer->destroy(_sphere);
+    _content->destroy(_sphere);
+    _content->destroy(_shader); 
+    _content->destroy(_earthTex);
+    _content->destroy(_whiteTex);
 }
 
 void Application::resize(int width, int height)

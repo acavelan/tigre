@@ -37,6 +37,11 @@ class Content : public core::ContentLoader<graphics::Image>
 			return texture;
 		}
 		
+		void destroy(graphics::Texture2D *texture)
+		{
+			_renderer->destroy(texture);
+		}
+		
 		graphics::Shader *createShader(const std::string &vertexFile, const std::string &fragmentFile)
 		{
 			graphics::ShaderSource shaderSource;
@@ -48,11 +53,21 @@ class Content : public core::ContentLoader<graphics::Image>
 			return shader;
 		}
 		
+		void destroy(graphics::Shader *shader)
+		{
+			_context->destroy(shader);
+		}
+		
 		graphics::ModelMesh *createSphere(float radius, int latitudeBands, int longitudeBands)
 		{
 			Sphere sphere(radius, latitudeBands, longitudeBands);
 			graphics::ModelMesh *model = _renderer->createModelMesh(&sphere);
 			return model;
+		}
+		
+		void destroy(graphics::ModelMesh *model)
+		{
+			_renderer->destroy(model);
 		}
 	
 	private:
