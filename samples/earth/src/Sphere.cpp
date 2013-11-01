@@ -1,9 +1,7 @@
 #include <cmath>
-#include "SphereMesh.hpp"
+#include "Sphere.hpp"
 
-#include <cstdio>
-
-SphereMesh::SphereMesh(float radius, int latitudeBands, int longitudeBands) :
+Sphere::Sphere(float radius, int latitudeBands, int longitudeBands) :
     radius(radius), latitudeBands(latitudeBands), longitudeBands(longitudeBands)
 {
     vertexCount = (latitudeBands + 1) * (longitudeBands + 1) * 3;
@@ -62,8 +60,4 @@ SphereMesh::SphereMesh(float radius, int latitudeBands, int longitudeBands) :
             indices[ic++] = first + 1;
         }
     }
-}
-
-SphereMesh::~SphereMesh()
-{
 }

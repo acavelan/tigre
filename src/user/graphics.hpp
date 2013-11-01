@@ -37,4 +37,7 @@ SOFTWARE.
 #include "../graphics/Texture2D.hpp"
 #include "../graphics/Rectangle.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #endif

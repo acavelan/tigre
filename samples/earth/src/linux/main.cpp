@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 	context.printGLString(GL_VERSION, &logger);
 	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
 	
-	Content content;
+	Content content(&context, &renderer);
 	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
 	Application app(&display, &context, &renderer, &logger, &content);

@@ -1,14 +1,4 @@
-#include <cstdlib>
-#include <sys/time.h>
-#include <unistd.h>
-
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "core/file.hpp"
-#include "graphics/Rectangle.hpp"
-
 #include "Application.hpp"
-#include "SphereMesh.hpp"
 
 using namespace std;
 using namespace glm;
@@ -36,21 +26,11 @@ void Application::init()
 {	
     _log->info("create()\n");
     
-    SphereMesh sphereMesh(8, 32, 32);
-    _sphere = _renderer->createModelMesh(&sphereMesh);
+    _sphere = _content->createSphere(8, 32, 32);
+    _shader = _content->createShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
     
-    ShaderSource shaderSource;
-    shaderSource.vertexShader = loadFile("../../content/shaders/texture.vert");
-    shaderSource.fragmentShader = loadFile("../../content/shaders/texture.frag");
-    _shader = _context->createShader(shaderSource);
-    
-    Image *image = _content->load<Image>("../../content/textures/earth.jpg");
-    _earthTex = _renderer->createTexture2D(image);
-    release(image);
-    
-    image = _content->load<Image>("../../content/textures/white1x1.jpg");
-    _whiteTex = _renderer->createTexture2D(image);
-    release(image);
+    _earthTex = _content->createTexture("../../content/textures/earth.jpg");
+    _whiteTex = _content->createTexture("../../content/textures/white1x1.jpg");
     
     _width = _display->getWidth();
     _height = _display->getHeight();

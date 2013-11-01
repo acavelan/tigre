@@ -14,7 +14,7 @@ cxxflags = ['-O2', '-W', '-Wall', '-Wextra', '-DGL_GLEXT_PROTOTYPES']
 sources =  [
 	rootsrc + '/linux/main.cpp',
 	rootsrc + '/Application.cpp',
-	rootsrc + '/SphereMesh.cpp'
+	rootsrc + '/Sphere.cpp'
 ]
 
 cpppath = [
