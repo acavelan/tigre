@@ -11,10 +11,9 @@ multiple implementations of that interface, for different systems.
 		- Exceptions
 		- Resource
 		- Loader
-	::utils
 		- Logger
 		- Timer
-	::graphics
+	::gfx
 		- Renderer
 		- Display
 		- Context
@@ -25,8 +24,9 @@ multiple implementations of that interface, for different systems.
 		- Shader
 		- Color
 		- Rectangle
-	::android
-		- Activity
+	::os::
+		::android
+			- Activity
 		
 
 Compilation:
