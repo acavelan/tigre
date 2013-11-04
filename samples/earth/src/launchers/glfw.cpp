@@ -2,6 +2,7 @@
 
 #include "user/core.hpp"
 #include "user/gfx.hpp"
+
 #include "core/Logger/ConsoleLogger.hpp"
 #include "gfx/Display/GLFWDisplay.hpp"
 #include "gfx/Context/OpenGLContext.hpp"
@@ -68,7 +69,7 @@ int main(int argc, char **argv)
 	context.printGLString(GL_VERSION, &logger);
 	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
 	
-	Content content(&context, &renderer);
+	Content content;
 	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
 	Application app(&display, &context, &renderer, &logger, &content);

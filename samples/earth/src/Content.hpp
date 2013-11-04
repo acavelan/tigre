@@ -1,21 +1,38 @@
+/*
+TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
+
+Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #ifndef CONTENT_H
 #define CONTENT_H
 
-#include "user/core.hpp"
-#include "user/gfx.hpp"
-
-#include "Sphere.hpp"
+#include "core/ContentLoader.hpp"
+#include "gfx/Image.hpp"
 
 using namespace tigre;
 
 class Content : public core::ContentLoader<gfx::Image>
 {
 	public:
-		
-		Content(gfx::Context *context, gfx::Renderer *renderer) : 
-			_context(context), _renderer(renderer)
-		{
-		}
 		
 		template<class T>
 		T* load(const std::string &filename)
@@ -28,52 +45,7 @@ class Content : public core::ContentLoader<gfx::Image>
 		{
 			ContentLoader<T>::save(filename, resource);
 		}
-		
-		gfx::Texture2D *createTexture(const std::string &filename)
-		{
-			gfx::Image *image = load<gfx::Image>(filename);
-			gfx::Texture2D *texture = _renderer->createTexture2D(image);
-			release(image);
-			return texture;
-		}
-		
-		void destroy(gfx::Texture2D *texture)
-		{
-			_renderer->destroy(texture);
-		}
-		
-		gfx::Shader *createShader(const std::string &vertexFile, const std::string &fragmentFile)
-		{
-			gfx::ShaderSource shaderSource;
-			shaderSource.vertexShader = core::loadFile(vertexFile);
-			shaderSource.fragmentShader = core::loadFile(fragmentFile);
-			
-			gfx::Shader *shader = _context->createShader(shaderSource);
-			
-			return shader;
-		}
-		
-		void destroy(gfx::Shader *shader)
-		{
-			_context->destroy(shader);
-		}
-		
-		gfx::ModelMesh *createSphere(float radius, int latitudeBands, int longitudeBands)
-		{
-			Sphere sphere(radius, latitudeBands, longitudeBands);
-			gfx::ModelMesh *model = _renderer->createModelMesh(&sphere);
-			return model;
-		}
-		
-		void destroy(gfx::ModelMesh *model)
-		{
-			_renderer->destroy(model);
-		}
-	
-	private:
-		
-		gfx::Context *_context;
-		gfx::Renderer *_renderer;
 };
+
 
 #endif

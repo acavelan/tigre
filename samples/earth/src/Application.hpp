@@ -29,6 +29,11 @@ class Application
         void update(float delta);
 
         void drawFrame();
+        
+        // shortcuts
+        gfx::ModelMesh* loadSphere(float radius, int lat, int lon);
+        gfx::Texture2D* loadTexture(const std::string &filename);
+        gfx::Shader* loadShader(const std::string &vertexFile, const std::string &fragmentFile);
 
     private:
 		

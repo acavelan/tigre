@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include "Sphere.hpp"
 
 using namespace std;
 using namespace glm;
@@ -26,11 +27,10 @@ void Application::init()
 {	
     _log->info("create()\n");
     
-    _sphere = _content->createSphere(8, 32, 32);
-    _shader = _content->createShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
-    
-    _earthTex = _content->createTexture("../../content/textures/earth.jpg");
-    _whiteTex = _content->createTexture("../../content/textures/white1x1.jpg");
+    _sphere = loadSphere(8, 32, 32);
+    _earthTex = loadTexture("../../content/textures/earth.jpg");
+    _whiteTex = loadTexture("../../content/textures/white1x1.jpg");
+    _shader = loadShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
     
     _width = _display->getWidth();
     _height = _display->getHeight();
@@ -42,10 +42,10 @@ void Application::destroy()
 {
     _log->info("destroy()\n");
     
-    _content->destroy(_sphere);
-    _content->destroy(_shader); 
-    _content->destroy(_earthTex);
-    _content->destroy(_whiteTex);
+    _renderer->destroy(_sphere);
+    _renderer->destroy(_earthTex);
+    _renderer->destroy(_whiteTex);
+    _context->destroy(_shader); 
 }
 
 void Application::resize(int width, int height)
@@ -117,3 +117,29 @@ void Application::drawFrame()
 	// Limit to 60 FPS
     _display->swapBuffers();
 }
+
+ModelMesh* Application::loadSphere(float radius, int lat, int lon)
+{
+	Sphere sphere(radius, lat, lon);
+	return _renderer->createModelMesh(&sphere);
+}
+
+Texture2D* Application::loadTexture(const std::string &filename)
+{
+	Image *image = _content->load<Image>(filename);
+	Texture2D *texture = _renderer->createTexture2D(image);
+	release(image);
+	return texture;
+}
+
+Shader* Application::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
+{
+	ShaderSource shaderSource;
+	shaderSource.vertexShader = loadFile(vertexFile);
+	shaderSource.fragmentShader = loadFile(fragmentFile);
+	
+	Shader *shader = _context->createShader(shaderSource);
+	
+	return shader;
+}
+
