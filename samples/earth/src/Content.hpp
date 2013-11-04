@@ -2,17 +2,17 @@
 #define CONTENT_H
 
 #include "user/core.hpp"
-#include "user/graphics.hpp"
+#include "user/gfx.hpp"
 
 #include "Sphere.hpp"
 
 using namespace tigre;
 
-class Content : public core::ContentLoader<graphics::Image>
+class Content : public core::ContentLoader<gfx::Image>
 {
 	public:
 		
-		Content(graphics::Context *context, graphics::Renderer *renderer) : 
+		Content(gfx::Context *context, gfx::Renderer *renderer) : 
 			_context(context), _renderer(renderer)
 		{
 		}
@@ -29,51 +29,51 @@ class Content : public core::ContentLoader<graphics::Image>
 			ContentLoader<T>::save(filename, resource);
 		}
 		
-		graphics::Texture2D *createTexture(const std::string &filename)
+		gfx::Texture2D *createTexture(const std::string &filename)
 		{
-			graphics::Image *image = load<graphics::Image>(filename);
-			graphics::Texture2D *texture = _renderer->createTexture2D(image);
+			gfx::Image *image = load<gfx::Image>(filename);
+			gfx::Texture2D *texture = _renderer->createTexture2D(image);
 			release(image);
 			return texture;
 		}
 		
-		void destroy(graphics::Texture2D *texture)
+		void destroy(gfx::Texture2D *texture)
 		{
 			_renderer->destroy(texture);
 		}
 		
-		graphics::Shader *createShader(const std::string &vertexFile, const std::string &fragmentFile)
+		gfx::Shader *createShader(const std::string &vertexFile, const std::string &fragmentFile)
 		{
-			graphics::ShaderSource shaderSource;
+			gfx::ShaderSource shaderSource;
 			shaderSource.vertexShader = core::loadFile(vertexFile);
 			shaderSource.fragmentShader = core::loadFile(fragmentFile);
 			
-			graphics::Shader *shader = _context->createShader(shaderSource);
+			gfx::Shader *shader = _context->createShader(shaderSource);
 			
 			return shader;
 		}
 		
-		void destroy(graphics::Shader *shader)
+		void destroy(gfx::Shader *shader)
 		{
 			_context->destroy(shader);
 		}
 		
-		graphics::ModelMesh *createSphere(float radius, int latitudeBands, int longitudeBands)
+		gfx::ModelMesh *createSphere(float radius, int latitudeBands, int longitudeBands)
 		{
 			Sphere sphere(radius, latitudeBands, longitudeBands);
-			graphics::ModelMesh *model = _renderer->createModelMesh(&sphere);
+			gfx::ModelMesh *model = _renderer->createModelMesh(&sphere);
 			return model;
 		}
 		
-		void destroy(graphics::ModelMesh *model)
+		void destroy(gfx::ModelMesh *model)
 		{
 			_renderer->destroy(model);
 		}
 	
 	private:
 		
-		graphics::Context *_context;
-		graphics::Renderer *_renderer;
+		gfx::Context *_context;
+		gfx::Renderer *_renderer;
 };
 
 #endif

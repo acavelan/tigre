@@ -13,14 +13,14 @@ sources = [
 	src + '/core/Resource.cpp',
 	src + '/core/Exceptions.cpp',
 	src + '/core/Timer.cpp',
-	src + '/graphics/Mesh.cpp',
-	src + '/graphics/ModelMesh.cpp',
-	src + '/graphics/Shader.cpp',
-	src + '/graphics/Color.cpp',
-	src + '/graphics/Image.cpp',
-	src + '/graphics/Texture2D.cpp',
-	src + '/graphics/ImageLoader.cpp',
-	src + '/graphics/Rectangle.cpp'
+	src + '/gfx/Mesh.cpp',
+	src + '/gfx/ModelMesh.cpp',
+	src + '/gfx/Shader.cpp',
+	src + '/gfx/Color.cpp',
+	src + '/gfx/Image.cpp',
+	src + '/gfx/Texture2D.cpp',
+	src + '/gfx/ImageLoader.cpp',
+	src + '/gfx/Rectangle.cpp'
 ]
 
 cpppath = [
@@ -40,9 +40,9 @@ if platform.system() == "Linux":
 	
 	sources.append([
 		src + '/core/Logger/ConsoleLogger.cpp',
-		src + '/graphics/Display/GLFWDisplay.cpp',
-		src + '/graphics/Context/OpenGLContext.cpp',
-		src + '/graphics/Renderer/OpenGLRenderer.cpp'
+		src + '/gfx/Display/GLFWDisplay.cpp',
+		src + '/gfx/Context/OpenGLContext.cpp',
+		src + '/gfx/Renderer/OpenGLRenderer.cpp'
 	])
 	
 	SOIL = env.File(root + '/local/soil/lib/libSOIL.a')

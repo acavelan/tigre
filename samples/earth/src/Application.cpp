@@ -3,7 +3,7 @@
 using namespace std;
 using namespace glm;
 using namespace core;
-using namespace graphics;
+using namespace gfx;
 
 Application::Application(	Display *display, 
 							Context *context,

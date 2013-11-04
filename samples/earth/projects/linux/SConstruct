@@ -1,2 +1,2 @@
 SConscript('tigre.py')
-SConscript('app.py')
+SConscript('glfw.py')

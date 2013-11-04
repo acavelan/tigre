@@ -2,7 +2,7 @@
 #define APPLICATION_H
 
 #include "user/core.hpp"
-#include "user/graphics.hpp"
+#include "user/gfx.hpp"
 
 #include "Content.hpp"
 
@@ -12,9 +12,9 @@ class Application
 {
     public:
 
-        Application(graphics::Display *display, 
-					graphics::Context *context,
-					graphics::Renderer *renderer,
+        Application(gfx::Display *display, 
+					gfx::Context *context,
+					gfx::Renderer *renderer,
 					core::Logger *logger,
 					Content *content);
 					
@@ -32,16 +32,16 @@ class Application
 
     private:
 		
-        graphics::Display *_display;
-        graphics::Context *_context;
-        graphics::Renderer *_renderer;
+        gfx::Display *_display;
+        gfx::Context *_context;
+        gfx::Renderer *_renderer;
         
         core::Logger *_log;
         Content *_content;
         
-        graphics::Texture2D *_earthTex, *_whiteTex;
-        graphics::ModelMesh *_sphere;
-        graphics::Shader *_shader;
+        gfx::Texture2D *_earthTex, *_whiteTex;
+        gfx::ModelMesh *_sphere;
+        gfx::Shader *_shader;
 		
 		int _width, _height;
 		

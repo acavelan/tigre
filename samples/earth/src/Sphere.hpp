@@ -1,9 +1,9 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "graphics/Mesh.hpp"
+#include "gfx/Mesh.hpp"
 
-class Sphere : public tigre::graphics::Mesh
+class Sphere : public tigre::gfx::Mesh
 {
     public:
 
