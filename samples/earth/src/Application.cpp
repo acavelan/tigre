@@ -113,9 +113,6 @@ void Application::drawFrame()
     
     _renderer->bindTexture(_earthTex);
     _renderer->draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));
-
-	// Limit to 60 FPS
-    _display->swapBuffers();
 }
 
 ModelMesh* Application::loadSphere(float radius, int lat, int lon)

@@ -88,6 +88,7 @@ int main(int argc, char **argv)
 		{		
 			app.update(timer.tick());
 			app.drawFrame();
+			display.swapBuffers();
 			context.checkGlError("drawFrame()", &logger);
 			
 			run = !(glfwGetKey(window, GLFW_KEY_ESCAPE) || glfwWindowShouldClose(window));

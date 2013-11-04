@@ -1,6 +1,6 @@
 env = Environment()
 
-target = "app"
+target = "glfw"
 
 tigre = '../../../..'
 tigresrc = tigre + '/src'
