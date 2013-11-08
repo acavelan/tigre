@@ -41,10 +41,6 @@ namespace tigre
 				
 				virtual ~Renderer() {}
 				
-				virtual void init() = 0;
-				
-				virtual void destroy() = 0;
-				
 				// Texture
 				virtual Texture2D* createTexture2D(Image *image) = 0;
 				

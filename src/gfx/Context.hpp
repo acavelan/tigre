@@ -47,9 +47,6 @@ namespace tigre
 				
 				virtual ~Context() {}
 				
-				virtual void init() = 0;
-				virtual void destroy() = 0;
-				
 				virtual void setViewport(int x, int y, int width, int height) = 0;
 				virtual void setViewport(int width, int height) = 0;
 
