@@ -22,8 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CORE_H
-#define CORE_H
+#ifndef GFX_H
+#define GFX_H
 
+#include "../gfx/Color.hpp"
+#include "../gfx/Image.hpp"
+#include "../gfx/ImageLoader.hpp"
+#include "../gfx/Context.hpp"
+#include "../gfx/Display.hpp"
+#include "../gfx/Renderer.hpp"
+#include "../gfx/Mesh.hpp"
+#include "../gfx/ModelMesh.hpp"
+#include "../gfx/Shader.hpp"
+#include "../gfx/Texture2D.hpp"
+#include "../gfx/Rectangle.hpp"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #endif

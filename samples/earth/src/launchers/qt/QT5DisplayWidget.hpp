@@ -4,8 +4,8 @@
 #include <QGLWidget>
 #include <QTimer>
 
-#include "user/core.hpp"
-#include "user/gfx.hpp"
+#include "core/core.hpp"
+#include "gfx/gfx.hpp"
 
 #include "core/Logger/ConsoleLogger.hpp"
 #include "gfx/Display/GLFWDisplay.hpp"

@@ -2,9 +2,6 @@
 #include "Sphere.hpp"
 
 using namespace std;
-using namespace glm;
-using namespace core;
-using namespace gfx;
 
 Application::Application(Display *display,  Context *context, Renderer *renderer, Logger *logger, Content *content) :
     _display(display), _context(context), _renderer(renderer), _log(logger), 

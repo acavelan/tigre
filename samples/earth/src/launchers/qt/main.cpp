@@ -1,7 +1,9 @@
 #include <QApplication>
 
 #include "QT5Window.hpp"
-#include "user/core.hpp"
+#include "core/core.hpp"
+
+using namespace tigre::core;
 
 int main(int argc, char **argv)
 {	
@@ -10,8 +12,8 @@ int main(int argc, char **argv)
         
 	if(argc > 2)
 	{
-		width = tigre::core::toInt(argv[1]);
-		height = tigre::core::toInt(argv[2]);
+		width = toInt(argv[1]);
+		height = toInt(argv[2]);
 	}
 	
 	QApplication app(argc, argv);

@@ -1,7 +1,7 @@
 #include <GLFW/glfw3.h>
 
-#include "user/core.hpp"
-#include "user/gfx.hpp"
+#include "core/core.hpp"
+#include "gfx/gfx.hpp"
 
 #include "core/Logger/ConsoleLogger.hpp"
 #include "gfx/Display/GLFWDisplay.hpp"
@@ -11,9 +11,8 @@
 #include "Content.hpp"
 #include "Application.hpp"
 
-using namespace tigre;
-using namespace core;
-using namespace gfx;
+using namespace tigre::core;
+using namespace tigre::gfx;
 
 Application *handler = 0;
 
