@@ -22,16 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CORE_H
-#define CORE_H
+#ifndef CORE_MAIN_H
+#define CORE_MAIN_H
 
-#include "../core/file.hpp"
-#include "../core/string.hpp"
-#include "../core/Loader.hpp"
-#include "../core/Resource.hpp"
-#include "../core/Exceptions.hpp"
-#include "../core/ContentLoader.hpp"
-#include "../core/Timer.hpp"
-#include "../core/Logger.hpp"
+#include "file.hpp"
+#include "string.hpp"
+#include "Loader.hpp"
+#include "Resource.hpp"
+#include "Exceptions.hpp"
+#include "ContentLoader.hpp"
+#include "Timer.hpp"
+#include "Logger.hpp"
 
 #endif

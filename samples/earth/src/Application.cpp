@@ -1,12 +1,11 @@
 #include "Application.hpp"
-#include "Sphere.hpp"
 
 using namespace std;
 
-Application::Application(Display *display,  Context *context, Renderer *renderer, Logger *logger, Content *content) :
-    _display(display), _context(context), _renderer(renderer), _log(logger), 
-    _content(content), _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), 
-    _width(0), _height(0), _angle(0)
+Application::Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger) :
+    Game(display, context, renderer, content),
+    _display(display), _context(context), _renderer(renderer), _content(content), _log(logger), 
+    _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), _angle(0.0f)
 {
     _log->info("Application(log, display, context, renderer, content)\n");
 }
@@ -91,29 +90,3 @@ void Application::drawFrame()
     _renderer->bindTexture(_earthTex);
     _renderer->draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));
 }
-
-ModelMesh* Application::loadSphere(float radius, int lat, int lon)
-{
-	Sphere sphere(radius, lat, lon);
-	return _renderer->createModelMesh(&sphere);
-}
-
-Texture2D* Application::loadTexture(const std::string &filename)
-{
-	Image *image = _content->load<Image>(filename);
-	Texture2D *texture = _renderer->createTexture2D(image);
-	release(image);
-	return texture;
-}
-
-Shader* Application::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
-{
-	ShaderSource shaderSource;
-	shaderSource.vertexShader = loadFile(vertexFile);
-	shaderSource.fragmentShader = loadFile(fragmentFile);
-	
-	Shader *shader = _context->createShader(shaderSource);
-	
-	return shader;
-}
-

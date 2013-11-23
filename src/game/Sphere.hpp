@@ -22,30 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CONTENT_H
-#define CONTENT_H
+#ifndef SPHERE_H
+#define SPHERE_H
 
-#include "core/ContentLoader.hpp"
-#include "gfx/Image.hpp"
+#include "../gfx/Mesh.hpp"
 
-using namespace tigre;
-
-class Content : public core::ContentLoader<gfx::Image>
+namespace tigre
 {
-	public:
-		
-		template<class T>
-		T* load(const std::string &filename)
+	namespace game
+	{
+		class Sphere : public tigre::gfx::Mesh
 		{
-			return ContentLoader<T>::load(filename);
-		}
-		
-		template<class T>
-		void save(const std::string &filename, const T *resource)
-		{
-			ContentLoader<T>::save(filename, resource);
-		}
-};
+			public:
 
+				Sphere(float radius, int latitudeBands, int longitudeBands);
+		};
+	}
+}
 
 #endif

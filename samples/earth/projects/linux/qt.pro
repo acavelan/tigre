@@ -12,14 +12,11 @@ rootsrc = $$root/src
 SOURCES += 	$$rootsrc/launchers/qt/main.cpp \
 			$$rootsrc/launchers/qt/QT5Window.cpp \
 			$$rootsrc/launchers/qt/QT5DisplayWidget.cpp \
-			$$rootsrc/Application.cpp \
-			$$rootsrc/Sphere.cpp
+			$$rootsrc/Application.cpp
 
 HEADERS += 	$$rootsrc/launchers/qt/QT5DisplayWidget.hpp \
 			$$rootsrc/launchers/qt/QT5Window.hpp \
-			$$rootsrc/Application.hpp \
-			$$rootsrc/Content.hpp \
-			$$rootsrc/Sphere.hpp
+			$$rootsrc/Application.hpp
 
 INCLUDEPATH += 	$$tigre/local \
 				$$tigresrc \

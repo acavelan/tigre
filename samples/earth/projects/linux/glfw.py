@@ -12,8 +12,7 @@ cxxflags = ['-O2', '-W', '-Wall', '-Wextra', '-DGL_GLEXT_PROTOTYPES']
 
 sources =  [
 	rootsrc + '/launchers/glfw/main.cpp',
-	rootsrc + '/Application.cpp',
-	rootsrc + '/Sphere.cpp'
+	rootsrc + '/Application.cpp'
 ]
 
 cpppath = [

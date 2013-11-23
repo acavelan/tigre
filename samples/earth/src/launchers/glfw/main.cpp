@@ -8,10 +8,10 @@
 #include "gfx/Context/OpenGLContext.hpp"
 #include "gfx/Renderer/OpenGLRenderer.hpp"
 
-#include "Content.hpp"
 #include "Application.hpp"
 
 using namespace tigre::core;
+using namespace tigre::game;
 using namespace tigre::gfx;
 
 Application *handler = 0;
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	Content content;
 	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
-	Application app(&display, &context, &renderer, &logger, &content);
+	Application app(&display, &context, &renderer, &content, &logger);
 	handler = &app;
 	
 	try
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
 			glfwPollEvents();
 		}
 	}
-	catch(const core::Exception &e)
+	catch(const Exception &e)
 	{
 		logger.error(e.what());
 	}

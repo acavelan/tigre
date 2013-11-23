@@ -28,7 +28,6 @@ namespace tigre
 {
     namespace core
     {
-
 		Exception::Exception(const std::string &message) :
 			_message(message)
 		{

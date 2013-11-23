@@ -59,7 +59,7 @@ void QT5DisplayWidget::initializeGL()
 	_content = new Content();
 	_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
-	_app = new Application(this, _context, _renderer, _logger, _content);
+	_app = new Application(this, _context, _renderer, _content, _logger);
 
 	makeCurrent();
 	

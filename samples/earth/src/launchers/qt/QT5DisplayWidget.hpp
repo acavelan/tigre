@@ -12,7 +12,6 @@
 #include "gfx/Context/OpenGLContext.hpp"
 #include "gfx/Renderer/OpenGLRenderer.hpp"
 
-#include "Content.hpp"
 #include "Application.hpp"
 
 using namespace tigre;

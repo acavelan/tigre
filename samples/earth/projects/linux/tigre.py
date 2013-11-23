@@ -20,7 +20,9 @@ sources = [
 	src + '/gfx/Image.cpp',
 	src + '/gfx/Texture2D.cpp',
 	src + '/gfx/ImageLoader.cpp',
-	src + '/gfx/Rectangle.cpp'
+	src + '/gfx/Rectangle.cpp',
+	src + '/game/Game.cpp',
+	src + '/game/Sphere.cpp'
 ]
 
 cpppath = [
