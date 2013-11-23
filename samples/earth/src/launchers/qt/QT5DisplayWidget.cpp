@@ -43,6 +43,8 @@ int QT5DisplayWidget::getHeight() const
 
 void QT5DisplayWidget::initializeGL()
 {
+	makeCurrent();
+	
 	_logger = new ConsoleLogger("Application");
 	
 	_context = new OpenGLContext(this);
@@ -60,16 +62,12 @@ void QT5DisplayWidget::initializeGL()
 	_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
 	_app = new Application(this, _context, _renderer, _content, _logger);
-
-	makeCurrent();
-	
-	timer.start();
-	
-	_app->init();
 	
     connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
 	refresh.setInterval(0);
     refresh.start();
+    
+    timer.start();
 }
 
 void QT5DisplayWidget::paintGL()

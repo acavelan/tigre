@@ -3,21 +3,10 @@
 using namespace std;
 
 Application::Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger) :
-    Game(display, context, renderer, content),
-    _display(display), _context(context), _renderer(renderer), _content(content), _log(logger), 
+    Game(display, context, renderer, content), _log(logger),
     _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), _angle(0.0f)
 {
     _log->info("Application(log, display, context, renderer, content)\n");
-}
-
-Application::~Application()
-{
-	destroy();
-}
-
-void Application::init()
-{	
-    _log->info("create()\n");
     
     _sphere = loadSphere(8, 32, 32);
     _earthTex = loadTexture("../../content/textures/earth.jpg");
@@ -25,23 +14,23 @@ void Application::init()
     _shader = loadShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
 }
 
-void Application::destroy()
+Application::~Application()
 {
-    _log->info("destroy()\n");
+	_log->info("~Application()\n");
     
-    _renderer->destroy(_sphere);
-    _renderer->destroy(_earthTex);
-    _renderer->destroy(_whiteTex);
-    _context->destroy(_shader); 
+    destroy(_sphere);
+    destroy(_earthTex);
+    destroy(_whiteTex);
+    destroy(_shader); 
 }
 
 void Application::resize(int width, int height)
 {
 	_log->info("resize(%d, %d)\n", width, height);
 	
-	_context->setViewport(width, height);
+	setViewport(width, height);
 		
-	_projection = perspective(60.0f, (float)_context->getWidth() / (float)_context->getHeight(), 0.001f, 100000.f);
+	_projection = perspective(60.0f, (float)width / (float)height, 0.001f, 100000.f);
 	_projection2D = ortho(0.0f, (float)width, 0.0f, (float)height, 0.0f, 10.0f);
 	
 	_view = lookAt(vec3(20.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
@@ -57,36 +46,32 @@ void Application::update(float delta)
 
 void Application::drawFrame()
 {	
-    _context->clear(color::Black);
-    _context->setShader(_shader, color::White);
-    _context->setMatrix4(shader::projection, _projection);
-    _context->setMatrix4(shader::view, _view);
+    clear(color::Black);
+    setShader(_shader, _projection, _view, color::White);
     
     // Earth
     mat4 model= rotate(mat4(1.0f), 23.0f, vec3(0.0f, 0.0f, 1.0f));
     model = rotate(model, _angle, vec3(0.0f, 1.0f, 0.0f));
     
-    _context->setMatrix4(shader::model, model);
+    setMatrix4(shader::model, model);
     
-    _renderer->bindTexture(_earthTex);
-    _renderer->draw(_sphere);
+    bindTexture(_earthTex);
+    draw(_sphere);
     
     // Light
     model = rotate(mat4(1.0f), _angle, vec3(0.0f, 1.0f, 0.0f));
     model = translate(model, vec3(-10.0f, 5.0f, 0.0f));
     model = scale(model, vec3(0.05f));
 	
-    _context->setMatrix4(shader::model, model);
-    _context->setColor(color::Yellow);
+    setMatrix4(shader::model, model);
+    setColor(color::Yellow);
     
-    _renderer->bindTexture(_whiteTex);
-    _renderer->draw(_sphere);
+    bindTexture(_whiteTex);
+    draw(_sphere);
     
     // Texture
-    _context->setMatrix4(shader::projection, _projection2D);
-    _context->setMatrix4(shader::view, _view2D);
-    _context->setColor(color::White);
+    setShader(_shader, _projection2D, _view2D, color::White);
     
-    _renderer->bindTexture(_earthTex);
-    _renderer->draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));
+    bindTexture(_earthTex);
+    draw(_earthTex, Rectangle(0, 0, _earthTex->width/8, _earthTex->height/8));
 }

@@ -83,22 +83,22 @@ namespace tigre
 			setViewport(0, 0, width, height);
 		}
 
-		int OpenGLContext::getX() const
+		int OpenGLContext::getViewPortX() const
 		{
 			return _x;
 		}
 
-		int OpenGLContext::getY() const
+		int OpenGLContext::getViewPortY() const
 		{
 			return _y;
 		}
 
-		int OpenGLContext::getWidth() const
+		int OpenGLContext::getViewPortWidth() const
 		{
 			return _width;
 		}
 
-		int OpenGLContext::getHeight() const
+		int OpenGLContext::getViewPortHeight() const
 		{
 			return _height;
 		}
@@ -108,9 +108,9 @@ namespace tigre
 			glUniformMatrix4fv(_shader->ports[port], 1, GL_FALSE, glm::value_ptr(mat));
 		}
 		
-		void OpenGLContext::setColor(const Color &color)
+		void OpenGLContext::setFloat4(int port, float a, float b, float c, float d)
 		{
-			glUniform4f(_shader->ports[shader::color], color.r, color.g, color.b, color.a);
+			glUniform4f(_shader->ports[port], a, b, c, d);
 		}
 		
 		void OpenGLContext::clear(const Color &color)
@@ -243,12 +243,6 @@ namespace tigre
 				_shader = 0;
 
 			glUseProgram(_shader->program);
-		}
-		
-		void OpenGLContext::setShader(Shader *shader, const Color &color)
-		{
-			setShader(shader);
-			setColor(color);
 		}
 		
 		OpenGLShader *OpenGLContext::getCurrentShader()

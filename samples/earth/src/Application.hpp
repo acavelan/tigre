@@ -17,10 +17,6 @@ class Application : public Game
         Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger);
 					
         ~Application();
-
-        void init();
-        
-        void destroy();
         
         void resize(int width, int height);
         
@@ -30,10 +26,6 @@ class Application : public Game
 
     private:
 		
-        Display *_display;
-        Context *_context;
-        Renderer *_renderer;
-        Content *_content;
         Logger *_log;
         
         Texture2D *_earthTex, *_whiteTex;

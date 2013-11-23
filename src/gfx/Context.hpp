@@ -50,15 +50,14 @@ namespace tigre
 				virtual void setViewport(int x, int y, int width, int height) = 0;
 				virtual void setViewport(int width, int height) = 0;
 
-				virtual int getX() const = 0;
-				virtual int getY() const = 0;
+				virtual int getViewPortX() const = 0;
+				virtual int getViewPortY() const = 0;
 
-				virtual int getWidth() const = 0;
-				virtual int getHeight() const = 0;
+				virtual int getViewPortWidth() const = 0;
+				virtual int getViewPortHeight() const = 0;
 				
 				virtual void setMatrix4(int port, const glm::mat4 &mat) = 0;
-				
-				virtual void setColor(const Color &color) = 0;
+				virtual void setFloat4(int port, float a, float b, float c, float d) = 0;
 				
 				virtual void clear(const Color &color = color::White) = 0;
 				
@@ -66,7 +65,6 @@ namespace tigre
 				virtual void destroy(Shader *shader) = 0;
 				
 				virtual void setShader(Shader *shader) = 0;
-				virtual void setShader(Shader *shader, const Color &color) = 0;
 		};
 	}
 }

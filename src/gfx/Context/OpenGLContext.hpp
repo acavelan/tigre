@@ -69,15 +69,15 @@ namespace tigre
 				void setViewport(int x, int y, int width, int height);
 				void setViewport(int width, int height);
 
-				int getX() const;
-				int getY() const;
+				int getViewPortX() const;
+				int getViewPortY() const;
 
-				int getWidth() const;
-				int getHeight() const;
+				int getViewPortWidth() const;
+				int getViewPortHeight() const;
 				
 				void setMatrix4(int port, const glm::mat4 &mat);
 				
-				void setColor(const Color &color);
+				void setFloat4(int port, float a, float b, float c, float d);
 				
 				void clear(const Color &color);
 								
@@ -85,7 +85,6 @@ namespace tigre
 				void destroy(Shader *shader);
 				
 				void setShader(Shader *shader);
-				void setShader(Shader *shader, const Color &color);
 				
 				OpenGLShader *getCurrentShader();
 
