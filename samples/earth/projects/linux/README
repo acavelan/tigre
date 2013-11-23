@@ -1,7 +1,19 @@
 Use scons to compile both the tigre library and the earth sample:
 
-Compile:
-scons -f tigre.py -f app.py 
+Tigre library
+=============
 
-Clean:
-scons -f tigre.py -f app.py -c
+Compile: scons -f tigre.py -f app.py 
+Clean: scons -f tigre.py -f app.py -c
+
+GLFW
+====
+
+Compile: scons -f glfw.py
+Clean: scons -f glfw.py -c
+
+Qt
+==
+
+Compile: qmake && make
+Clean: make clean (objects), make distclean (everything else)
