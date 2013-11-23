@@ -78,6 +78,7 @@ int main(int argc, char **argv)
 	try
 	{
 		app.init();
+		app.resize(width, height);
 		context.checkGlError("create()", &logger);
 		
 		Timer timer;

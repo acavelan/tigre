@@ -6,11 +6,7 @@ using namespace glm;
 using namespace core;
 using namespace gfx;
 
-Application::Application(	Display *display, 
-							Context *context,
-							Renderer *renderer,
-							Logger *logger,
-							Content *content) :
+Application::Application(Display *display,  Context *context, Renderer *renderer, Logger *logger, Content *content) :
     _display(display), _context(context), _renderer(renderer), _log(logger), 
     _content(content), _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), 
     _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
@@ -31,11 +27,6 @@ void Application::init()
     _earthTex = loadTexture("../../content/textures/earth.jpg");
     _whiteTex = loadTexture("../../content/textures/white1x1.jpg");
     _shader = loadShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
-    
-    _width = _display->getWidth();
-    _height = _display->getHeight();
-    
-    resize(_width, _height);
 }
 
 void Application::destroy()
