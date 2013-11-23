@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     
     glfwWindowHint(GLFW_SAMPLES, 4);
     
-	window = glfwCreateWindow(width, height, "Game", monitor, 0);
+	window = glfwCreateWindow(width, height, "Tigre", monitor, 0);
     
     if(!window)
     {
@@ -83,11 +83,30 @@ int main(int argc, char **argv)
 		
 		Timer timer;
 		timer.start();
-
+		
+		float delta = 0.0f, sec = 0.0f;
+		int frames = 0;
+		
 		bool run = true;
 		while(run)
-		{		
-			app.update(timer.tick());
+		{
+			delta = timer.tick();
+			
+			sec += delta;
+			
+			if(sec > 1.0f)
+			{
+				char title[32];
+				sprintf(title, "Tigre: %d FPS", frames);
+				glfwSetWindowTitle(window, title);
+
+				sec = 0.0f;
+				frames = 0;
+			}
+			else
+				frames++;
+				
+			app.update(delta);
 			app.drawFrame();
 			display.swapBuffers();
 			context.checkGlError("drawFrame()", &logger);

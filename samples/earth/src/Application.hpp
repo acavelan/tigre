@@ -50,10 +50,6 @@ class Application
 		
 		int _width, _height;
 		
-		int _FPS;
-		
-		float _timer;
-		
 		float _angle;
         
         // World

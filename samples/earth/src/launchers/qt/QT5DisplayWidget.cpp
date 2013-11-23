@@ -68,13 +68,7 @@ void QT5DisplayWidget::initializeGL()
 	_app->init();
 	
     connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
-    if(format().swapInterval() == -1)
-    {
-        _logger->warning("Swap Buffers at v_blank not available: refresh at approx 60fps.\n");
-        refresh.setInterval(16);
-    }
-    else
-        refresh.setInterval(0);
+	refresh.setInterval(0);
     refresh.start();
 }
 

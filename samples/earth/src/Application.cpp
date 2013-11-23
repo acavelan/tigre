@@ -9,7 +9,7 @@ using namespace gfx;
 Application::Application(Display *display,  Context *context, Renderer *renderer, Logger *logger, Content *content) :
     _display(display), _context(context), _renderer(renderer), _log(logger), 
     _content(content), _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), 
-    _width(0), _height(0), _FPS(0), _timer(0.0f), _angle(0)
+    _width(0), _height(0), _angle(0)
 {
     _log->info("Application(log, display, context, renderer, content)\n");
 }
@@ -53,21 +53,10 @@ void Application::resize(int width, int height)
 }
 
 void Application::update(float delta)
-{
-	_timer += delta;
-	if(_timer > 1.0f)
-	{
-		_log->info("FPS: %d\n", _FPS);
-		_timer = 0.0f;
-        _FPS = 0;
-	}
-	else
-		_FPS++;
-	
-    // Animation
+{	
     _angle += delta * 15.0f;
-    if(_angle > 360)
-        _angle = 0;
+    
+    if(_angle > 360) _angle = 0;
 }
 
 void Application::drawFrame()
