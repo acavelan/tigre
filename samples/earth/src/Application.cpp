@@ -1,7 +1,5 @@
 #include "Application.hpp"
 
-using namespace std;
-
 Application::Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger) :
     Game(display, context, renderer, content), _log(logger),
     _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), _angle(0.0f)

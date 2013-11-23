@@ -31,11 +31,11 @@ class Application : public Game
         Texture2D *_earthTex, *_whiteTex;
         ModelMesh *_sphere;
         Shader *_shader;
-		
-		float _angle;
         
         mat4 _projection, _projection2D;
         mat4 _view, _view2D;
+        
+		float _angle;
         
 };
 
