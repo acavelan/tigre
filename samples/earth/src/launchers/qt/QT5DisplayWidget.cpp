@@ -1,14 +1,14 @@
-#include "QT5Display.hpp"
+#include "QT5DisplayWidget.hpp"
 
 using namespace core;
 using namespace gfx;
 
-QT5Display::QT5Display(QWidget *parent) : 
-	QGLWidget(QGLFormat(desiredFormat()), parent), _valid(false)
+QT5DisplayWidget::QT5DisplayWidget(QWidget *parent) : 
+	QGLWidget(QGLFormat(desiredFormat()), parent)
 {
 }
 
-QT5Display::~QT5Display() 
+QT5DisplayWidget::~QT5DisplayWidget() 
 {
 	delete _app;
 	delete _content;
@@ -16,24 +16,14 @@ QT5Display::~QT5Display()
 	delete _context;
 }
 
-QGLFormat QT5Display::desiredFormat()
+QGLFormat QT5DisplayWidget::desiredFormat()
 {
     QGLFormat fmt(QGL::SampleBuffers);
-    //fmt.setSwapInterval(1);
+    fmt.setSwapInterval(1);
     return fmt;
 }
 
-void QT5Display::setApplication(Application *app)
-{
-	_app = app;
-}
-
-bool QT5Display::valid() const
-{
-	return _valid;
-}
-
-void QT5Display::resize(int width, int height)
+void QT5DisplayWidget::resize(int width, int height)
 {
 	_width = width;
 	_height = height;
@@ -41,17 +31,17 @@ void QT5Display::resize(int width, int height)
 	QGLWidget::resize(width, height);
 }
 
-int QT5Display::getWidth() const
+int QT5DisplayWidget::getWidth() const
 {
 	return _width;
 }
 
-int QT5Display::getHeight() const
+int QT5DisplayWidget::getHeight() const
 {
 	return _height;
 }
 
-void QT5Display::initializeGL()
+void QT5DisplayWidget::initializeGL()
 {
 	_logger = new ConsoleLogger("Application");
 	
@@ -77,8 +67,6 @@ void QT5Display::initializeGL()
 	
 	_app->init();
 	
-	_valid = true;
-	
     connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
     if(format().swapInterval() == -1)
     {
@@ -90,13 +78,13 @@ void QT5Display::initializeGL()
     refresh.start();
 }
 
-void QT5Display::paintGL()
+void QT5DisplayWidget::paintGL()
 {
 	_app->update(timer.tick());
 	_app->drawFrame();
 }
 
-void QT5Display::resizeGL(int width, int height)
+void QT5DisplayWidget::resizeGL(int width, int height)
 {
 	_width = width;
 	_height = height;

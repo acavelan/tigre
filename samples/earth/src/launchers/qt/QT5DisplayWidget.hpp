@@ -1,5 +1,5 @@
-#ifndef QT5DISPLAY_H
-#define QT5DISPLAY_H
+#ifndef QT5DISPLAYWIDGET_H
+#define QT5DISPLAYWIDGET_H
 
 #include <QGLWidget>
 #include <QTimer>
@@ -17,21 +17,17 @@
 
 using namespace tigre;
 
-class QT5Display : public QGLWidget, public gfx::Display
+class QT5DisplayWidget : public QGLWidget, public gfx::Display
 {
     Q_OBJECT
 
 	public:
 	
-		QT5Display(QWidget *parent = 0);
+		QT5DisplayWidget(QWidget *parent = 0);
 
-		virtual ~QT5Display();
+		virtual ~QT5DisplayWidget();
 		
 		QGLFormat desiredFormat();
-		
-		void setApplication(Application *app);
-		
-		bool valid() const;
 		
 		void resize(int width, int height);
 		
@@ -60,7 +56,6 @@ class QT5Display : public QGLWidget, public gfx::Display
 		core::Timer timer;
 		
 		int _width, _height;
-		bool _valid;
 
 };
 

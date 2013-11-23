@@ -1,12 +1,12 @@
 #include <QtWidgets>
 
 #include "QT5Window.hpp"
-#include "QT5Display.hpp"
+#include "QT5DisplayWidget.hpp"
 
 
 QT5Window::QT5Window()
 {        
-	QT5Display *display = new QT5Display();
+	QT5DisplayWidget *display = new QT5DisplayWidget();
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(display);
