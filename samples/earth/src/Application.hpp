@@ -5,18 +5,27 @@
 #include "game/game.hpp"
 #include "gfx/gfx.hpp"
 
-using namespace glm;
 using namespace tigre::core;
 using namespace tigre::game;
 using namespace tigre::gfx;
+
+using namespace glm;
 
 class Application : public Game
 {
     public:
 
-        Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger);
+        Application(Display *display, 
+					Context *context, 
+					Renderer *renderer, 
+					Content *content, 
+					Logger *logger);
 					
         ~Application();
+        
+        void start();
+        
+        void stop();
         
         void resize(int width, int height);
         

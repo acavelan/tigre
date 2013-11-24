@@ -53,10 +53,10 @@ int main(int argc, char **argv)
     glfwSetWindowSizeCallback(window, onResize);
     glfwMakeContextCurrent(window);
     
-	ConsoleLogger logger("Application");
+	ConsoleLogger logger("Tigre");
 	
+	OpenGLContext context;
 	GLFWDisplay display(window);
-	OpenGLContext context(&display);
 	OpenGLRenderer renderer(&context); 
 	
 	display.init();
@@ -76,6 +76,7 @@ int main(int argc, char **argv)
 	
 	try
 	{
+		app.start();
 		app.resize(width, height);
 		context.checkGlError("create()", &logger);
 		
@@ -113,6 +114,8 @@ int main(int argc, char **argv)
 			
 			glfwPollEvents();
 		}
+		
+		app.stop();
 	}
 	catch(const Exception &e)
 	{

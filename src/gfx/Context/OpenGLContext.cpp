@@ -36,8 +36,8 @@ namespace tigre
 {
 	namespace gfx
 	{
-		OpenGLContext::OpenGLContext(Display *display) :
-			_display(display), _shader(0), _x(0), _y(0), _width(0), _height(0)
+		OpenGLContext::OpenGLContext() :
+			_shader(0), _x(0), _y(0), _width(0), _height(0)
 		{
 		}
 
@@ -50,8 +50,6 @@ namespace tigre
 		{
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 			glPixelStorei(GL_PACK_ALIGNMENT, 1);
-			
-			setViewport(0, 0, _display->getWidth(), _display->getHeight());
 		}
 		
 		void OpenGLContext::destroy()

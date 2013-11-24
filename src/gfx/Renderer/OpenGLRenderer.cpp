@@ -48,14 +48,14 @@ namespace tigre
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			
-			static const GLfloat vertices[12] = {
+			static const GLfloat vertices[8] = {
 				0.0f, 0.0f,
 				0.0f, 1.0f,
 				1.0f, 1.0f,
 				1.0f, 0.0f
 			};
 			
-			static const GLfloat texCoords[12] = {
+			static const GLfloat texCoords[8] = {
 				0.0f, 1.0f,
 				0.0f, 0.0f,
 				1.0f, 0.0f,
@@ -68,10 +68,10 @@ namespace tigre
 			
 			glGenBuffers(3, _quad.vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, _quad.vbo[0]);
-			glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 			
 			glBindBuffer(GL_ARRAY_BUFFER, _quad.vbo[1]);
-			glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), texCoords, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), texCoords, GL_STATIC_DRAW);
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quad.vbo[2]);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLubyte), indices, GL_STATIC_DRAW);

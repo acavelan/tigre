@@ -37,7 +37,6 @@ SOFTWARE.
 	#include <GLES2/gl2ext.h>
 #endif
 
-#include "../Display.hpp"
 #include "../Context.hpp"
 #include "../../core/Logger.hpp"
 
@@ -57,7 +56,7 @@ namespace tigre
 		{
 			public:
 
-				OpenGLContext(Display *display);
+				OpenGLContext();
 				~OpenGLContext();
 				
 				void init();
@@ -92,8 +91,6 @@ namespace tigre
 			
 				GLuint createShader(GLenum shaderType, const char *source);
 				GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader);
-
-				Display *_display;
 				
 				OpenGLShader *_shader;
 				std::vector<OpenGLShader*> _glShaders;

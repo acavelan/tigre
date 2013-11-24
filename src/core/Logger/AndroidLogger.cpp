@@ -28,7 +28,7 @@ SOFTWARE.
 
 namespace tigre
 {
-	namespace utils
+	namespace core
 	{
 		AndroidLogger::AndroidLogger(const std::string &tag) :
 			_tag(tag)

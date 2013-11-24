@@ -10,6 +10,8 @@ QT5DisplayWidget::QT5DisplayWidget(QWidget *parent) :
 
 QT5DisplayWidget::~QT5DisplayWidget() 
 {
+	_app->stop();
+	
 	delete _app;
 	delete _content;
 	delete _renderer;
@@ -45,29 +47,37 @@ void QT5DisplayWidget::initializeGL()
 {
 	makeCurrent();
 	
-	_logger = new ConsoleLogger("Application");
-	
-	_context = new OpenGLContext(this);
-	_renderer = new OpenGLRenderer(_context); 
+	try
+	{
+		_logger = new ConsoleLogger("Tigre");
+		
+		_context = new OpenGLContext();
+		_renderer = new OpenGLRenderer(_context); 
 
-	_context->init();
-	_renderer->init();
-	
-	_context->printGLString(GL_VENDOR, _logger);
-	_context->printGLString(GL_RENDERER, _logger);
-	_context->printGLString(GL_VERSION, _logger);
-	_context->printGLString(GL_SHADING_LANGUAGE_VERSION, _logger);
-	
-	_content = new Content();
-	_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
-	
-	_app = new Application(this, _context, _renderer, _content, _logger);
-	
-    connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
-	refresh.setInterval(0);
-    refresh.start();
-    
-    timer.start();
+		_context->init();
+		_renderer->init();
+		
+		_context->printGLString(GL_VENDOR, _logger);
+		_context->printGLString(GL_RENDERER, _logger);
+		_context->printGLString(GL_VERSION, _logger);
+		_context->printGLString(GL_SHADING_LANGUAGE_VERSION, _logger);
+		
+		_content = new Content();
+		_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
+		
+		_app = new Application(this, _context, _renderer, _content, _logger);
+		_app->start();
+		
+		connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
+		refresh.setInterval(0);
+		refresh.start();
+		
+		timer.start();
+    }
+	catch(const Exception &e)
+	{
+		_logger->error(e.what());
+	}
 }
 
 void QT5DisplayWidget::paintGL()

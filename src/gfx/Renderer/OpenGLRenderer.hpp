@@ -92,6 +92,7 @@ namespace tigre
 				OpenGLContext *_context;
 				
 				OpenGLQuad _quad;
+
 				std::vector<OpenGLTexture*> _glTextures;
 				std::vector<OpenGLModelMesh*> _glModels;
 

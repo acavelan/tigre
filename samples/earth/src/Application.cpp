@@ -1,20 +1,33 @@
 #include "Application.hpp"
 
-Application::Application(Display *display, Context *context, Renderer *renderer, Content *content, Logger *logger) :
+Application::Application(Display *display, 
+						 Context *context, 
+						 Renderer *renderer, 
+						 Content *content, 
+						 Logger *logger) :
     Game(display, context, renderer, content), _log(logger),
     _earthTex(0), _whiteTex(0), _sphere(0), _shader(0), _angle(0.0f)
 {
     _log->info("Application(log, display, context, renderer, content)\n");
-    
-    _sphere = loadSphere(8, 32, 32);
+}
+
+Application::~Application()
+{
+}
+
+void Application::start()
+{
+	_log->info("start()\n");
+	
+	_sphere = loadSphere(8, 32, 32);
     _earthTex = loadTexture("../../content/textures/earth.jpg");
     _whiteTex = loadTexture("../../content/textures/white1x1.jpg");
     _shader = loadShader("../../content/shaders/texture.vert", "../../content/shaders/texture.frag");
 }
 
-Application::~Application()
+void Application::stop()
 {
-	_log->info("~Application()\n");
+	_log->info("stop()\n");
     
     destroy(_sphere);
     destroy(_earthTex);

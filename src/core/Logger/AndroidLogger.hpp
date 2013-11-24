@@ -31,7 +31,7 @@ SOFTWARE.
 
 namespace tigre
 {
-	namespace utils
+	namespace core
 	{
 		class AndroidLogger : public Logger
 		{
