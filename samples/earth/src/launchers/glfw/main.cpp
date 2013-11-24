@@ -69,6 +69,7 @@ int main(int argc, char **argv)
 	context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
 	
 	Content content;
+	content.addLocation("content", "../../content");
 	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
 	Application app(&display, &context, &renderer, &content, &logger);
@@ -120,6 +121,8 @@ int main(int argc, char **argv)
 	catch(const Exception &e)
 	{
 		logger.error(e.what());
+		
+		app.stop();
 	}
 	
 	glfwTerminate();

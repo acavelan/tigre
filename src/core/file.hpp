@@ -31,9 +31,7 @@ namespace tigre
 {
 	namespace core
 	{	
-		std::string loadFile(const std::string &filename);
-		
-		std::string getExtension(const std::string &filename);
+		void loadFile(const std::string &filename, std::string &buffer);
 	}
 }
 

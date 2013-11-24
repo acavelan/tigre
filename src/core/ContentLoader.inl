@@ -5,7 +5,7 @@ ContentLoader<T>::~ContentLoader()
 }
 
 template<class T>
-T* ContentLoader<T>::load(const std::string &filename)
+T* ContentLoader<T>::loadFromFile(const std::string &filename)
 {
 	Loader<T> *loader = findLoader(filename);
 	T *resource = loader->loadFromFile(filename);
@@ -13,7 +13,7 @@ T* ContentLoader<T>::load(const std::string &filename)
 }
 
 template<class T>
-void ContentLoader<T>::save(const std::string &filename, const T *resource)
+void ContentLoader<T>::saveToFile(const std::string &filename, const T *resource)
 {
 	Loader<T> *loader = findLoader(filename);
 	loader->saveToFile(filename, resource);
@@ -46,7 +46,7 @@ void ContentLoader<T>::unregisterLoaders()
 template<class T>
 Loader<T>* ContentLoader<T>::findLoader(const std::string &filename)
 {
-	std::string extension = toLower(getExtension(filename));
+	std::string extension = toLower(getSuffix(filename, "."));
 	
 	typename LoaderMap::iterator it = _loaderMap.find(extension);
 

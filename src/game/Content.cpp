@@ -22,50 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CONTENT_LOADER_H
-#define CONTENT_LOADER_H
-
-#include <map>
-#include <string>
-#include <vector>
-
-#include "string.hpp"
-#include "Loader.hpp"
-#include "Resource.hpp"
-#include "Exceptions.hpp"
+#include "Content.hpp"
+#include "../core/file.hpp"
 
 namespace tigre
 {
-	namespace core
+	namespace game
 	{
-		template <class T>
-		class ContentLoader
+		void Content::addLocation(const std::string &name, const std::string &path)
 		{
-			public:
-
-				virtual ~ContentLoader();
-				
-				T* loadFromFile(const std::string &filename);
-				
-				void saveToFile(const std::string &filename, const T *resource);
-				
-				void registerLoader(Loader<T> *loader, const std::string &extensions);
-				
-				void unregisterLoaders();
-				
-				Loader<T>* findLoader(const std::string &filename);
-				
-			protected:
-				
-				typedef std::map<std::string, Loader<T>*> LoaderMap;
-				typedef std::vector<Loader<T>*> LoaderList;
-				
-				LoaderList _loaderList;
-				LoaderMap _loaderMap;
-		};
+			_locations[name] = path;
+		}
 		
-		#include "ContentLoader.inl"
+		void Content::loadFile(const std::string &filename, std::string &buffer)
+		{
+			std::string prefix = core::getPrefix(filename, ":");
+					
+			if(!prefix.empty())
+			{
+				if(_locations.find(prefix) != _locations.end())
+				{
+					std::string suffix = core::getSuffix(filename, ":");
+					std::string path = _locations.at(prefix) + "/" + suffix;
+					core::loadFile(path, buffer);
+				}
+				else
+					throw core::LoadingFailed("unknown prefix: " + prefix);
+			}
+			else
+				core::loadFile(filename, buffer);
+		}
 	}
 }
-
-#endif

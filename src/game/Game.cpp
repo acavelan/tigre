@@ -205,8 +205,9 @@ namespace tigre
 		gfx::Shader* Game::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
 		{
 			gfx::ShaderSource shaderSource;
-			shaderSource.vertexShader = core::loadFile(vertexFile);
-			shaderSource.fragmentShader = core::loadFile(fragmentFile);
+			
+			_content->loadFile(vertexFile, shaderSource.vertexShader);
+			_content->loadFile(fragmentFile, shaderSource.fragmentShader);
 			
 			gfx::Shader *shader = _context->createShader(shaderSource);
 			

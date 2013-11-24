@@ -52,6 +52,12 @@ namespace tigre
 		std::string toUpper(const std::string &str);
 		
 		void split(const std::string &str, std::vector<std::string> &tokens, const std::string &delim);
+		
+		std::string cut(const std::string &str, const std::string &delim, int occurrence);
+		
+		std::string getPrefix(const std::string &str, const std::string &delim);
+		
+		std::string getSuffix(const std::string &str, const std::string &delim);
 	}
 }
 

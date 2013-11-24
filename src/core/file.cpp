@@ -31,10 +31,8 @@ namespace tigre
 {
 	namespace core
 	{
-		std::string loadFile(const std::string &filename)
-		{
-			std::string source;
-			
+		void loadFile(const std::string &filename, std::string &buffer)
+		{			
 			FILE *fp = fopen(filename.c_str(), "rb");
 			
 			if(fp)
@@ -43,31 +41,14 @@ namespace tigre
 				long fsize = ftell(fp);
 				fseek(fp, 0, SEEK_SET);
 				
-				source.resize(fsize + 1);
-				fread(&source[0], fsize, 1, fp);
-				source[fsize] = 0;
+				buffer.resize(fsize + 1);
+				fread(&buffer[0], fsize, 1, fp);
+				buffer[fsize] = 0;
 				
 				fclose(fp);
 			}
 			else
-				throw core::LoadingFailed("Couldn't load " + filename + ": file not found\n");
-			
-			return source;
-		}
-		
-		std::string getExtension(const std::string &filename)
-		{
-			std::string extension = "";
-			bool find = false;
-			
-			int size = filename.size();
-			for(int i=size-1; i>0 && !find; i--)
-			{
-				if(filename[i] == '.') find = true;
-				else extension = filename[i] + extension;
-			}
-			
-			return extension;
+				throw core::LoadingFailed(filename + ": file not found\n");
 		}
 	}
 }

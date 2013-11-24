@@ -193,5 +193,33 @@ namespace tigre
 				}
 			}
 		}
+		
+		std::string cut(const std::string &str, const std::string &delim, int occurrence)
+		{
+			std::vector<std::string> tokens;
+			
+			split(str, tokens, delim);
+			
+			if(tokens.size() > 0 && occurrence == -1)
+			{
+				return tokens[tokens.size() - 1];
+			}
+			else if(tokens.size() > (unsigned int)occurrence)
+			{
+				return tokens[occurrence];
+			}
+			else
+				return "";
+		}
+		
+		std::string getPrefix(const std::string &str, const std::string &delim)
+		{
+			return cut(str, delim, 0);
+		}
+		
+		std::string getSuffix(const std::string &str, const std::string &delim)
+		{
+			return cut(str, delim, -1);
+		}
 	}
 }

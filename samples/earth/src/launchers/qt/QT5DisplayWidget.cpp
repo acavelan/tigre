@@ -63,6 +63,7 @@ void QT5DisplayWidget::initializeGL()
 		_context->printGLString(GL_SHADING_LANGUAGE_VERSION, _logger);
 		
 		_content = new Content();
+		_content->addLocation("content", "../../content");
 		_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 		
 		_app = new Application(this, _context, _renderer, _content, _logger);

@@ -45,7 +45,7 @@ namespace tigre
 			if(!data)
 			{
 				std::string error = std::string(SOIL_last_result()) + "\n";
-				throw core::LoadingFailed(error);
+				throw core::LoadingFailed(filename + ": " + error);
 				return 0;
 			}
 			else
