@@ -1,10 +1,10 @@
 #version 100	
 
-in vec3 position;
-in vec3 normal;
-in vec2 texCoord;
+attribute vec3 position;
+//attribute vec3 normal;
+attribute vec2 texCoord;
 
-varying vec3 vnormal;
+//varying vec3 vnormal;
 varying vec2 vtexCoord;
 varying vec4 vcolor;
 
@@ -15,7 +15,7 @@ uniform vec4 color;
 
 void main()
 {
-	vnormal = normal;
+	//vnormal = normal;
 	vtexCoord = texCoord;
 	vcolor = color;												
 	gl_Position = projection * view * model * vec4(position, 1.0);

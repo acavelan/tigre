@@ -4,9 +4,9 @@
 	precision mediump float;						
 #endif	
 											
-in vec3 vnormal;
-in vec2 vtexCoord;
-in vec4 vcolor;
+varying vec3 vnormal;
+varying vec2 vtexCoord;
+varying vec4 vcolor;
 								
 uniform sampler2D texture0;
 
