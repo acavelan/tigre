@@ -22,7 +22,7 @@ void Application::start()
 	_sphere = loadSphere(8, 32, 32);
     _earthTex = loadTexture("content:textures/earth.jpg");
     _whiteTex = loadTexture("content:textures/white1x1.jpg");
-    _shader = loadShader("content:shaders/texture.vert", "content:shaders/texture.frag");
+    _shader = loadShader("shaders:texture.vert", "shaders:texture.frag");
 }
 
 void Application::stop()

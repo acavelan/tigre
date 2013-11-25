@@ -70,6 +70,7 @@ int main(int argc, char **argv)
 	
 	Content content;
 	content.addLocation("content", "../../content");
+	content.addLocation("shaders", "../../content/shaders/130");
 	content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 	
 	Application app(&display, &context, &renderer, &content, &logger);

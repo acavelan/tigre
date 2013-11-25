@@ -22,17 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CORE_MAIN_H
-#define CORE_MAIN_H
+#ifndef ACTIVITY_HELPER_H
+#define ACTIVITY_HELPER_H
 
-#include "os.hpp"
-#include "file.hpp"
-#include "string.hpp"
-#include "Loader.hpp"
-#include "Resource.hpp"
-#include "Exceptions.hpp"
-#include "ContentLoader.hpp"
-#include "Timer.hpp"
-#include "Logger.hpp"
+#include <android_native_app_glue.h>
+    
+namespace tigre
+{
+	namespace os
+	{
+		namespace android
+		{			
+			void cacheActivity(struct ANativeActivity *activity);
+			
+			struct ANativeActivity *getActivity();
+			
+			struct AAssetManager* getAssetManager();
+		}
+	}
+}
 
 #endif

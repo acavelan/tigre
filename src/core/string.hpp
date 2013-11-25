@@ -58,6 +58,8 @@ namespace tigre
 		std::string getPrefix(const std::string &str, const std::string &delim);
 		
 		std::string getSuffix(const std::string &str, const std::string &delim);
+		
+		bool startsWith(const std::string &s1, const std::string &s2);
 	}
 }
 

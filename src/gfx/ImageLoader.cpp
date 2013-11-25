@@ -27,6 +27,7 @@ SOFTWARE.
 
 #include "SOIL.h"
 #include "ImageLoader.hpp"
+#include "../core/file.hpp"
 
 namespace tigre
 {
@@ -34,10 +35,14 @@ namespace tigre
 	{
 		Image* ImageLoader::loadFromFile(const std::string &filename)
 		{
+			std::string file;
+			core::loadFile(filename, file);
+			
 			int channels, width, height;
-			unsigned char *data = SOIL_load_image
+			unsigned char *data = SOIL_load_image_from_memory
 			(
-				filename.c_str(),
+				(unsigned char*)file.c_str(),
+				file.size(),
 				&width, &height, &channels,
 				SOIL_LOAD_AUTO
 			);

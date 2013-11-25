@@ -221,5 +221,10 @@ namespace tigre
 		{
 			return cut(str, delim, -1);
 		}
+		
+		bool startsWith(const std::string &s1, const std::string &s2)
+		{
+			return !s1.compare(0, s2.size(), s2);
+		}
 	}
 }

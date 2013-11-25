@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 #include "Activity.hpp"
+#include "activity.hpp"
 
 namespace tigre
 {
@@ -102,8 +103,10 @@ namespace tigre
 				_app->onAppCmd = _app_handle_cmd;
 				_app->onInputEvent = _app_handle_input;
 
-				if (_app->savedState != NULL)
+				if(_app->savedState != NULL)
 					this->onLoadState(_app->savedState);
+				
+				cacheActivity(state->activity);
 			}
 
 			Activity::~Activity()

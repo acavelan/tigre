@@ -16,6 +16,7 @@ LOCAL_SRC_FILES 		:= 	../$(TIGRESRC)/core/file.cpp \
 							../$(TIGRESRC)/core/Timer.cpp \
 							../$(TIGRESRC)/core/Logger/AndroidLogger.cpp \
 							../$(TIGRESRC)/game/Game.cpp \
+							../$(TIGRESRC)/game/Content.cpp \
 							../$(TIGRESRC)/game/Sphere.cpp \
 							../$(TIGRESRC)/gfx/Display/AndroidDisplay.cpp \
 							../$(TIGRESRC)/gfx/Context/OpenGLContext.cpp \
@@ -28,7 +29,8 @@ LOCAL_SRC_FILES 		:= 	../$(TIGRESRC)/core/file.cpp \
 							../$(TIGRESRC)/gfx/Texture2D.cpp \
 							../$(TIGRESRC)/gfx/ImageLoader.cpp \
 							../$(TIGRESRC)/gfx/Rectangle.cpp \
-							../$(TIGRESRC)/os/android/Activity.cpp
+							../$(TIGRESRC)/os/android/Activity.cpp \
+							../$(TIGRESRC)/os/android/activity.cpp
 
 LOCAL_STATIC_LIBRARIES 	+= 	soil android_native_app_glue
 

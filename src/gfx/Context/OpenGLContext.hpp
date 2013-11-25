@@ -27,7 +27,9 @@ SOFTWARE.
 
 #include <vector>
 
-#include "os/os.hpp"
+#include "../Context.hpp"
+#include "../../core/Logger.hpp"
+#include "../../core/os.hpp"
 
 #if defined(OS_LINUX)
 	#include <GL/gl.h>
@@ -36,9 +38,6 @@ SOFTWARE.
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
 #endif
-
-#include "../Context.hpp"
-#include "../../core/Logger.hpp"
 
 namespace tigre
 {

@@ -43,7 +43,7 @@ namespace tigre
 				void loadFile(const std::string &filename, std::string &buffer);
 				
 				template<class T>
-				T* load(const std::string &filename)
+				T* loadFromFile(const std::string &filename)
 				{
 					std::string prefix = core::getPrefix(filename, ":");
 					
@@ -63,7 +63,7 @@ namespace tigre
 				}
 				
 				template<class T>
-				void save(const std::string &filename, const T *resource)
+				void saveToFile(const std::string &filename, const T *resource)
 				{
 					ContentLoader<T>::saveToFile(filename, resource);
 				}

@@ -193,7 +193,7 @@ namespace tigre
 
 		gfx::Texture2D* Game::loadTexture(const std::string &filename)
 		{
-			gfx::Image *image = _content->load<gfx::Image>(filename);
+			gfx::Image *image = _content->loadFromFile<gfx::Image>(filename);
 			
 			gfx::Texture2D *texture = _renderer->createTexture2D(image);
 			

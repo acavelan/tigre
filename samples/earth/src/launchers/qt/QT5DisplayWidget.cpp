@@ -64,6 +64,7 @@ void QT5DisplayWidget::initializeGL()
 		
 		_content = new Content();
 		_content->addLocation("content", "../../content");
+		_content->addLocation("shaders", "../../content/shaders/130");
 		_content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 		
 		_app = new Application(this, _context, _renderer, _content, _logger);
