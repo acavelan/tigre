@@ -3,10 +3,23 @@ TIGRE (Tiny Graphics Rendering Engine)
 What is Tigre ?
 ================
 
-Tigre is a set of libraries dedicated to advanced visualization and/or 
+Tigre is a set of modules suited for advanced visualization or 
 video game development.
 
+Tigre is light, flexible and fast.
+
 Tigre is free, open source and cross-platform.
+
+[WARNING] Tigre is under heavy development and it is far from stable.
+
+What is Tigre not ?
+====================
+
+By design, Tigre doesn't come with OpenGL context creation, window 
+management nor input handling. You need to provide these yourself or by 
+using third-party libraries like Qt, glfw, SFML, or SDL. Tigre will fit 
+in most projects, giving you the ultimate control. Tigre comes with some 
+working examples using Qt, Android and glfw.
 
 Philosphy
 ==========

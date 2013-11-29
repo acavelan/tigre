@@ -24,6 +24,10 @@ multiple implementations of that interface, for different systems.
 		- Shader
 		- Color
 		- Rectangle
+	::game
+		- Game
+		- Content
+		- Sphere
 	::os::
 		::android
 			- Activity
@@ -36,7 +40,7 @@ Tigre is very modular, like a bunch of Lego pieces, and it would be nonsense to
 provide one very specific build since everyone is likely to need something 
 different.
 
-Tigre provides some examples that you can use as a start-up build, including 
+Tigre provides some examples that you can use as a starter, including 
 different ways to compile the library, so you can easily adapt it to your needs.
 
 Indentation:

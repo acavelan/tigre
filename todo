@@ -1,7 +1,7 @@
 Tigre
-	- Android compatibility
 	- Windows compatibility
 	- Add an OpenGL 2.x renderer
+	- Find some way to make sample "launchers" reusable
 	
 Sample:	
 	- Add lights
