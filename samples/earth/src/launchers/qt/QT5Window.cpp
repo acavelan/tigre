@@ -5,8 +5,8 @@
 
 
 QT5Window::QT5Window()
-{        
-	QT5DisplayWidget *display = new QT5DisplayWidget();
+{
+    QT5DisplayWidget *display = new QT5DisplayWidget();
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(display);

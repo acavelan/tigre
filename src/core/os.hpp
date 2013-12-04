@@ -1,47 +1,23 @@
-/*
-TIGRE (https://gitorious.org/tigre) is made available under the MIT License.
-
-Copyright (c) 2012 - 2013 Aurélien Cavelan (razlock)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-
 #ifndef OS_H
 #define OS_H
 
 #if defined(_WIN64)
-	#define OS_WINDOWS
-	#define OS_WINDOWS_64
+#define OS_WINDOWS
+#define OS_WINDOWS_64
 #elif defined(_WIN32)
-	#define OS_WINDOWS
-	#define OS_WINDOWS_32
+#define OS_WINDOWS
+#define OS_WINDOWS_32
 #elif defined(__APPLE__)
-	#define OS_APPLE
+#define OS_APPLE
 #elif defined(__ANDROID__)
-	#define OS_ANDROID
+#define OS_ANDROID
 #elif defined(__linux)
-	#define OS_LINUX
-	#define OS_UNIX
+#define OS_LINUX
+#define OS_UNIX
 #elif defined(__unix)
-	#define OS_UNIX
+#define OS_UNIX
 #else
-	#define OS_UNKNOWN
+#define OS_UNKNOWN
 #endif
 
 #endif

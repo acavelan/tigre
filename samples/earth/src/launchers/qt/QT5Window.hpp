@@ -5,16 +5,16 @@
 
 class QT5Window : public QWidget
 {
-    Q_OBJECT
+        Q_OBJECT
 
-	public:
-	
-		QT5Window();
+    public:
 
-	protected:
-	
-		void keyPressEvent(QKeyEvent *event);
-		
+        QT5Window();
+
+    protected:
+
+        void keyPressEvent(QKeyEvent *event);
+
 };
 
 #endif

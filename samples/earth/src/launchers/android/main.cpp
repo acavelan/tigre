@@ -23,44 +23,44 @@ using namespace tigre::gfx;
  */
 void android_main(struct android_app* state)
 {
-	AndroidLogger logger("Tigre");
+    AndroidLogger logger("Tigre");
 
-	try
-	{
-		OpenGLContext context;
-		AndroidDisplay display;
-		OpenGLRenderer renderer(&context);
-	
-		Content content;
-		content.addLocation("content", "file:///android_asset");
-		content.addLocation("shaders", "file:///android_asset/shaders/100");
-		content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
-	
-		Application app(&display, &context, &renderer, &content, &logger);
-		
-		AppHandler handler(state, &logger, &display, &context, &renderer, &app);
-		
-		Timer timer;
-		timer.start();
+    try
+    {
+        OpenGLContext context;
+        AndroidDisplay display;
+        OpenGLRenderer renderer(&context);
 
-		while(handler.loop())
-		{
-			handler.pollEvent();
-			
-			if(handler.hasFocus())
-			{
-				app.update(timer.tick());
-				if(display.valid())
-				{
-					app.drawFrame();
-					display.swapBuffers();
-					context.checkGlError("drawFrame()", &logger);
-				}
-			}
-		}
-	}
-	catch(const Exception &e)
-	{
-		logger.error(e.what());
-	}
+        Content content;
+        content.addLocation("content", "file:///android_asset");
+        content.addLocation("shaders", "file:///android_asset/shaders/100");
+        content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
+
+        Application app(&display, &context, &renderer, &content, &logger);
+
+        AppHandler handler(state, &logger, &display, &context, &renderer, &app);
+
+        Timer timer;
+        timer.start();
+
+        while(handler.loop())
+        {
+            handler.pollEvent();
+
+            if(handler.hasFocus())
+            {
+                app.update(timer.tick());
+                if(display.valid())
+                {
+                    app.drawFrame();
+                    display.swapBuffers();
+                    context.checkGlError("drawFrame()", &logger);
+                }
+            }
+        }
+    }
+    catch(const Exception &e)
+    {
+        logger.error(e.what());
+    }
 }

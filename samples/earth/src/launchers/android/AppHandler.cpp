@@ -1,6 +1,6 @@
 #include "AppHandler.hpp"
 
-AppHandler::AppHandler(	struct android_app *state, 
+AppHandler::AppHandler(	struct android_app *state,
                         Logger *log,
                         AndroidDisplay *display,
                         OpenGLContext *context,
@@ -9,7 +9,7 @@ AppHandler::AppHandler(	struct android_app *state,
     Activity(state), _log(log), _display(display), _context(context), _renderer(renderer), _app(app), _hasFocus(true), _loop(true)
 {
     _log->info("AppHandler::AppHandler(state, log, display)");
-	
+
     sensorManager = ASensorManager_getInstance();
     accelerometerSensor = ASensorManager_getDefaultSensor(sensorManager, ASENSOR_TYPE_ACCELEROMETER);
     sensorEventQueue = ASensorManager_createEventQueue(sensorManager, getState()->looper, LOOPER_ID_USER, NULL, NULL);
@@ -23,33 +23,33 @@ AppHandler::~AppHandler()
 void AppHandler::onInitWindow()
 {
     _log->info("AppHandler::onInitWindow()");
-    
+
     if(getState()->window != NULL)
     {
-		_display->setWindow(getState()->window);
+        _display->setWindow(getState()->window);
         _display->init();
         _context->init();
         _renderer->init();
 
         _context->printGLString(GL_VENDOR, _log);
-		_context->printGLString(GL_RENDERER, _log);
-		_context->printGLString(GL_VERSION, _log);
-		_context->printGLString(GL_SHADING_LANGUAGE_VERSION, _log);
-		
-		_app->start();
-		_app->resize(_display->getWidth(), _display->getHeight());
-	}
+        _context->printGLString(GL_RENDERER, _log);
+        _context->printGLString(GL_VERSION, _log);
+        _context->printGLString(GL_SHADING_LANGUAGE_VERSION, _log);
+
+        _app->start();
+        _app->resize(_display->getWidth(), _display->getHeight());
+    }
 }
 
 void AppHandler::onTermWindow()
 {
     _log->info("AppHandler::onTermWindow()");
-    
+
     if(_display->valid())
-		_app->stop();
-			
-	_renderer->destroy();
-	_context->destroy();
+        _app->stop();
+
+    _renderer->destroy();
+    _context->destroy();
     _display->destroy();
 }
 
@@ -57,25 +57,25 @@ void AppHandler::onWindowResized()
 {
     _log->info("AppHandler::onWindoResize()");
     if(_display->valid())
-		_app->resize(_display->getWidth(), _display->getHeight());
+        _app->resize(_display->getWidth(), _display->getHeight());
 }
 
 void AppHandler::onConfigChanged()
 {
     _log->info("AppHandler::onConfigChanged()");
-    
+
     if(_display->valid())
     {
         // Switch width <-> height on configuration changed
         _display->resize(_display->getHeight(), _display->getWidth());
-        
-		if(getOrientation() == ACONFIGURATION_ORIENTATION_PORT)
-			_log->info("Orientation: PORTRAIT; Size: %d, %d", _display->getWidth(), _display->getHeight());
-		else if(getOrientation() == ACONFIGURATION_ORIENTATION_LAND)
-			_log->info("Orientation: LANDSCAPE; Size: %d, %d", _display->getWidth(), _display->getHeight());
 
-		_app->resize(_display->getWidth(), _display->getHeight());
-	}
+        if(getOrientation() == ACONFIGURATION_ORIENTATION_PORT)
+            _log->info("Orientation: PORTRAIT; Size: %d, %d", _display->getWidth(), _display->getHeight());
+        else if(getOrientation() == ACONFIGURATION_ORIENTATION_LAND)
+            _log->info("Orientation: LANDSCAPE; Size: %d, %d", _display->getWidth(), _display->getHeight());
+
+        _app->resize(_display->getWidth(), _display->getHeight());
+    }
 }
 
 void AppHandler::onGainedFocus()

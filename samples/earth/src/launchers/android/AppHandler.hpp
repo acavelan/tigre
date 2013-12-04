@@ -22,19 +22,19 @@ class AppHandler : public android::Activity
     public:
 
         AppHandler(	struct android_app *state, Logger *log,
-					AndroidDisplay *display, 
+                    AndroidDisplay *display,
                     OpenGLContext *context,
-					OpenGLRenderer *renderer,
+                    OpenGLRenderer *renderer,
                     Application *app);
-							
+
         ~AppHandler();
-		
+
         virtual void onInitWindow();
 
         virtual void onTermWindow();
 
         virtual void onWindowResized();
-		
+
         virtual void onConfigChanged();
 
         virtual void onGainedFocus();
@@ -58,28 +58,28 @@ class AppHandler : public android::Activity
         virtual void onEvent();
 
         virtual int onInputEvent(AInputEvent* event);
-        
+
         // App state
         bool hasFocus() const;
 
         bool loop() const;
 
         void close();
-        
+
         // Accelerometer
         void accSetup();
         void accRelease();
 
     private:
-                    
+
         Logger *_log;
         AndroidDisplay *_display;
         OpenGLContext *_context;
         OpenGLRenderer *_renderer;
 
-        // Application                 
+        // Application
         Application *_app;
-        
+
         // State
         bool _hasFocus;
         bool _loop;
