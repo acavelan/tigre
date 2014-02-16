@@ -1,70 +1,72 @@
-#include "AppHandler.hpp"
+#include "EarthActivity.hpp"
 
-AppHandler::AppHandler(	struct android_app *state,
-                        Logger *log,
-                        AndroidDisplay *display,
-                        OpenGLContext *context,
-                        OpenGLRenderer *renderer,
-                        Application *app) :
-    Activity(state), _log(log), _display(display), _context(context), _renderer(renderer), _app(app), _hasFocus(true), _loop(true)
+EarthActivity::EarthActivity(struct android_app *state, Content *content, Logger *logger) :
+    Activity(state), _content(content), _log(logger), _display(0), _context(0), _renderer(0), _hasFocus(true), _loop(true)
 {
-    _log->info("AppHandler::AppHandler(state, log, display)");
+    _log->info("EarthActivity::EarthActivity(state)");
 
     sensorManager = ASensorManager_getInstance();
     accelerometerSensor = ASensorManager_getDefaultSensor(sensorManager, ASENSOR_TYPE_ACCELEROMETER);
     sensorEventQueue = ASensorManager_createEventQueue(sensorManager, getState()->looper, LOOPER_ID_USER, NULL, NULL);
 }
 
-AppHandler::~AppHandler()
+EarthActivity::~EarthActivity()
 {
-    _log->info("AppHandler::~AppHandler()");
+    _log->info("EarthActivity::~EarthActivity()");
 }
 
-void AppHandler::onInitWindow()
+void EarthActivity::onInitWindow()
 {
-    _log->info("AppHandler::onInitWindow()");
+    _log->info("EarthActivity::onInitWindow()");
 
     if(getState()->window != NULL)
     {
-        _display->setWindow(getState()->window);
-        _display->init();
-        _context->init();
-        _renderer->init();
+        _display = new AndroidDisplay(getState()->window);
+
+        _context = new OpenGLContext();
 
         _context->printGLString(GL_VENDOR, _log);
         _context->printGLString(GL_RENDERER, _log);
         _context->printGLString(GL_VERSION, _log);
         _context->printGLString(GL_SHADING_LANGUAGE_VERSION, _log);
 
+        _renderer = new OpenGLRenderer(_context);
+
+        _app = new Earth(_display, _context, _renderer, _content, _log);
+
         _app->start();
         _app->resize(_display->getWidth(), _display->getHeight());
     }
 }
 
-void AppHandler::onTermWindow()
+void EarthActivity::onTermWindow()
 {
-    _log->info("AppHandler::onTermWindow()");
+    _log->info("EarthActivity::onTermWindow()");
 
-    if(_display->valid())
+    if(_display)
+    {
         _app->stop();
 
-    _renderer->destroy();
-    _context->destroy();
-    _display->destroy();
+        delete _app;
+        delete _renderer;
+        delete _context;
+        delete _display;
+    }
 }
 
-void AppHandler::onWindowResized()
+void EarthActivity::onWindowResized()
 {
-    _log->info("AppHandler::onWindoResize()");
-    if(_display->valid())
+    _log->info("EarthActivity::onWindoResize()");
+
+    if(_display)
         _app->resize(_display->getWidth(), _display->getHeight());
 }
 
-void AppHandler::onConfigChanged()
+void EarthActivity::onConfigChanged()
 {
-    _log->info("AppHandler::onConfigChanged()");
+    _log->info("EarthActivity::onConfigChanged()");
 
-    if(_display->valid())
+    if(_display)
     {
         // Switch width <-> height on configuration changed
         _display->resize(_display->getHeight(), _display->getWidth());
@@ -78,57 +80,57 @@ void AppHandler::onConfigChanged()
     }
 }
 
-void AppHandler::onGainedFocus()
+void EarthActivity::onGainedFocus()
 {
-    _log->info("AppHandler::onGainedFocus()");
+    _log->info("EarthActivity::onGainedFocus()");
     _hasFocus = true;
     accSetup();
 }
 
-void AppHandler::onLostFocus()
+void EarthActivity::onLostFocus()
 {
-    _log->info("AppHandler::onLostFocus()");
+    _log->info("EarthActivity::onLostFocus()");
     _hasFocus = false;
     accRelease();
 }
 
-void AppHandler::onStart()
+void EarthActivity::onStart()
 {
-    _log->info("AppHandler::onStart()");
+    _log->info("EarthActivity::onStart()");
 }
 
-void AppHandler::onResume()
+void EarthActivity::onResume()
 {
-    _log->info("AppHandler::onResume()");
+    _log->info("EarthActivity::onResume()");
 }
 
-void AppHandler::onSaveState()
+void EarthActivity::onSaveState()
 {
-    _log->info("AppHandler::onSaveState()");
+    _log->info("EarthActivity::onSaveState()");
 }
 
-void AppHandler::onLoadState(void *state)
+void EarthActivity::onLoadState(void *state)
 {
-    _log->info("AppHandler::onLoadState()");
+    _log->info("EarthActivity::onLoadState()");
 }
 
-void AppHandler::onPause()
+void EarthActivity::onPause()
 {
-    _log->info("AppHandler::onPause()");
+    _log->info("EarthActivity::onPause()");
 }
 
-void AppHandler::onStop()
+void EarthActivity::onStop()
 {
-    _log->info("AppHandler::onStop()");
+    _log->info("EarthActivity::onStop()");
 }
 
-void AppHandler::onDestroy()
+void EarthActivity::onDestroy()
 {
-    _log->info("AppHandler::onDestroy()");
+    _log->info("EarthActivity::onDestroy()");
     close();
 }
 
-void AppHandler::onEvent()
+void EarthActivity::onEvent()
 {
     if(accelerometerSensor != NULL)
     {
@@ -143,9 +145,9 @@ void AppHandler::onEvent()
     }
 }
 
-int AppHandler::onInputEvent(AInputEvent* event)
+int EarthActivity::onInputEvent(AInputEvent* event)
 {
-    _log->info("AppHandler::onInputEvent()");
+    _log->info("EarthActivity::onInputEvent()");
 
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION)
     {
@@ -157,24 +159,35 @@ int AppHandler::onInputEvent(AInputEvent* event)
     return 0;
 }
 
-bool AppHandler::hasFocus() const
+bool EarthActivity::hasFocus() const
 {
     return _hasFocus;
 }
 
-bool AppHandler::loop() const
+bool EarthActivity::loop() const
 {
     return _loop;
 }
 
-void AppHandler::close()
+void EarthActivity::update(float tick)
+{
+    if(_display)
+    {
+        _app->update(tick);
+        _app->drawFrame();
+        _display->swapBuffers();
+        _context->checkGlError("drawFrame()", _log);
+    }
+}
+
+void EarthActivity::close()
 {
     _loop = false;
 }
 
-void AppHandler::accSetup()
+void EarthActivity::accSetup()
 {
-    _log->info("AppHandler::accSetup()");
+    _log->info("EarthActivity::accSetup()");
 
     if(accelerometerSensor != NULL)
     {
@@ -185,9 +198,9 @@ void AppHandler::accSetup()
     }
 }
 
-void AppHandler::accRelease()
+void EarthActivity::accRelease()
 {
-    _log->info("AppHandler::accRelease()");
+    _log->info("EarthActivity::accRelease()");
 
     // When our app loses focus, we stop monitoring the accelerometer.
     // This is to avoid consuming battery while not being used.

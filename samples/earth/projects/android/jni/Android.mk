@@ -28,8 +28,8 @@ LOCAL_MODULE 			:= 	libTigre
 LOCAL_C_INCLUDES 		:= 	$(TIGRE)/local $(TIGRESRC) $(ROOTSRC)
 
 LOCAL_SRC_FILES 		:= 	../$(ROOTSRC)/launchers/android/main.cpp \
-							../$(ROOTSRC)/launchers/android/AppHandler.cpp \
-							../$(ROOTSRC)/Application.cpp
+							../$(ROOTSRC)/launchers/android/EarthActivity.cpp \
+							../$(ROOTSRC)/Earth.cpp
 
 LOCAL_LDLIBS 			+= 	-llog -landroid -lEGL -lGLESv2
 

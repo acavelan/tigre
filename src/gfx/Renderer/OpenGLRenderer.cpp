@@ -1,3 +1,4 @@
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "OpenGLRenderer.hpp"
@@ -8,15 +9,6 @@ namespace tigre
     {
         OpenGLRenderer::OpenGLRenderer(OpenGLContext *context) :
             _context(context)
-        {
-        }
-
-        OpenGLRenderer::~OpenGLRenderer()
-        {
-            destroy();
-        }
-
-        void OpenGLRenderer::init()
         {
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_BLEND);
@@ -54,7 +46,7 @@ namespace tigre
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLubyte), indices, GL_STATIC_DRAW);
         }
 
-        void OpenGLRenderer::destroy()
+        OpenGLRenderer::~OpenGLRenderer()
         {
             glDeleteBuffers(3, _quad.vbo);
         }

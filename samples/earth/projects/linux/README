@@ -3,8 +3,13 @@ Use scons to compile both the tigre library and the earth sample:
 Tigre library
 =============
 
-Compile: scons -f tigre.py -f app.py 
-Clean: scons -f tigre.py -f app.py -c
+Compile: scons -f tigre.py
+Clean: scons -f tigre.py -c
+
+SOIL (Image Library)
+====================
+
+scons -f soil.py
 
 GLFW
 ====

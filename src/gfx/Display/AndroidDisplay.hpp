@@ -13,16 +13,10 @@ namespace tigre
         {
             public:
 
-                AndroidDisplay();
+                AndroidDisplay(ANativeWindow *window);
                 ~AndroidDisplay();
 
                 void setWindow(ANativeWindow *window);
-
-                void init();
-
-                void destroy();
-
-                bool valid() const;
 
                 void resize(int width, int height);
 

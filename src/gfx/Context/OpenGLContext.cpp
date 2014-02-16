@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <string>
 
+#define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
 #include "OpenGLContext.hpp"
@@ -15,20 +16,11 @@ namespace tigre
         OpenGLContext::OpenGLContext() :
             _shader(0), _x(0), _y(0), _width(0), _height(0)
         {
-        }
-
-        OpenGLContext::~OpenGLContext()
-        {
-            destroy();
-        }
-
-        void OpenGLContext::init()
-        {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
             glPixelStorei(GL_PACK_ALIGNMENT, 1);
         }
 
-        void OpenGLContext::destroy()
+        OpenGLContext::~OpenGLContext()
         {
         }
 
@@ -133,10 +125,9 @@ namespace tigre
             if(program)
             {
                 glAttachShader(program, vertexShader);
-                //checkGlError("glAttachShader");
                 glAttachShader(program, fragmentShader);
-                //checkGlError("glAttachShader");
                 glLinkProgram(program);
+
                 GLint linkStatus = GL_FALSE;
 
                 glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);

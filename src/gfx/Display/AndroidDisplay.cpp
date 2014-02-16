@@ -6,22 +6,8 @@ namespace tigre
 {
     namespace gfx
     {
-        AndroidDisplay::AndroidDisplay() :
-            _window(0), _valid(false), _width(0), _height(0)
-        {
-        }
-
-        AndroidDisplay::~AndroidDisplay()
-        {
-            destroy();
-        }
-
-        void AndroidDisplay::setWindow(ANativeWindow *window)
-        {
-            _window = window;
-        }
-
-        void AndroidDisplay::init()
+        AndroidDisplay::AndroidDisplay(ANativeWindow *window) :
+            _window(window), _valid(false), _width(0), _height(0)
         {
             // initialize OpenGL ES and EGL
 
@@ -89,11 +75,9 @@ namespace tigre
             _surface = surface;
             _width = w;
             _height = h;
-
-            _valid = true;
         }
 
-        void AndroidDisplay::destroy()
+        AndroidDisplay::~AndroidDisplay()
         {
             if (_display != EGL_NO_DISPLAY)
             {
@@ -112,11 +96,6 @@ namespace tigre
             _display = EGL_NO_DISPLAY;
             _context = EGL_NO_CONTEXT;
             _surface = EGL_NO_SURFACE;
-        }
-
-        bool AndroidDisplay::valid() const
-        {
-            return _valid;
         }
 
         void AndroidDisplay::resize(int width, int height)

@@ -12,7 +12,7 @@
 #include "gfx/Context/OpenGLContext.hpp"
 #include "gfx/Renderer/OpenGLRenderer.hpp"
 
-#include "Application.hpp"
+#include "Earth.hpp"
 
 using namespace tigre;
 
@@ -49,7 +49,7 @@ class QT5DisplayWidget : public QGLWidget, public gfx::Display
         gfx::OpenGLRenderer *_renderer;
 
         Content *_content;
-        Application *_app;
+        Earth *_app;
 
         QTimer refresh;
         core::Timer timer;

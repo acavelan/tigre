@@ -8,11 +8,11 @@ tigresrc = tigre + '/src'
 root = '../..'
 rootsrc = root + '/src'
 
-cxxflags = ['-O2', '-W', '-Wall', '-Wextra', '-DGL_GLEXT_PROTOTYPES']
+cxxflags = ['-O2', '-Wall', '-Wextra', '-DGL_GLEXT_PROTOTYPES']
 
 sources =  [
 	rootsrc + '/launchers/glfw/main.cpp',
-	rootsrc + '/Application.cpp'
+	rootsrc + '/Earth.cpp'
 ]
 
 cpppath = [

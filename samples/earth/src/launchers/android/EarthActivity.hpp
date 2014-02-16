@@ -10,59 +10,57 @@
 
 #include "os/android/Activity.hpp"
 
-#include "Application.hpp"
+#include "Earth.hpp"
 
 using namespace tigre::core;
 using namespace tigre::game;
 using namespace tigre::gfx;
 using namespace tigre::os;
 
-class AppHandler : public android::Activity
+class EarthActivity : public android::Activity
 {
     public:
 
-        AppHandler(	struct android_app *state, Logger *log,
-                    AndroidDisplay *display,
-                    OpenGLContext *context,
-                    OpenGLRenderer *renderer,
-                    Application *app);
+        EarthActivity(struct android_app *state, Content *content, Logger *logger);
 
-        ~AppHandler();
+        ~EarthActivity();
 
-        virtual void onInitWindow();
+        void onInitWindow();
 
-        virtual void onTermWindow();
+        void onTermWindow();
 
-        virtual void onWindowResized();
+        void onWindowResized();
 
-        virtual void onConfigChanged();
+        void onConfigChanged();
 
-        virtual void onGainedFocus();
+        void onGainedFocus();
 
-        virtual void onLostFocus();
+        void onLostFocus();
 
-        virtual void onStart();
+        void onStart();
 
-        virtual void onResume();
+        void onResume();
 
-        virtual void onSaveState();
+        void onSaveState();
 
-        virtual void onLoadState(void *state);
+        void onLoadState(void *state);
 
-        virtual void onPause();
+        void onPause();
 
-        virtual void onStop();
+        void onStop();
 
-        virtual void onDestroy();
+        void onDestroy();
 
-        virtual void onEvent();
+        void onEvent();
 
-        virtual int onInputEvent(AInputEvent* event);
+        int onInputEvent(AInputEvent* event);
 
         // App state
         bool hasFocus() const;
 
         bool loop() const;
+
+        void update(float tick);
 
         void close();
 
@@ -73,12 +71,13 @@ class AppHandler : public android::Activity
     private:
 
         Logger *_log;
+        Content *_content;
         AndroidDisplay *_display;
         OpenGLContext *_context;
         OpenGLRenderer *_renderer;
 
         // Application
-        Application *_app;
+        Earth *_app;
 
         // State
         bool _hasFocus;

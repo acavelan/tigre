@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <cstdio>
 
 #include "core/core.hpp"
 #include "gfx/gfx.hpp"
@@ -8,13 +9,13 @@
 #include "gfx/Context/OpenGLContext.hpp"
 #include "gfx/Renderer/OpenGLRenderer.hpp"
 
-#include "Application.hpp"
+#include "Earth.hpp"
 
 using namespace tigre::core;
 using namespace tigre::game;
 using namespace tigre::gfx;
 
-Application *handler = 0;
+Earth *handler = 0;
 
 void onResize(GLFWwindow*, int width, int height)
 {
@@ -59,10 +60,6 @@ int main(int argc, char **argv)
     GLFWDisplay display(window);
     OpenGLRenderer renderer(&context);
 
-    display.init();
-    context.init();
-    renderer.init();
-
     context.printGLString(GL_VENDOR, &logger);
     context.printGLString(GL_RENDERER, &logger);
     context.printGLString(GL_VERSION, &logger);
@@ -73,7 +70,7 @@ int main(int argc, char **argv)
     content.addLocation("shaders", "../../content/shaders/130");
     content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 
-    Application app(&display, &context, &renderer, &content, &logger);
+    Earth app(&display, &context, &renderer, &content, &logger);
     handler = &app;
 
     try

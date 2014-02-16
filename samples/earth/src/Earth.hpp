@@ -1,5 +1,5 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef EARTH_H
+#define EARTH_H
 
 #include "core/core.hpp"
 #include "game/game.hpp"
@@ -11,17 +11,17 @@ using namespace tigre::gfx;
 
 using namespace glm;
 
-class Application : public Game
+class Earth : public Game
 {
     public:
 
-        Application(Display *display,
+        Earth(Display *display,
                     Context *context,
                     Renderer *renderer,
                     Content *content,
                     Logger *logger);
 
-        ~Application();
+        ~Earth();
 
         void start();
 

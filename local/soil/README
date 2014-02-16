@@ -1,0 +1,31 @@
+This a reduced and modified version of the SOIL image library.
+
+This version can be compiled for Android devices supporintg GLES.
+
+Link: http://www.lonesock.net/soil.html
+
+SOIL is in the public domaine.
+
+diff:
+
+diff original_SOIL.c modified_SOIL.c 
+27a28,31
+> #elif defined(__ANDROID__)
+> 	#include <GLES2/gl2.h>
+> 	#include <GLES2/gl2ext.h>
+> 	#define APIENTRY
+1345,1346c1349,1350
+< 			/*	unsigned int clamp_mode = SOIL_CLAMP_TO_EDGE;	*/
+< 			unsigned int clamp_mode = GL_CLAMP;
+---
+> 			unsigned int clamp_mode = SOIL_CLAMP_TO_EDGE;
+> 			/*unsigned int clamp_mode = GL_CLAMP;*/
+1812,1813c1816,1817
+< 			/*	unsigned int clamp_mode = SOIL_CLAMP_TO_EDGE;	*/
+< 			unsigned int clamp_mode = GL_CLAMP;
+---
+> 			unsigned int clamp_mode = SOIL_CLAMP_TO_EDGE;
+> 			/*unsigned int clamp_mode = GL_CLAMP;*/
+1996a2001,2002
+> 			#elif defined(__ANDROID__)
+> 				ext_addr = NULL;

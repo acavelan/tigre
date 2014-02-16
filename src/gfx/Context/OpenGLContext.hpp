@@ -34,9 +34,6 @@ namespace tigre
                 OpenGLContext();
                 ~OpenGLContext();
 
-                void init();
-                void destroy();
-
                 void printGLString(GLenum s, const core::Logger *log);
                 void checkGlError(const char* op, const core::Logger *log);
 

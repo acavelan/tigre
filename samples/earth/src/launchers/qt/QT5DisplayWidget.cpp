@@ -54,9 +54,6 @@ void QT5DisplayWidget::initializeGL()
         _context = new OpenGLContext();
         _renderer = new OpenGLRenderer(_context);
 
-        _context->init();
-        _renderer->init();
-
         _context->printGLString(GL_VENDOR, _logger);
         _context->printGLString(GL_RENDERER, _logger);
         _context->printGLString(GL_VERSION, _logger);
@@ -67,7 +64,7 @@ void QT5DisplayWidget::initializeGL()
         _content->addLocation("shaders", "../../content/shaders/130");
         _content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 
-        _app = new Application(this, _context, _renderer, _content, _logger);
+        _app = new Earth(this, _context, _renderer, _content, _logger);
         _app->start();
 
         connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));

@@ -9,8 +9,8 @@
 #include "gfx/Context/OpenGLContext.hpp"
 #include "gfx/Renderer/OpenGLRenderer.hpp"
 
-#include "Application.hpp"
-#include "AppHandler.hpp"
+#include "Earth.hpp"
+#include "EarthActivity.hpp"
 
 using namespace tigre::core;
 using namespace tigre::game;
@@ -27,36 +27,22 @@ void android_main(struct android_app* state)
 
     try
     {
-        OpenGLContext context;
-        AndroidDisplay display;
-        OpenGLRenderer renderer(&context);
-
         Content content;
         content.addLocation("content", "file:///android_asset");
         content.addLocation("shaders", "file:///android_asset/shaders/100");
         content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 
-        Application app(&display, &context, &renderer, &content, &logger);
-
-        AppHandler handler(state, &logger, &display, &context, &renderer, &app);
+        EarthActivity activity(state, &content, &logger);
 
         Timer timer;
         timer.start();
 
-        while(handler.loop())
+        while(activity.loop())
         {
-            handler.pollEvent();
+            activity.pollEvent();
 
-            if(handler.hasFocus())
-            {
-                app.update(timer.tick());
-                if(display.valid())
-                {
-                    app.drawFrame();
-                    display.swapBuffers();
-                    context.checkGlError("drawFrame()", &logger);
-                }
-            }
+            if(activity.hasFocus())
+                activity.update(timer.tick());
         }
     }
     catch(const Exception &e)
