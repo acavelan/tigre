@@ -12,6 +12,7 @@
 #include "Shader.hpp"
 #include "Texture2D.hpp"
 #include "Rectangle.hpp"
+#include "Sphere.hpp"
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>

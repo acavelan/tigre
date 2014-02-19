@@ -1,9 +1,10 @@
 #include "Content.hpp"
+
 #include "../core/file.hpp"
 
 namespace tigre
 {
-    namespace game
+    namespace hl
     {
         void Content::addLocation(const std::string &name, const std::string &path)
         {

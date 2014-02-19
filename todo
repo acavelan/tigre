@@ -5,13 +5,3 @@ Tigre
 	
 Sample:	
 	- Add lights
-	
-Priority:
-	- rename game -> hl (hight level (abstraction layer))
-	- rename draw to render
-	- rewrite the renderer by making it a mixin (good multiple inheritance, using A::foo for render and destroy)
-	- Renderer : Display, Context, [RendererX]
-		=> So a renderer is then asociated to a window and an opengl context, which i think is almost always true
-		=> it makes evrything easier
-		
-

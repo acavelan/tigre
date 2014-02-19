@@ -1,5 +1,7 @@
-#ifndef ACTIVITY_HELPER_H
-#define ACTIVITY_HELPER_H
+#ifndef ANDROID_H
+#define ANDROID_H
+
+#include <string>
 
 #include <android_native_app_glue.h>
 
@@ -10,6 +12,8 @@ namespace tigre
         namespace android
         {
             void cacheActivity(struct ANativeActivity *activity);
+
+            void loadAsset(const std::string &filename, std::string &buffer);
 
             struct ANativeActivity *getActivity();
 

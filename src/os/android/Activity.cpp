@@ -1,5 +1,5 @@
 #include "Activity.hpp"
-#include "activity.hpp"
+#include "android.hpp"
 
 namespace tigre
 {

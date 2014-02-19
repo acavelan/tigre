@@ -10,9 +10,8 @@ QT5DisplayWidget::QT5DisplayWidget(QWidget *parent) :
 
 QT5DisplayWidget::~QT5DisplayWidget()
 {
-    _app->stop();
-
     delete _app;
+    delete _renderView;
     delete _content;
     delete _renderer;
     delete _context;
@@ -47,25 +46,26 @@ void QT5DisplayWidget::initializeGL()
 {
     makeCurrent();
 
+    _log = new ConsoleLogger("Tigre");
+
     try
     {
-        _logger = new ConsoleLogger("Tigre");
-
         _context = new OpenGLContext();
         _renderer = new OpenGLRenderer(_context);
 
-        _context->printGLString(GL_VENDOR, _logger);
-        _context->printGLString(GL_RENDERER, _logger);
-        _context->printGLString(GL_VERSION, _logger);
-        _context->printGLString(GL_SHADING_LANGUAGE_VERSION, _logger);
+        _context->printGLString(GL_VENDOR, _log);
+        _context->printGLString(GL_RENDERER, _log);
+        _context->printGLString(GL_VERSION, _log);
+        _context->printGLString(GL_SHADING_LANGUAGE_VERSION, _log);
 
         _content = new Content();
         _content->addLocation("content", "../../content");
         _content->addLocation("shaders", "../../content/shaders/130");
         _content->registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
 
-        _app = new Earth(this, _context, _renderer, _content, _logger);
-        _app->start();
+        _renderView =  new RenderView(this, _context, _renderer);
+
+        _app = new Earth(_renderView, _content, _log);
 
         connect(&refresh, SIGNAL(timeout()), this, SLOT(updateGL()));
         refresh.setInterval(0);
@@ -75,14 +75,15 @@ void QT5DisplayWidget::initializeGL()
     }
     catch(const Exception &e)
     {
-        _logger->error(e.what());
+        _log->error(e.what());
     }
 }
 
 void QT5DisplayWidget::paintGL()
 {
     _app->update(timer.tick());
-    _app->drawFrame();
+    _app->render();
+    _context->checkGlError("app.render()", _log);
 }
 
 void QT5DisplayWidget::resizeGL(int width, int height)

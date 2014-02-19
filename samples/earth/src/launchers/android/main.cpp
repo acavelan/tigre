@@ -1,8 +1,8 @@
 #include <jni.h>
 
 #include "core/core.hpp"
-#include "game/game.hpp"
 #include "gfx/gfx.hpp"
+#include "hl/hl.hpp"
 
 #include "core/Logger/AndroidLogger.hpp"
 #include "gfx/Display/AndroidDisplay.hpp"
@@ -13,8 +13,8 @@
 #include "EarthActivity.hpp"
 
 using namespace tigre::core;
-using namespace tigre::game;
 using namespace tigre::gfx;
+using namespace tigre::hl;
 
 /**
  * This is the main entry point of a native application that is using

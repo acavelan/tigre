@@ -1,27 +1,23 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef RENDERVIEW_H
+#define RENDERVIEW_H
 
 #include "../gfx/Display.hpp"
 #include "../gfx/Context.hpp"
 #include "../gfx/Renderer.hpp"
-#include "../core/Logger.hpp"
-#include "Content.hpp"
-#include "Sphere.hpp"
 
 namespace tigre
 {
-    namespace game
+    namespace hl
     {
-        class Game : public gfx::Display,
+        class RenderView : public gfx::Display,
             public gfx::Context,
-            public gfx::Renderer,
-            public Content
+            public gfx::Renderer
         {
             public:
 
-                Game(gfx::Display *display, gfx::Context *context, gfx::Renderer *renderer, Content *content);
+                RenderView(gfx::Display *display, gfx::Context *context, gfx::Renderer *renderer);
 
-                virtual ~Game();
+                virtual ~RenderView();
 
                 // Display
                 void resize(int width, int height);
@@ -53,7 +49,7 @@ namespace tigre
                 void setShader(gfx::Shader *shader, const glm::mat4 &projection, const glm::mat4 &view);
                 void setShader(gfx::Shader *shader, const glm::mat4 &projection, const glm::mat4 &view, const gfx::Color &color);
 
-                // Renderer
+                // RenderView
                 gfx::Texture2D* createTexture2D(gfx::Image *image);
 
                 void bindTexture(gfx::Texture2D *texture);
@@ -72,28 +68,11 @@ namespace tigre
 
                 void destroy(gfx::ModelMesh *model);
 
-                template<class T>
-                T* load(const std::string &filename)
-                {
-                    return _content->load<T>(filename);
-                }
-
-                template<class T>
-                void save(const std::string &filename, const T *resource)
-                {
-                    _content->save<T>(filename, resource);
-                }
-
-                gfx::ModelMesh* loadSphere(float radius, int lat, int lon);
-                gfx::Texture2D* loadTexture(const std::string &filename);
-                gfx::Shader* loadShader(const std::string &vertexFile, const std::string &fragmentFile);
-
             private:
 
                 gfx::Display *_display;
                 gfx::Context *_context;
                 gfx::Renderer *_renderer;
-                Content *_content;
 
         };
     }

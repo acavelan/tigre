@@ -1,0 +1,51 @@
+Use scons to compile both the tigre library and the earth sample:
+
+SCons
+=====
+
+Compiling (using SConstruct):
+$> scons
+
+Target a project only:
+$> scons -f tigre.py
+
+Cleaning:
+$> scons -c
+
+Cleaning a project only:
+$> scons -f tigre.py -c
+
+Build Tigre
+===========
+
+$> scons
+
+GLFW
+====
+
+$> scons
+
+Qt
+==
+
+Generate the Makefile and compile the project:
+$> qmake && make
+
+Cleaning:
+$> make clean 
+or
+$> make distclean
+
+Android
+=======
+
+/!\ Requires Android sdk and ndk /!\
+
+Update the project (path, sdk target, name):
+$> android update project -p . -t 1 -n "Earth"
+
+Building everything:
+$> ndk-build
+
+Installing quickly:
+$> ant debug install

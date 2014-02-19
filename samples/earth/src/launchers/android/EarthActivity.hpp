@@ -13,8 +13,8 @@
 #include "Earth.hpp"
 
 using namespace tigre::core;
-using namespace tigre::game;
 using namespace tigre::gfx;
+using namespace tigre::hl;
 using namespace tigre::os;
 
 class EarthActivity : public android::Activity
@@ -62,8 +62,6 @@ class EarthActivity : public android::Activity
 
         void update(float tick);
 
-        void close();
-
         // Accelerometer
         void accSetup();
         void accRelease();
@@ -75,6 +73,7 @@ class EarthActivity : public android::Activity
         AndroidDisplay *_display;
         OpenGLContext *_context;
         OpenGLRenderer *_renderer;
+        RenderView *_renderView;
 
         // Application
         Earth *_app;

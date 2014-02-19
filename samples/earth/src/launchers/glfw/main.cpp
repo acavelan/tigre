@@ -3,6 +3,7 @@
 
 #include "core/core.hpp"
 #include "gfx/gfx.hpp"
+#include "hl/hl.hpp"
 
 #include "core/Logger/ConsoleLogger.hpp"
 #include "gfx/Display/GLFWDisplay.hpp"
@@ -12,8 +13,8 @@
 #include "Earth.hpp"
 
 using namespace tigre::core;
-using namespace tigre::game;
 using namespace tigre::gfx;
+using namespace tigre::hl;
 
 Earth *handler = 0;
 
@@ -55,27 +56,28 @@ int main(int argc, char **argv)
     glfwMakeContextCurrent(window);
 
     ConsoleLogger logger("Tigre");
-
-    OpenGLContext context;
-    GLFWDisplay display(window);
-    OpenGLRenderer renderer(&context);
-
-    context.printGLString(GL_VENDOR, &logger);
-    context.printGLString(GL_RENDERER, &logger);
-    context.printGLString(GL_VERSION, &logger);
-    context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
-
-    Content content;
-    content.addLocation("content", "../../content");
-    content.addLocation("shaders", "../../content/shaders/130");
-    content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
-
-    Earth app(&display, &context, &renderer, &content, &logger);
-    handler = &app;
-
+    
     try
     {
-        app.start();
+        OpenGLContext context;
+        GLFWDisplay display(window);
+        OpenGLRenderer renderer(&context);
+
+        context.printGLString(GL_VENDOR, &logger);
+        context.printGLString(GL_RENDERER, &logger);
+        context.printGLString(GL_VERSION, &logger);
+        context.printGLString(GL_SHADING_LANGUAGE_VERSION, &logger);
+
+        Content content;
+        content.addLocation("content", "../../content");
+        content.addLocation("shaders", "../../content/shaders/130");
+        content.registerLoader(new ImageLoader(), "jpg,bmp,png,tga");
+
+        RenderView renderView(&display, &context, &renderer);
+
+        Earth app(&renderView, &content, &logger);
+        handler = &app;
+
         app.resize(width, height);
         context.checkGlError("create()", &logger);
 
@@ -105,22 +107,18 @@ int main(int argc, char **argv)
                 frames++;
 
             app.update(delta);
-            app.drawFrame();
+            app.render();
             display.swapBuffers();
-            context.checkGlError("drawFrame()", &logger);
+            context.checkGlError("app.render()", &logger);
 
             run = !(glfwGetKey(window, GLFW_KEY_ESCAPE) || glfwWindowShouldClose(window));
 
             glfwPollEvents();
         }
-
-        app.stop();
     }
     catch(const Exception &e)
     {
         logger.error(e.what());
-
-        app.stop();
     }
 
     glfwTerminate();

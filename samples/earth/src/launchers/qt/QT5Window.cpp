@@ -12,7 +12,7 @@ QT5Window::QT5Window()
     mainLayout->addWidget(display);
     setLayout(mainLayout);
 
-    setWindowTitle(tr("Tigre"));
+    setWindowTitle("Tigre");
 }
 
 void QT5Window::keyPressEvent(QKeyEvent *e)

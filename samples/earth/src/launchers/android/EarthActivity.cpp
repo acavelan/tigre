@@ -32,9 +32,9 @@ void EarthActivity::onInitWindow()
 
         _renderer = new OpenGLRenderer(_context);
 
-        _app = new Earth(_display, _context, _renderer, _content, _log);
+        _renderView = new RenderView(_display, _context, _renderer);
 
-        _app->start();
+        _app = new Earth(_renderView, _content, _log);
         _app->resize(_display->getWidth(), _display->getHeight());
     }
 }
@@ -45,9 +45,8 @@ void EarthActivity::onTermWindow()
 
     if(_display)
     {
-        _app->stop();
-
         delete _app;
+        delete _renderView;
         delete _renderer;
         delete _context;
         delete _display;
@@ -127,7 +126,7 @@ void EarthActivity::onStop()
 void EarthActivity::onDestroy()
 {
     _log->info("EarthActivity::onDestroy()");
-    close();
+    _loop = false;
 }
 
 void EarthActivity::onEvent()
@@ -174,15 +173,10 @@ void EarthActivity::update(float tick)
     if(_display)
     {
         _app->update(tick);
-        _app->drawFrame();
+        _app->render();
         _display->swapBuffers();
-        _context->checkGlError("drawFrame()", _log);
+        _context->checkGlError("app.render()", _log);
     }
-}
-
-void EarthActivity::close()
-{
-    _loop = false;
 }
 
 void EarthActivity::accSetup()

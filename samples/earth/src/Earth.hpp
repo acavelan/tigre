@@ -2,42 +2,44 @@
 #define EARTH_H
 
 #include "core/core.hpp"
-#include "game/game.hpp"
 #include "gfx/gfx.hpp"
+#include "hl/hl.hpp"
 
 using namespace tigre::core;
-using namespace tigre::game;
 using namespace tigre::gfx;
+using namespace tigre::hl;
 
 using namespace glm;
 
-class Earth : public Game
+class Earth
 {
     public:
 
-        Earth(Display *display,
-                    Context *context,
-                    Renderer *renderer,
-                    Content *content,
-                    Logger *logger);
+        Earth(RenderView *renderer, Content *content, Logger *logger);
 
         ~Earth();
-
-        void start();
-
-        void stop();
 
         void resize(int width, int height);
 
         void update(float delta);
 
-        void drawFrame();
+        void render();
 
     private:
 
+        ModelMesh* loadSphere(float radius, int lat, int lon);
+
+        Texture2D* loadTexture(const std::string &filename);
+
+        Shader* loadShader(const std::string &vertexFile, const std::string &fragmentFile);
+
+    private:
+
+        RenderView *_rdr;
+        Content *_content;
         Logger *_log;
 
-        Texture2D *_earthTex, *_whiteTex;
+        Texture2D *_earthTex;
         ModelMesh *_sphere;
         Shader *_shader;
 
@@ -45,7 +47,6 @@ class Earth : public Game
         mat4 _view, _view2D;
 
         float _angle;
-
 };
 
 #endif

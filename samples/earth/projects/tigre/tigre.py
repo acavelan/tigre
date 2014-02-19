@@ -21,9 +21,9 @@ sources = [
 	src + '/gfx/Texture2D.cpp',
 	src + '/gfx/ImageLoader.cpp',
 	src + '/gfx/Rectangle.cpp',
-	src + '/game/Game.cpp',
-	src + '/game/Content.cpp',
-	src + '/game/Sphere.cpp'
+	src + '/gfx/Sphere.cpp',
+	src + '/hl/Content.cpp',
+	src + '/hl/RenderView.cpp'
 ]
 
 cpppath = [
@@ -48,7 +48,7 @@ if platform.system() == "Linux":
 		src + '/gfx/Renderer/OpenGLRenderer.cpp'
 	])
 	
-	SOIL = env.File(root + '/local/soil/lib/libSOIL.a')
+	SOIL = env.File('libSOIL.a')
 	
 	libs.append(['GL', 'glfw', SOIL])
 

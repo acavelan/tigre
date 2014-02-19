@@ -22,7 +22,7 @@ cpppath = [
 ]
 
 libs = ['tigre', 'glfw']
-libpath = ['.']
+libpath = ['../tigre']
 
 env.Append(CXXFLAGS = cxxflags)
 env.Append(LIBS = libs)

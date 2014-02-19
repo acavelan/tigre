@@ -44,9 +44,10 @@ class QT5DisplayWidget : public QGLWidget, public gfx::Display
 
     private:
 
-        core::ConsoleLogger *_logger;
+        core::ConsoleLogger *_log;
         gfx::OpenGLContext *_context;
         gfx::OpenGLRenderer *_renderer;
+        hl::RenderView *_renderView;
 
         Content *_content;
         Earth *_app;

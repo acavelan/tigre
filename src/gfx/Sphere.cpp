@@ -4,7 +4,7 @@
 
 namespace tigre
 {
-    namespace game
+    namespace gfx
     {
         Sphere::Sphere(float radius, int latitudeBands, int longitudeBands)
         {

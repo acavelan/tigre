@@ -5,7 +5,7 @@
 
 namespace tigre
 {
-    namespace game
+    namespace gfx
     {
         class Sphere : public tigre::gfx::Mesh
         {

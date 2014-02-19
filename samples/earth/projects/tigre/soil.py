@@ -5,7 +5,7 @@ target = "SOIL"
 tigre = '../../../..'
 soilsrc = tigre + '/local/soil/src/'
 
-cxxflags = ['-O2', '-s', '-Wall', '-Wextra', '-fPIC']
+cxxflags = ['-O2', '-s', '-fPIC']
 
 sources =  [
 	soilsrc + 'image_helper.c',
@@ -14,6 +14,6 @@ sources =  [
   	soilsrc + 'SOIL.c'
 ]
 
-env.Append(CXXFLAGS = cxxflags)
+env.Append(CFLAGS = cxxflags)
 
 env.StaticLibrary(target, sources)

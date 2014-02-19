@@ -1,3 +1,2 @@
 SConscript('tigre.py')
 SConscript('soil.py')
-SConscript('glfw.py')

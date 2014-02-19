@@ -8,7 +8,7 @@
 
 namespace tigre
 {
-    namespace game
+    namespace hl
     {
         class Content : public core::ContentLoader<gfx::Image>
         {
