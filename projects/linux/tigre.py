@@ -4,7 +4,7 @@ env = Environment()
 
 target = "tigre"
 
-root = '../../../..'
+root = '../..'
 src = root + '/src'
 
 sources = [

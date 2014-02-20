@@ -16,7 +16,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-TIGRE					:=	../../../../../tigre
+TIGRE					:=	../../../..
 TIGRESRC				:=	$(TIGRE)/src
 
 ROOT					:=	../..
@@ -37,6 +37,6 @@ LOCAL_STATIC_LIBRARIES 	+= 	tigre android_native_app_glue
 
 include $(BUILD_SHARED_LIBRARY)
 
-include $(LOCAL_PATH)/Tigre.mk
+include $(TIGRE)/projects/android/Tigre.mk
 
 $(call import-module, android/native_app_glue)

@@ -1,5 +1,5 @@
-#ifndef APP_HANDLER_H
-#define APP_HANDLER_H
+#ifndef EARTH_ACTIVITY_H
+#define EARTH_ACTIVITY_H
 
 #include <android/sensor.h>
 

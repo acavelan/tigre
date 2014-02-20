@@ -22,4 +22,4 @@ INCLUDEPATH += 	$$tigre/local \
 				$$tigresrc \
 				$$rootsrc
 
-LIBS += -L../tigre -ltigre
+LIBS += -L$$tigre/projects/linux -ltigre

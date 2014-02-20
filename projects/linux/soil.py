@@ -2,7 +2,7 @@ env = Environment()
 
 target = "SOIL"
 
-tigre = '../../../..'
+tigre = '../..'
 soilsrc = tigre + '/local/soil/src/'
 
 cxxflags = ['-O2', '-s', '-fPIC']

@@ -1,2 +1,2 @@
-SConscript('../tigre/SConstruct')
+SConscript('../../../../projects/linux/SConstruct')
 SConscript('glfw.py')
